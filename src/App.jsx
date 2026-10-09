@@ -1,6 +1,9 @@
-import Nav from "./components/Nav";
-const App = () => {
-  return <Nav />;
-};
+import Nav from './components/Nav'
 
-export default App;
+const App = () => {
+  return (
+    <div><Nav/></div>
+  )
+}
+
+export default App
