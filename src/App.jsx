@@ -1,8 +1,13 @@
-import Nav from './components/Nav'
+import {Route, Routes} from 'react-router'
+import Layout from './components/Layout'
 
 const App = () => {
   return (
-    <div><Nav/></div>
+    <div className='min-h-screen w-full'>
+      <Routes>
+        <Route path='/' element={<Layout/>}/>
+        </Routes>
+    </div>
   )
 }
 
