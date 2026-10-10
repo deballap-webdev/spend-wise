@@ -1,14 +1,14 @@
-import { useStoreState } from "easy-peasy"
-import { LuSearch } from "react-icons/lu"
+import { useStoreState } from "easy-peasy";
+import { LuSearch } from "react-icons/lu";
 
 const Header = () => {
-    const outlet = useStoreState((state => state.activeOutlet))
+  const outlet = useStoreState((state) => state.activeOutlet);
   return (
-    <div className="flex flex-row w-full items-center justify-between">
-            <p>{`Workspace > ${outlet}`} </p>
-    <LuSearch/>
-    </div>
-  )
-}
+    <header className="flex p-4 border-b-BORDER border-b w-full flex-row items-center justify-between text-[clamp(1vh_0.7rem_1.5vh)] sticky top-0 z-10 bg-white">
+      <p>{`Workspace > ${outlet}`} </p>
+      <LuSearch />
+    </header>
+  );
+};
 
-export default Header
+export default Header;

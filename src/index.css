@@ -1,2 +1,14 @@
-@import 'tailwindcss'
+@import "tailwindcss";
 
+@theme {
+  --color-LIGHT-TEXT: #8c97a5;
+  --color-NAV-BG: #0e1824;
+  --color-NAV-ACTIVE: #009464;
+  --color-NAV-HOVER: #1b2531;
+  --color-BORDER: #e2e7eb;
+  --color-BODY-BG: #f6f8fa;
+  --color-CARD-BG: #fff;
+  --color-ICON-BG: #eff2f5;
+  --color-LIGHT-GREEN: #dff7eb;
+  --color-LIGHT-RED: #fef1f4;
+}

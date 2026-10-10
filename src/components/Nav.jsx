@@ -11,18 +11,27 @@ import {
 import NavLink from "./NavLink";
 const Nav = () => {
   return (
-    <nav className="flex py-4 px-3 w-fit items-center bg-black h-screen flex-col gap-1">
-      <div className="text-white flex h-20 items-center gap-2"><LuTrendingUp className="text-white bg-green-800  w-10 h-10 p-2 rounded-lg"/> 
-      <p>Spend Wise</p></div>
+    <nav className="bg-NAV-BG flex min-h-screen w-fit flex-col justify-between px-3 py-4">
+      <div className="justify-startflex flex-col items-center gap-1">
+        <div className="mb-2 flex h-20 items-center gap-1 text-white">
+          <LuTrendingUp className="h-10 w-15 rounded-lg bg-green-800 p-2 text-white" />
+          <p className="text-[1.3rem] font-bold">SpendWise</p>
+        </div>
+        <div>
+          <h3 className="text-LIGHT-TEXT mb-4 w-full px-4 text-[0.8rem]">
+            workspace
+          </h3>
+          <NavLink icon={<LuLayoutDashboard />} text="Dashboard" path="dashboard" />
+          <NavLink icon={<LuArrowLeftRight />} text="Transactions" path="transactions" />
+          <NavLink icon={<LuChartNoAxesCombined />} text="Analytics" path="analytics" />
+          <NavLink icon={<LuWallet />} text="Budgets" path="budgets"/>
+          <NavLink icon={<LuTarget />} text="Goals" path="goals" />
+          <NavLink icon={<LuSettings />} text="Settings" path="settings" />
+        </div>
+      </div>
       <div>
-      <h3 className="text-white w-full px-4">workspace</h3>
-        <NavLink icon={<LuLayoutDashboard/>} text='Dashboard'/>
-        <NavLink icon={<LuArrowLeftRight/>} text='Transactions'/>
-        <NavLink icon={<LuChartNoAxesCombined/>} text='Analytics'/>
-        <NavLink icon={<LuWallet/>} text='Budgets'/>
-        <NavLink icon={<LuTarget/>} text='Goals'/>
-        <NavLink icon={<LuSettings/>} text='Settings'/>
-  </div>
+        <NavLink icon={<LuCircleHelp />} text="Help & Support" />
+      </div>
     </nav>
   );
 };
