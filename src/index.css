@@ -12,3 +12,7 @@
   --color-LIGHT-GREEN: #dff7eb;
   --color-LIGHT-RED: #fef1f4;
 }
+
+.icon {
+@apply bg-ICON-BG w-8 h-8 p-2 rounded-lg;
+}
