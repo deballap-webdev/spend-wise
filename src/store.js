@@ -61,10 +61,12 @@ export default createStore({
   totalAmount: computed((state) => (type) => state.transactions.reduce((accum, transaction) => { return transaction.type === type ? transaction.amount + accum : accum }, 0)),
   getTotalExpenseForCategory: computed((state) => (category) => state.transactions.filter(transaction => transaction.category === category).reduce((accum, transaction) => accum + transaction.amount, 0)),
   modifyTransac: computed((state) => (type) => (category) => (amount) => state[type][category] + amount),
-  currency: 'naira',
+  currency: 'nigerian naira',
   setCurrency: action((state, payload) => {
     state.currency = payload;
   }),
+
+  setCountry: action((state, payload) => state.country = payload),
   recentTransactions: computed((state) => state.transactions.length <= 4 ? state.transactions : state.transactions.filter(transaction => state.transactions.indexOf(transaction) < 4)),
-  symbol: computed(state => state.currency === 'dollar' ? '$' : state.currency === "euro" ? "€" : "₦")
+  symbol: computed(state => state.currency === 'united states dollar' ? '$' : state.currency === "european euro" ? "€" : "₦")
 });

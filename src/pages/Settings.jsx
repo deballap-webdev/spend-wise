@@ -1,7 +1,11 @@
 import useActiveComponent from "../hooks/useActiveOutlet";
+import Preferences from "../components/Preferences";
 const Settings = () => {
   useActiveComponent('Settings')
-  return <div className="bg-BODY-BG grow">Settings</div>;
+  return <main className="bg-BODY-BG grow">
+    <h2>Settings</h2>
+    <Preferences />
+  </main>;
 };
 
 export default Settings;
