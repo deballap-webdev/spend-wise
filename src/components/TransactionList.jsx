@@ -1,6 +1,14 @@
 const TransactionList = () => {
     return (
-        <div>TransactionList</div>
+        <div>
+            <div>
+                <div>TRANSACTION</div>
+                <div>CATEGORY</div>
+                <div>DATE</div>
+                <div>AMOUNT</div>
+                <div>ACTIONS</div>
+            </div>
+        </div>
     )
 }
 

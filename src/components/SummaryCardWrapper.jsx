@@ -10,9 +10,9 @@ const SummaryCardWrapper = () => {
 
     return (
         <div className="flex flex-row gap-3 w-full">
-            <SummaryCard text='Total Balance' amount={`${symbol}${totalIncome - totalExpenses}`} percentChange={"+12%"} icon={<LuWallet className="icon" />} />
-            <SummaryCard text='Total Income' amount={`${symbol}${totalIncome}`} percentChange={"+20%"} icon={<LuArrowDown className="w-8 h-8 p-2 rounded-lg bg-LIGHT-GREEN" />} />
-            <SummaryCard text='Total Expenses' amount={`${symbol}${totalExpenses}`} percentChange={"+18%"} icon={<LuArrowUp className="w-8 h-8 p-2 rounded-lg bg-LIGHT-RED" />} />
+            <SummaryCard text='Total Balance' amount={`${symbol}${totalIncome - totalExpenses}`} percentChange={"+12%"} icon={<LuWallet className="icon" />} color="black" />
+            <SummaryCard text='Total Income' amount={`${symbol}${totalIncome}`} percentChange={"+20%"} icon={<LuArrowDown className="w-8 h-8 p-2 rounded-lg bg-LIGHT-GREEN" />} color="#009464" />
+            <SummaryCard text='Total Expenses' amount={`${symbol}${totalExpenses}`} percentChange={"+18%"} icon={<LuArrowUp className="w-8 h-8 p-2 rounded-lg bg-LIGHT-RED" />} color="#de4544" />
         </div>
     )
 }

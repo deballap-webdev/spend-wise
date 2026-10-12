@@ -9,12 +9,13 @@ const SummaryCard = ({ amount, icon, color, text, percentChange }) => {
  
      }
      console.log(formattedAmount) */
+    console.log(color)
 
     return (
         <div className="bg-CARD-BG border border-BORDER grow h-40 p-2 flex flex-col justify-evenly rounded-md">
             <div className="flex flex-row justify-between items-center"> <p className="text-[0.7rem]">{text}</p>
                 {icon}</div>
-            <p className="font-bold text-[1.2rem]">{amount}</p>
+            <p className="font-bold text-[1.2rem]" style={{ "color": `${color}` }}>{amount}</p>
             <p className="text-[0.7rem]">{percentChange} vs last month</p>
         </div>
     )

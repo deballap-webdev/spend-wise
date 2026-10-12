@@ -33,6 +33,7 @@ const Transactions = () => {
         </select>
       </div>
     </div>
+    <TransactionList />
   </div>);
 };
 

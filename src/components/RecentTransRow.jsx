@@ -3,7 +3,7 @@ import { useStoreState } from "easy-peasy"
 import properCase from "../utils/ProperCase"
 
 const RecentTransRow = ({ trans }) => {
-    const icon = trans.category === "entertainment" ? <LuFilm className="icon text-purple-700" /> : trans.category === "food" ? <LuShoppingBasket className="icon text-green-700 " /> : trans.category === "transport" ? <LuCar className="icon text-blue-500" /> : trans.category === "bills" ? <LuZap className="icon text-black" /> : <LuBriefcase className="icon text-green-500" />
+    const icon = trans.category === "entertainment" ? <LuFilm className="icon text-PURPLE" /> : trans.category === "food" ? <LuShoppingBasket className="icon text-GREEN " /> : trans.category === "transport" ? <LuCar className="icon text-BLUE" /> : trans.category === "bills" ? <LuZap className="icon text-black" /> : <LuBriefcase className="icon text-GREEN2" />
     const symbol = useStoreState((state) => state.symbol)
 
     return (
