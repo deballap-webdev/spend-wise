@@ -3,7 +3,7 @@ import { LuSearch } from "react-icons/lu";
 import TransactionList from "../components/TransactionList";
 const Transactions = () => {
   useActiveComponent('Transactions')
-  return (<div className="bg-BODY-BG grow p-4">  <h2>Transactions</h2>
+  return (<div className="bg-BODY-BG grow p-4 flex flex-col gap-4">  <h2>Transactions</h2>
     <div className="flex flex-wrap md:flex-nowrap gap-3 ">
       <div className="flex items-center w-full min-w-50 bg-CARD-BG rounded-md h-10 border border-BORDER px-3 focus-within:outline-1">
         <LuSearch />

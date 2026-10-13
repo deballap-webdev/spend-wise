@@ -69,7 +69,7 @@ export default createStore({
   },
   {
     category: "shopping",
-    id: 5,
+    id: 7,
     date: "",
     type: "expense",
     note: "",

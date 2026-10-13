@@ -1,11 +1,10 @@
-import { LuFilm, LuBriefcase, LuShoppingBasket, LuCar, LuZap } from "react-icons/lu"
+
 import { useStoreState } from "easy-peasy"
-import properCase from "../utils/ProperCase"
-
+import properCase from "../utils/properCase"
+import getIcon from "../utils/getIcon"
 const RecentTransRow = ({ trans }) => {
-    const icon = trans.category === "entertainment" ? <LuFilm className="icon text-PURPLE" /> : trans.category === "food" ? <LuShoppingBasket className="icon text-GREEN " /> : trans.category === "transport" ? <LuCar className="icon text-BLUE" /> : trans.category === "bills" ? <LuZap className="icon text-black" /> : <LuBriefcase className="icon text-GREEN2" />
     const symbol = useStoreState((state) => state.symbol)
-
+    const icon = getIcon(trans.category)
     return (
         <div className="flex justify-between border-b border-b-BORDER items-center p-4">
             <div className="flex flex-row gap-2  items-center">

@@ -1,5 +1,5 @@
 import { useStoreState } from "easy-peasy"
-import properCase from "../utils/ProperCase"
+import properCase from "../utils/properCase"
 const Preferences = () => {
     const symbol = useStoreState((state) => state.symbol)
     const currency = useStoreState((state) => state.currency)
