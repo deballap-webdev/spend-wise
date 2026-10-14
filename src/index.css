@@ -19,6 +19,7 @@
   --color-BLUE: #3496de;
   --color-PURPLE: #bf98da;
   --color-RANGE-BG: #ebeff3;
+  --color-BACKDROP: rgba(225,225,225,0.7);
 }
 
 .icon {
@@ -26,7 +27,9 @@
 }
 
 button:disabled {
-  @apply bg-gray-400 text-[rgba(225,225,225,0.7)] hover:cursor-not-allowed;
+  @apply bg-gray-400 text-BACKDROP hover:cursor-not-allowed;
+}
 
-
+.backDrop {
+@apply  w-screen h-screen bg-[rgba(60,68,80,0.6)] backdrop-blur-sm fixed top-0 left-0 flex items-center justify-center z-30
 }

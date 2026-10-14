@@ -39,7 +39,7 @@ const TransactionItem = ({ transaction }) => {
     return (
 
         < div className="flex  justify-between p-4 bg-CARD-BG border border-BORDER border-collapse text-[0.78em]" >
-            <div className="w-2/5 flex gap-2 items-center">
+            <div className="w-3/10 flex gap-2 items-center">
                 {getIcon(transaction.category)}
                 <div>
                     <div className="  font-bold">
@@ -59,7 +59,7 @@ const TransactionItem = ({ transaction }) => {
             <div className="w-1/5" >
                 {transaction.amount}
             </div>
-            <div className="w-1/10">
+            <div className="w-1/10 flex">
                 <button>
                     <LuPencil />
                 </button>
