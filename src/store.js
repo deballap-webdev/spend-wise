@@ -75,6 +75,42 @@ export default createStore({
     note: "",
     description: "new shoes",
     amount: 10000
+  },
+  {
+    category: "shopping",
+    id: 8,
+    date: "",
+    type: "expense",
+    note: "",
+    description: "new shoes",
+    amount: 10000
+  },
+  {
+    category: "shopping",
+    id: 9,
+    date: "",
+    type: "expense",
+    note: "",
+    description: "new shoes",
+    amount: 10000
+  },
+  {
+    category: "income",
+    id: 10,
+    date: "",
+    type: "income",
+    note: "",
+    description: "birthday gift",
+    amount: 50000
+  },
+  {
+    category: "health",
+    id: 11,
+    date: "",
+    type: "expense",
+    note: "",
+    description: "braces",
+    amount: 20000
   }],
   totalAmount: computed((state) => (type) => state.transactions.reduce((accum, transaction) => { return transaction.type === type ? transaction.amount + accum : accum }, 0)),
   getTotalForCategory: computed((state) => (category) => state.transactions.filter(transaction => transaction.category === category).reduce((accum, transaction) => accum + transaction.amount, 0)),

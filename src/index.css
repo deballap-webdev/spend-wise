@@ -24,3 +24,9 @@
 .icon {
 @apply bg-ICON-BG w-8 h-8 p-2 rounded-lg;
 }
+
+button:disabled {
+  @apply bg-gray-400 text-[rgba(225,225,225,0.7)] hover:cursor-not-allowed;
+
+
+}
