@@ -1,11 +1,8 @@
 import { LuPencil, LuTrash2 } from "react-icons/lu"
 import properCase from "../utils/properCase"
 import getIcon from "../utils/getIcon"
+import { useStoreActions, useStoreState } from "easy-peasy"
 const TransactionItem = ({ transaction }) => {
-
-
-
-
     /*   <tr className="flex  justify-between p-4 bg-CARD-BG border border-BORDER border-collapse text-[0.8rem] w-full" >
           <td className=" flex gap-2 items-center">
               {getIcon(transaction.category)}
@@ -36,8 +33,19 @@ const TransactionItem = ({ transaction }) => {
               </button>
           </td>
       </tr> */
-    return (
 
+    const setTransactions = useStoreActions((actions) => actions.setTransactions)
+    const transactions = useStoreState((state) => state.transactions)
+    const handleDelete = (id) => {
+        transactions.forEach((transaction) => {
+            if (transaction.id === id) {
+                const transClone = [...transactions]
+                transClone.splice(transactions.indexOf(transaction), 1)
+                setTransactions(transClone)
+            }
+        })
+    }
+    return (
         < div className="flex  justify-between p-4 bg-CARD-BG border border-BORDER border-collapse text-[0.78em]" >
             <div className="w-3/10 flex gap-2 items-center">
                 {getIcon(transaction.category)}
@@ -59,11 +67,13 @@ const TransactionItem = ({ transaction }) => {
             <div className="w-1/5" >
                 {transaction.amount}
             </div>
-            <div className="w-1/10 flex">
+            <div className="w-1/10 flex ">
                 <button>
                     <LuPencil />
                 </button>
-                <button>
+                <button onClick={() => {
+                    handleDelete(transaction.id)
+                }}>
                     <LuTrash2 className="text-red-400 ml-3" />
                 </button>
             </div>

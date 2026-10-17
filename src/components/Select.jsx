@@ -1,6 +1,6 @@
-const Select = ({ type, all }) => {
+const Select = ({ type, all, value, setValue }) => {
     return (
-        <select name={type} id={type} className="bg-CARD-BG px-2 py-2 w-full rounded-md border border-BORDER font-medium text-[0.7rem] min-w-fit">
+        <select name={type} id={type} className="bg-CARD-BG px-2 py-2 w-full rounded-md border border-BORDER font-medium text-[0.7rem] min-w-fit" value={value} onChange={(e) => setValue(e.target.value)}>
             {type === "type" && <>
                 {all && <option value="All Types" >All Types</option>}
                 <option value="Expense">Expense</option>

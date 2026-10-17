@@ -112,6 +112,9 @@ export default createStore({
     description: "braces",
     amount: 20000
   }],
+  setTransactions: action((state, payload) => {
+    state.transactions = payload
+  }),
   totalAmount: computed((state) => (type) => state.transactions.reduce((accum, transaction) => { return transaction.type === type ? transaction.amount + accum : accum }, 0)),
   getTotalForCategory: computed((state) => (category) => state.transactions.filter(transaction => transaction.category === category).reduce((accum, transaction) => accum + transaction.amount, 0)),
   modifyTransac: computed((state) => (type) => (category) => (amount) => state[type][category] + amount),
@@ -122,5 +125,27 @@ export default createStore({
   getPercentOfTotalExpense: computed((state) => (category) => (state.getTotalForCategory(category) / state.totalAmount("expense")) * 100),
   setCountry: action((state, payload) => state.country = payload),
   recentTransactions: computed((state) => state.transactions.length <= 4 ? state.transactions : state.transactions.slice(0, 4)),
-  symbol: computed(state => state.currency === 'united states dollar' ? '$' : state.currency === "european euro" ? "€" : "₦")
+  symbol: computed(state => state.currency === 'united states dollar' ? '$' : state.currency === "european euro" ? "€" : "₦"),
+  getTransactionById: computed((state) => (id) => state.transactions.find((transaction) => id === transaction.id)),
+  /*  deleteTransaction: computed((state) => (id) =>
+     /* state.transactions.forEach(transaction => {
+       if (transaction.id === id) {
+         console.log("hey")
+         return "Mess"
+       }
+     })  {
+     for (let i = 0; i < state.transactions.length; i++) {
+       if (state.transactions[i].id === id) {
+         
+       } return [...state.transactions].splice(i, 1);  
+       break;
+     }
+   }
+   ), */
+  budgets: [{
+    category: "food",
+    monthlyLimit: "",
+    startDate: "",
+    id: ""
+  }]
 });

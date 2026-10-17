@@ -1,18 +1,22 @@
 import useActiveComponent from "../hooks/useActiveOutlet";
+import { useState } from "react";
 import { LuSearch, LuDownload } from "react-icons/lu";
 import TransactionList from "../components/TransactionList";
 import TransactionForm from "../components/modals/TransactionForm";
+import EditTransaction from "../components/modals/EditTransaction";
 import Select from "../components/Select"
+
 const Transactions = () => {
   useActiveComponent('Transactions')
+  const [isModalOpen, setIsModalOpen] = useState(false)
   return (<div className="bg-BODY-BG grow p-4 flex flex-col gap-4">
-    <div className="flex justify-between items-center">
+    <div className="flex flex-wrap gap-y-2  justify-between items-center">
       <div><h2 className="text-[1.5rem] font-bold">Transactions</h2>
         <p className="text-[0.8rem] text-LIGHT-TEXT">Every transaction tells a story, Keep yours in one place</p>
       </div>
-      <div className="flex ">
+      <div className="flex">
         <button className="mr-3 flex flex-row gap-1 items-center px-2 py-1 border border-BORDER rounded-md shadow"><LuDownload /> Export</button>
-        <button className="bg-NAV-ACTIVE text-white text-[0.7rem] px-3 py-1 rounded-md"> + Add Transaction</button>
+        <button className="bg-NAV-ACTIVE text-white text-[0.7rem] px-3 py-1 rounded-md text-nowrap" onClick={() => setIsModalOpen(true)}> + Add Transaction</button>
       </div>
     </div>
     <div className="flex flex-wrap md:flex-nowrap gap-3 ">
@@ -27,7 +31,8 @@ const Transactions = () => {
       </div>
     </div>
     <TransactionList />
-    <TransactionForm />
+    {isModalOpen && <TransactionForm setIsModalOpen={setIsModalOpen} />}
+    <EditTransaction />
   </div>);
 };
 

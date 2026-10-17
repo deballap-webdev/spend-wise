@@ -33,3 +33,13 @@ button:disabled {
 .backDrop {
 @apply  w-screen h-screen bg-[rgba(60,68,80,0.6)] backdrop-blur-sm fixed top-0 left-0 flex items-center justify-center z-30
 }
+
+.input-label {
+    @apply flex flex-col gap-1;
+  input {
+@apply border px-2 py-2 rounded-md border-BORDER bg-white text-[0.8rem]
+  }
+  label {
+    @apply font-medium text-[0.8rem];
+  }
+}
