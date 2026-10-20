@@ -15,11 +15,10 @@ export default createStore({
     transport: 90,
     bills: 4,
   },
-  /* totalExpenses: computed((state) => state.expenses.entertainment + state.expenses.food + state.expenses.transport + state.expenses.bills), */
   transactions: [{
     category: "entertainment",
     id: 1,
-    date: "",
+    date: "2026-10-03",
     type: "expense",
     note: "",
     description: "Prime videos",
@@ -27,7 +26,7 @@ export default createStore({
   }, {
     category: "transport",
     id: 2,
-    date: "",
+    date: "2026-10-07",
     type: "expense",
     note: "",
     description: "Uber",
@@ -35,7 +34,7 @@ export default createStore({
   }, {
     category: "income",
     id: 3,
-    date: "",
+    date: "2026-11-09",
     type: "income",
     note: "",
     description: "Freelance",
@@ -43,7 +42,7 @@ export default createStore({
   }, {
     category: "food",
     id: 4,
-    date: "",
+    date: "2026-03-18",
     type: "expense",
     note: "",
     description: "Fruits",
@@ -52,7 +51,7 @@ export default createStore({
   {
     category: "bills",
     id: 5,
-    date: "",
+    date: "2023-12-11",
     type: "expense",
     note: "",
     description: "electricity",
@@ -61,7 +60,7 @@ export default createStore({
   {
     category: "health",
     id: 6,
-    date: "",
+    date: "2027-05-08",
     type: "expense",
     note: "",
     description: "hospital",
@@ -70,16 +69,16 @@ export default createStore({
   {
     category: "shopping",
     id: 7,
-    date: "",
+    date: "2026-11-08",
     type: "expense",
-    note: "",
+    note: "2025-09-18",
     description: "new shoes",
     amount: 10000
   },
   {
     category: "shopping",
     id: 8,
-    date: "",
+    date: "2026-11-08",
     type: "expense",
     note: "",
     description: "new shoes",
@@ -88,7 +87,7 @@ export default createStore({
   {
     category: "shopping",
     id: 9,
-    date: "",
+    date: "2026-10-07",
     type: "expense",
     note: "",
     description: "new shoes",
@@ -97,7 +96,7 @@ export default createStore({
   {
     category: "income",
     id: 10,
-    date: "",
+    date: "2026-10-12",
     type: "income",
     note: "",
     description: "birthday gift",
@@ -106,7 +105,7 @@ export default createStore({
   {
     category: "health",
     id: 11,
-    date: "",
+    date: "2026-10-07",
     type: "expense",
     note: "",
     description: "braces",
@@ -115,37 +114,39 @@ export default createStore({
   setTransactions: action((state, payload) => {
     state.transactions = payload
   }),
-  totalAmount: computed((state) => (type) => state.transactions.reduce((accum, transaction) => { return transaction.type === type ? transaction.amount + accum : accum }, 0)),
-  getTotalForCategory: computed((state) => (category) => state.transactions.filter(transaction => transaction.category === category).reduce((accum, transaction) => accum + transaction.amount, 0)),
+  totalAmount: computed((state) => (type) => state.transactions.filter(trans => new Date(trans.date).getTime() <= Date.now()).reduce((accum, transaction) => { return transaction.type === type ? transaction.amount + accum : accum }, 0)),
+  getTotalForCategory: computed((state) => (category) => state.transactions.filter(
+    transaction => new Date(transaction.date).getTime() <= Date.now()
+  ).filter(transaction => transaction.category === category).reduce((accum, transaction) => accum + transaction.amount, 0)),
   modifyTransac: computed((state) => (type) => (category) => (amount) => state[type][category] + amount),
   currency: 'nigerian naira',
   setCurrency: action((state, payload) => {
     state.currency = payload;
   }),
-  getPercentOfTotalExpense: computed((state) => (category) => (state.getTotalForCategory(category) / state.totalAmount("expense")) * 100),
+  getPercentOfTotalExpense: computed((state) => (category) => {
+    const totalExpense = state.totalAmount("expense")
+    if (totalExpense === 0) return 0
+    return (state.getTotalForCategory(category) / totalExpense * 100)
+  }),
   setCountry: action((state, payload) => state.country = payload),
-  recentTransactions: computed((state) => state.transactions.length <= 4 ? state.transactions : state.transactions.slice(0, 4)),
+  recentTransactions: computed((state) => state.transactionsSortedByDate.filter(transaction => new Date(transaction.date).getTime() <= Date.now()).slice(0, 4)),
   symbol: computed(state => state.currency === 'united states dollar' ? '$' : state.currency === "european euro" ? "€" : "₦"),
   getTransactionById: computed((state) => (id) => state.transactions.find((transaction) => id === transaction.id)),
-  /*  deleteTransaction: computed((state) => (id) =>
-     /* state.transactions.forEach(transaction => {
-       if (transaction.id === id) {
-         console.log("hey")
-         return "Mess"
-       }
-     })  {
-     for (let i = 0; i < state.transactions.length; i++) {
-       if (state.transactions[i].id === id) {
-         
-       } return [...state.transactions].splice(i, 1);  
-       break;
-     }
-   }
-   ), */
+  categoryArray: [{ value: "food", label: "Food" }, { value: "entertainment", label: "Entertainment" }, { "value": "bills", "label": "Bills" }, { value: "transport", label: "Transport" }, { value: "health", label: "Health" }, { value: "shopping", label: "Shopping" }],
+  typeArray: [{ value: "income", label: "income" }, { value: "expense", label: "Expense" }],
+
+  transactionsSortedByDate: computed((state) => [...state.transactions].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())),
   budgets: [{
-    category: "food",
-    monthlyLimit: "",
+    category: "",
+    limit: "",
     startDate: "",
+    id: ""
+  }],
+  goals: [{
+    name: "",
+    targetAmount: "",
+    savedAmount: "",
+    targetDate: "",
     id: ""
   }]
 });

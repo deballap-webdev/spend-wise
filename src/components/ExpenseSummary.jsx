@@ -1,9 +1,5 @@
-
-import { useStoreState } from "easy-peasy"
 import ProgressBar from "./ProgressBar"
 const ExpenseSummary = () => {
-    const percentage = useStoreState((state) => state.getPercentOfTotalExpense)
-
     return (
         <div className="bg-CARD-BG border-BORDER border p-4 rounded-md">
             <h3>

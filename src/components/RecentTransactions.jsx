@@ -3,7 +3,6 @@ import RecentTransRow from "./RecentTransRow"
 import { Link } from "react-router"
 const RecentTransactions = () => {
     const recentTrans = useStoreState(state => state.recentTransactions)
-    console.log(recentTrans)
     return (
         <div className="bg-CARD-BG w-100 border-BORDER border rounded-lg">
             <div className="flex flex-row justify-between  p-4">

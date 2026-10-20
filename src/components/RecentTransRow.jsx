@@ -2,9 +2,11 @@
 import { useStoreState } from "easy-peasy"
 import properCase from "../utils/properCase"
 import getIcon from "../utils/getIcon"
+import { format } from "date-fns"
 const RecentTransRow = ({ trans }) => {
     const symbol = useStoreState((state) => state.symbol)
     const icon = getIcon(trans.category)
+    const dateTime = new Date(trans.date)
     return (
         <div className="flex justify-between border-b border-b-BORDER items-center p-4">
             <div className="flex flex-row gap-2  items-center">
@@ -12,7 +14,7 @@ const RecentTransRow = ({ trans }) => {
                 <div className="text-[0.7rem] ">
                     <p className="font-bold ">{properCase(trans.description)}</p>
                     <div>
-                        <p className="text-LIGHT-TEXT">{properCase(trans.category)} • 8 Oct</p>
+                        <p className="text-LIGHT-TEXT">{properCase(trans.category)} • {dateTime ? format(dateTime, "d MMM") : "N/A"}</p>
                     </div>
                 </div>
             </div>

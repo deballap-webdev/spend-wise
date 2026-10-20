@@ -11,6 +11,7 @@
     "prettier": "npx prettier -w **/*.{html,css,js,jsx}"
   },
   "dependencies": {
+    "date-fns": "^4.4.0",
     "easy-peasy": "^6.1.1",
     "icons": "^1.0.0",
     "react": "^19.3.0",
