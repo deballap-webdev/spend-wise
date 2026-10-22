@@ -2,11 +2,11 @@
 import { useStoreState } from "easy-peasy"
 import properCase from "../utils/properCase"
 import getIcon from "../utils/getIcon"
-import { format } from "date-fns"
+import { format, parseISO } from "date-fns"
 const RecentTransRow = ({ trans }) => {
     const symbol = useStoreState((state) => state.symbol)
     const icon = getIcon(trans.category)
-    const dateTime = new Date(trans.date)
+    const dateTime = parseISO(trans.date)
     return (
         <div className="flex justify-between border-b border-b-BORDER items-center p-4">
             <div className="flex flex-row gap-2  items-center">

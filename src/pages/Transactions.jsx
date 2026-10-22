@@ -1,11 +1,13 @@
 import useActiveComponent from "../hooks/useActiveOutlet";
 import { useEffect, useState } from "react";
+import { useStoreState } from "easy-peasy";
+import { isThisWeek, isThisMonth, isToday } from "date-fns";
 import { LuSearch, LuDownload } from "react-icons/lu";
 import TransactionList from "../components/TransactionList";
 import TransactionForm from "../components/modals/TransactionForm";
 import Select from "../components/Select"
-import { useStoreState } from "easy-peasy";
-
+import { parseISO } from "date-fns/fp";
+import properCase from "../utils/properCase";
 const Transactions = () => {
   useActiveComponent('Transactions')
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -35,7 +37,14 @@ const Transactions = () => {
     const matchesCategory = category === "All Categories" || transaction.category.toLowerCase() === category.toLowerCase()
 
     const matchesType = type === "All Types" || transaction.type.toLowerCase() === type.toLowerCase()
-    return matchesSearch && matchesType && matchesCategory
+
+    const matchesDate = {
+      "All Dates": transaction,
+      "Today": isToday(parseISO(transaction.date)),
+      "This Week": isThisWeek(parseISO(transaction.date)),
+      "This Month": isThisMonth(parseISO(transaction.date))
+    }
+    return matchesSearch && matchesType && matchesCategory && matchesDate[properCase(dateRange)]
   })
   const handleFilter = (e) => {
     setSearch(e.target.value)

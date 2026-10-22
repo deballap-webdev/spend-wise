@@ -1,5 +1,7 @@
 import { createStore, action, computed } from "easy-peasy";
 
+import { parseISO } from "date-fns";
+
 export default createStore({
   isCollapsed: false,
   setIsCollapsed: action((state, payload) => {
@@ -114,9 +116,26 @@ export default createStore({
   setTransactions: action((state, payload) => {
     state.transactions = payload
   }),
-  totalAmount: computed((state) => (type) => state.transactions.filter(trans => new Date(trans.date).getTime() <= Date.now()).reduce((accum, transaction) => { return transaction.type === type ? transaction.amount + accum : accum }, 0)),
+
+  addTransaction: action((state, payload) => {
+    state.transactions.push(payload)
+  }),
+
+  editTransaction: action((state, payload) => {
+    const index = state.transactions.findIndex(trans => trans.id === payload.id);
+    if (index !== -1)
+      state.transactions[index] = payload;
+
+  }),
+
+  deleteTransaction: action((state, payload) => {
+    const index = state.transactions.findIndex(trans => trans.id === payload);
+    if (index !== -1) state.transactions.splice(index, 1)
+  }),
+
+  totalAmount: computed((state) => (type) => state.transactions.filter(trans => parseISO(trans.date).getTime() <= Date.now()).reduce((accum, transaction) => { return transaction.type === type ? transaction.amount + accum : accum }, 0)),
   getTotalForCategory: computed((state) => (category) => state.transactions.filter(
-    transaction => new Date(transaction.date).getTime() <= Date.now()
+    transaction => parseISO(transaction.date).getTime() <= Date.now()
   ).filter(transaction => transaction.category === category).reduce((accum, transaction) => accum + transaction.amount, 0)),
   modifyTransac: computed((state) => (type) => (category) => (amount) => state[type][category] + amount),
   currency: 'nigerian naira',
@@ -128,14 +147,15 @@ export default createStore({
     if (totalExpense === 0) return 0
     return (state.getTotalForCategory(category) / totalExpense * 100)
   }),
+
+
   setCountry: action((state, payload) => state.country = payload),
-  recentTransactions: computed((state) => state.transactionsSortedByDate.filter(transaction => new Date(transaction.date).getTime() <= Date.now()).slice(0, 4)),
+  recentTransactions: computed((state) => state.transactionsSortedByDate.filter(transaction => parseISO(transaction.date).getTime() <= Date.now()).slice(0, 4)),
   symbol: computed(state => state.currency === 'united states dollar' ? '$' : state.currency === "european euro" ? "€" : "₦"),
   getTransactionById: computed((state) => (id) => state.transactions.find((transaction) => id === transaction.id)),
   categoryArray: [{ value: "food", label: "Food" }, { value: "entertainment", label: "Entertainment" }, { "value": "bills", "label": "Bills" }, { value: "transport", label: "Transport" }, { value: "health", label: "Health" }, { value: "shopping", label: "Shopping" }],
   typeArray: [{ value: "income", label: "income" }, { value: "expense", label: "Expense" }],
-
-  transactionsSortedByDate: computed((state) => [...state.transactions].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())),
+  transactionsSortedByDate: computed((state) => [...state.transactions].sort((a, b) => parseISO(b.date).getTime() - parseISO(a.date).getTime())),
   budgets: [{
     category: "",
     limit: "",
@@ -143,10 +163,38 @@ export default createStore({
     id: ""
   }],
   goals: [{
-    name: "",
-    targetAmount: "",
-    savedAmount: "",
-    targetDate: "",
-    id: ""
-  }]
+    name: "Upwork Connects",
+    targetAmount: 80000,
+    savedAmount: 9000,
+    targetDate: "12-07-2027",
+    id: 1
+  }, {
+    name: "Laptop",
+    targetAmount: 800000,
+    savedAmount: 450000,
+    targetDate: "12-07-2027",
+    id: 2
+  },
+  {
+    name: "Health",
+    targetAmount: 80000,
+    savedAmount: 4500,
+    targetDate: "12-07-2027",
+    id: 3
+  }, {
+    name: "PGD",
+    targetAmount: 900000,
+    savedAmount: 450000,
+    targetDate: "12-07-2027",
+    id: 4
+  }],
+  addGoal: action((state, payload) => { state.goals.push(payload) }),
+  deleteGoal: action((state, payload) => {
+    const index = state.goals.findIndex(goal => goal.id === payload)
+    state.goals.splice(index, 1)
+  }),
+  editGoal: action((state, payload) => {
+    const index = state.goals.findIndex(goal => goal.id === payload.id)
+    state.goals[index] = payload
+  })
 });

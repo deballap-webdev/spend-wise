@@ -11,6 +11,7 @@ const ProgressBar = ({ color, category, amount }) => {
                 <div style={{ "width": `${percentage(`${category.toLowerCase()}`)}%`, "backgroundColor": `${color}` }} className="h-2 rounded-lg">
                 </div>
             </div>
+            <button>+ Add Budget</button>
         </div>
     )
 }

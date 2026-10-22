@@ -2,14 +2,16 @@ import { LuPencil, LuTrash2 } from "react-icons/lu"
 import properCase from "../utils/properCase"
 import getIcon from "../utils/getIcon"
 import { useState } from "react"
-import DeleteTransaction from "./modals/DeleteTransaction"
+import Delete from "./modals/Delete"
 import EditTransaction from "./modals/EditTransaction"
-import { format } from "date-fns"
+import { format, parseISO } from "date-fns"
+import { useStoreActions } from "easy-peasy"
 
 const TransactionItem = ({ transaction }) => {
     const [isDeleteOpen, setIsDeleteOpen] = useState(false)
     const [isEditOpen, setIsEditOpen] = useState(false)
-    const dateTime = new Date(transaction.date).getTime()
+    const dateTime = parseISO(transaction.date)
+    const deleteTransaction = useStoreActions(actions => actions.deleteTransaction)
     return (
         < div className="flex  justify-between p-4 bg-CARD-BG border-b border-b-BORDER border-collapse text-[0.78em]" >
             <div className="w-3/10 flex gap-2 items-center">
@@ -40,7 +42,7 @@ const TransactionItem = ({ transaction }) => {
                     <LuTrash2 className="text-red-400 ml-3" />
                 </button>
             </div>
-            {isDeleteOpen && <DeleteTransaction transaction={transaction} setIsDeleteOpen={setIsDeleteOpen} />}
+            {isDeleteOpen && <Delete deleteFunction={deleteTransaction} setIsDeleteOpen={setIsDeleteOpen} functionParam={transaction.id} headText='transaction' description={transaction.description} />}
             {isEditOpen && <EditTransaction transaction={transaction} setIsEditOpen={setIsEditOpen} />}
         </ div>
 
