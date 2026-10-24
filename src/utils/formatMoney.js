@@ -1,5 +1,5 @@
 const formatMoney = () => {
-    return "Lagos"
-}
+  return "Lagos";
+};
 
-export default formatMoney
+export default formatMoney;

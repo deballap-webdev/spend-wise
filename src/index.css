@@ -19,27 +19,27 @@
   --color-BLUE: #3496de;
   --color-PURPLE: #bf98da;
   --color-RANGE-BG: #ebeff3;
-  --color-BACKDROP: rgba(225,225,225,0.7);
+  --color-BACKDROP: rgba(225, 225, 225, 0.7);
 }
 
 .icon {
-@apply bg-ICON-BG w-8 h-8 p-2 rounded-lg;
+  @apply bg-ICON-BG h-8 w-8 rounded-lg p-2;
 }
 
 button:disabled {
-  @apply bg-gray-400 text-BACKDROP hover:cursor-not-allowed;
+  @apply text-BACKDROP bg-gray-400 hover:cursor-not-allowed;
 }
 
 .backDrop {
-@apply  w-screen h-screen bg-[rgba(60,68,80,0.6)] backdrop-blur-sm fixed top-0 left-0 flex items-center justify-center z-30
+  @apply fixed top-0 left-0 z-30 flex h-screen w-screen items-center justify-center bg-[rgba(60,68,80,0.6)] backdrop-blur-sm;
 }
 
 .input-label {
-    @apply flex flex-col gap-1;
+  @apply flex flex-col gap-1;
   input {
-@apply border px-2 py-2 rounded-md border-BORDER bg-white text-[0.8rem]
+    @apply border-BORDER rounded-md border bg-white px-2 py-2 text-[0.8rem];
   }
   label {
-    @apply font-medium text-[0.8rem];
+    @apply text-[0.8rem] font-medium;
   }
 }

@@ -6,7 +6,7 @@ import Analytics from "./pages/Analytics";
 import Goals from "./pages/Goals";
 import Settings from "./pages/Settings";
 import Budgets from "./pages/Budgets";
-import Missing from "./components/Missing"
+import Missing from "./components/Missing";
 
 const App = () => {
   return (
@@ -18,8 +18,8 @@ const App = () => {
           <Route path="analytics" element={<Analytics />} />
           <Route path="budgets" element={<Budgets />} />
           <Route path="goals" element={<Goals />} />
-          <Route path='settings' element={<Settings />} />
-          <Route path='*' element={<Missing />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="*" element={<Missing />} />
         </Route>
       </Routes>
     </div>

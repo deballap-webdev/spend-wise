@@ -22,8 +22,16 @@ const Nav = () => {
             workspace
           </h3>
           <NavLink icon={<LuLayoutDashboard />} text="Dashboard" path="/" />
-          <NavLink icon={<LuArrowLeftRight />} text="Transactions" path="transactions" />
-          <NavLink icon={<LuChartNoAxesCombined />} text="Analytics" path="analytics" />
+          <NavLink
+            icon={<LuArrowLeftRight />}
+            text="Transactions"
+            path="transactions"
+          />
+          <NavLink
+            icon={<LuChartNoAxesCombined />}
+            text="Analytics"
+            path="analytics"
+          />
           <NavLink icon={<LuWallet />} text="Budgets" path="budgets" />
           <NavLink icon={<LuTarget />} text="Goals" path="goals" />
           <NavLink icon={<LuSettings />} text="Settings" path="settings" />
