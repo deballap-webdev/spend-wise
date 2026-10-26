@@ -7,11 +7,20 @@ import Goals from "./pages/Goals";
 import Settings from "./pages/Settings";
 import Budgets from "./pages/Budgets";
 import Missing from "./components/Missing";
-
+import useAxiosFetch from "./hooks/useAxiosFetch";
+import Loading from "./components/empty/Loading";
+import { useStoreActions } from "easy-peasy";
+import { useEffect } from "react";
 const App = () => {
+  const { data: rates, isLoading, fetchError } = useAxiosFetch('https://api.frankfurter.dev/v2/rates?base=NGN&quotes=eur,usd')
+  const setRates = useStoreActions(actions => actions.setRates)
+  useEffect(() => {
+    setRates(rates)
+  }, [rates, setRates])
+
   return (
     <div className="min-h-screen w-full">
-      <Routes>
+      {!isLoading && !fetchError && <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="transactions" element={<Transactions />} />
@@ -21,7 +30,10 @@ const App = () => {
           <Route path="settings" element={<Settings />} />
           <Route path="*" element={<Missing />} />
         </Route>
-      </Routes>
+      </Routes>}
+      {
+        isLoading && <Loading />
+      }
     </div>
   );
 };

@@ -6,7 +6,7 @@ import handleAmount from "../../utils/handleAmount"
 const AddContribution = ({ goal, setIsAddContOpen }) => {
     const symbol = useStoreState(state => state.symbol)
     const [amount, setAmount] = useState("")
-    const editGoal = useStoreActions(actions => actions.editGoal)
+    const editGoal = useStoreActions(actions => actions.targets.editGoal)
     const [invalid, setInvalid] = useState(false)
     const handleSubmit = (e) => {
         e.preventDefault()

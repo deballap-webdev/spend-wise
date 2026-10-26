@@ -12,7 +12,7 @@ const TransactionItem = ({ transaction }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const dateTime = parseISO(transaction.date);
   const deleteTransaction = useStoreActions(
-    (actions) => actions.deleteTransaction,
+    (actions) => actions.history.deleteTransaction,
   );
   return (
     <div className="bg-CARD-BG border-b-BORDER flex border-collapse justify-between border-b p-4 text-[0.78em]">

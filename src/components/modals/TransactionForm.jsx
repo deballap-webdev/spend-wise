@@ -7,15 +7,15 @@ import handleAmount from "../../utils/handleAmount";
 const TransactionForm = ({ setIsModalOpen }) => {
   const [amount, setAmount] = useState("");
   const symbol = useStoreState((state) => state.symbol);
-  const categoryArray = useStoreState((state) => state.categoryArray);
+
   const typeArray = useStoreState((state) => state.typeArray);
-  const addTransaction = useStoreActions(actions => actions.addTransaction)
+  const addTransaction = useStoreActions(actions => actions.history.addTransaction)
   const [category, setCategory] = useState("food");
   const [desc, setDesc] = useState("");
   const [type, setType] = useState("expense");
   const [note, setNote] = useState("");
   const [date, setDate] = useState("");
-
+  const getFilteredCategories = useStoreState(state => state.getFilteredCategories)
   const handleSubmit = (e) => {
     e.preventDefault();
     const newTransaction = {
@@ -83,7 +83,7 @@ const TransactionForm = ({ setIsModalOpen }) => {
           <div className="input-label w-1/2">
             <label htmlFor="category">Category</label>
             <Select
-              options={categoryArray}
+              options={getFilteredCategories(type)}
               value={category}
               setValue={setCategory}
             />

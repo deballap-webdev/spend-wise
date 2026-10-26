@@ -1,13 +1,17 @@
-import { useStoreState } from "easy-peasy";
+import { useStoreState, useStoreRehydrated } from "easy-peasy";
 import useActiveComponent from "../hooks/useActiveOutlet";
 import GoalCard from "../components/GoalCard";
 import CreateGoal from "../components/modals/CreateGoal";
 import EmptyGoal from "../components/empty/EmptyGoal";
 import { useState } from "react";
+import Loading from "../components/empty/Loading";
 const Goals = () => {
   useActiveComponent("Goals");
-  const goals = useStoreState((state) => state.goals);
+  const goals = useStoreState((state) => state.targets.goals);
   const [isCreateGoalOpen, setIsCreateGoalOpen] = useState(false);
+  const isRehydrated = useStoreRehydrated()
+  if (!isRehydrated) return <Loading />
+
   return (
     <div className="bg-BODY-BG flex grow flex-col gap-4 px-6 py-4">
       <div className="flex items-center  justify-between">
@@ -29,7 +33,7 @@ const Goals = () => {
           <GoalCard goal={goal} key={goal.id} />
         ))}
       </div>
-      {goals.length === 0 && <EmptyGoal />}
+      {goals.length === 0 && <EmptyGoal setIsCreateGoalOpen={setIsCreateGoalOpen} />}
       {isCreateGoalOpen && (
         <CreateGoal setIsCreateGoalOpen={setIsCreateGoalOpen} />
       )}

@@ -1,6 +1,6 @@
 import useActiveComponent from "../hooks/useActiveOutlet";
 import { useEffect, useState } from "react";
-import { useStoreState } from "easy-peasy";
+import { useStoreState, useStoreRehydrated } from "easy-peasy";
 import { isThisWeek, isThisMonth, isToday } from "date-fns";
 import { LuSearch, LuDownload } from "react-icons/lu";
 import TransactionList from "../components/TransactionList";
@@ -8,16 +8,18 @@ import TransactionForm from "../components/modals/TransactionForm";
 import Select from "../components/Select";
 import { parseISO } from "date-fns";
 import properCase from "../utils/properCase";
+import Loading from "../components/empty/Loading";
 const Transactions = () => {
   useActiveComponent("Transactions");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const typeArray = useStoreState((state) => state.typeArray);
   const categoryArray = useStoreState((state) => state.categoryArray);
-  const transactions = useStoreState((state) => state.transactions);
+  const transactions = useStoreState((state) => state.history.transactions);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All Categories");
   const [type, setType] = useState("All Types");
   const [dateRange, setDateRange] = useState("All Dates");
+  const isRehydrated = useStoreRehydrated()
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -58,6 +60,9 @@ const Transactions = () => {
   const handleFilter = (e) => {
     setSearch(e.target.value);
   };
+
+  if (!isRehydrated) return <Loading />
+
   return (
     <div className="bg-BODY-BG flex grow flex-col gap-4 p-4">
       <div className="flex flex-wrap items-center justify-between gap-y-2">

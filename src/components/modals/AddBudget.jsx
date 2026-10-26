@@ -4,12 +4,12 @@ import { LuCheck, LuX } from "react-icons/lu";
 import { useState } from "react";
 
 const AddBudget = ({ setIsAddBudgetOpen }) => {
-  const categoryArray = useStoreState((state) => state.categoryArray);
+  const getFilteredCategories = useStoreState((state) => state.getFilteredCategories);
   const [category, setCategory] = useState("");
   const [limit, setLimit] = useState("");
   const [startDate, setStartDate] = useState("");
-  const addBudget = useStoreActions((actions) => actions.addBudget);
-  const budgets = useStoreState(state => state.budgets)
+  const addBudget = useStoreActions((actions) => actions.allocations.addBudget);
+  const budgets = useStoreState(state => state.allocations.budgets)
   const [exists, setExists] = useState(false)
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -48,7 +48,7 @@ const AddBudget = ({ setIsAddBudgetOpen }) => {
         <div className="input-label">
           <label htmlFor="budgetCategory">Category</label>
           <Select
-            options={categoryArray}
+            options={getFilteredCategories("expense")}
             value={category}
             setValue={setCategory}
             id="budgetCategory"

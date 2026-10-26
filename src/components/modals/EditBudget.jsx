@@ -8,8 +8,9 @@ const EditBudget = ({ budget, setIsEditBudgetOpen }) => {
   const [category, setCategory] = useState(budget.category)
   const [limit, setLimit] = useState(budget.limit)
   const [startDate, setStartDate] = useState(budget.startDate)
-  const editBudget = useStoreActions(actions => actions.editBudget)
-  const handleSubmit = () => {
+  const editBudget = useStoreActions(actions => actions.allocations.editBudget)
+  const handleSubmit = (e) => {
+    e.preventDefault()
     const updatedBudget = {
       category,
       limit,
@@ -23,7 +24,7 @@ const EditBudget = ({ budget, setIsEditBudgetOpen }) => {
     <div className="backDrop" onClick={(e) => {
       if (e.target === e.currentTarget) setIsEditBudgetOpen(false)
     }}>
-      <form className="bg-BODY-BG flex flex-col gap-3 rounded-md p-3" onSubmit={handleSubmit}>
+      <form className="bg-BODY-BG flex flex-col gap-3 rounded-md p-3" onSubmit={(e) => handleSubmit(e)}>
         <div className="flex justify-between"><h3 className="font-bold">Edit Budget</h3>
           <button type="button" onClick={() => setIsEditBudgetOpen(false)}><LuX /></button>
         </div>

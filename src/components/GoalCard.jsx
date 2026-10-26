@@ -10,9 +10,10 @@ const GoalCard = ({ goal }) => {
   const percent = (goal.savedAmount / goal.targetAmount) * 100;
   const [isEditGoalOpen, setIsEditGoalOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const deleteGoal = useStoreActions((actions) => actions.deleteGoal);
+  const deleteGoal = useStoreActions((actions) => actions.targets.deleteGoal);
   const dateTime = parseISO(goal.targetDate)
   const [isAddContOpen, setIsAddContOpen] = useState(false)
+
 
   return (
     <div className="w-70">

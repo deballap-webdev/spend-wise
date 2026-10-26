@@ -7,7 +7,7 @@ const CreateGoal = ({ setIsCreateGoalOpen }) => {
   const [savedAmount, setSavedAmount] = useState("");
   const [name, setName] = useState("");
   const [targetDate, setTargetDate] = useState("");
-  const addGoal = useStoreActions((actions) => actions.addGoal);
+  const addGoal = useStoreActions((actions) => actions.targets.addGoal);
 
   const handleSubmit = (e) => {
     e.preventDefault();

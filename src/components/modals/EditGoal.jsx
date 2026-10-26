@@ -7,7 +7,7 @@ const EditGoal = ({ setIsEditGoalOpen, goal }) => {
   const [targetAmount, setTargetAmount] = useState(goal.targetAmount);
   const [savedAmount, setSavedAmount] = useState(goal.savedAmount);
   const [targetDate, setTargetDate] = useState(goal.targetDate);
-  const editGoal = useStoreActions((actions) => actions.editGoal);
+  const editGoal = useStoreActions((actions) => actions.targets.editGoal);
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedGoal = {

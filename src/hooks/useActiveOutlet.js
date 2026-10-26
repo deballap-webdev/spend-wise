@@ -8,7 +8,7 @@ const useActiveComponent = (outlet) => {
     return () => {
       setActiveOutlet(null);
     };
-  }, []);
+  }, [outlet, setActiveOutlet]);
 };
 
 export default useActiveComponent;

@@ -1,8 +1,9 @@
 import ProgressBar from "./ProgressBar";
 const ExpenseSummary = () => {
   return (
-    <div className="bg-CARD-BG border-BORDER rounded-md border p-4">
+    <div className="bg-CARD-BG grow border-BORDER rounded-md border p-4">
       <h3>Expenses by Category</h3>
+      <p>•••</p>
       <div>
         <ProgressBar category="Food" color="#00a979" />
         <ProgressBar category="Entertainment" color="#a975ce" />

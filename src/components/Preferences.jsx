@@ -1,53 +1,40 @@
 import { useStoreState } from "easy-peasy";
 import properCase from "../utils/properCase";
+import Select from "./Select";
 const Preferences = () => {
   const symbol = useStoreState((state) => state.symbol);
-  const currency = useStoreState((state) => state.currency);
+  const currency = useStoreState((state) => state.settings.currency);
+  const currencyArray = [{ value: "nigerian naira", label: "₦ — Nigerian Naira" }, { value: "european euro", label: "€ — European Euro" }, { value: "united states dollar", label: "$ — United States Dollar" }]
+  const categoryArray = useStoreState(state => state.categoryArray)
   return (
-    <div className="bg-CARD-BG">
-      <div>Preferences</div>
-      <div>
+    <div className="bg-CARD-BG  rounded-md border border-BORDER">
+      <div className="font-bold border-b border-b-BORDER p-3">Preferences</div>
+      <div className="border-b border-b-BORDER flex items-center p-3 justify-between gap-2">
         <div>
-          <p>Currency Selection</p>
-          <p>
-            All SpendWise balances and transactions are shown in{" "}
+          <p className="font-bold">Currency Selection</p>
+          <p className="text-[0.7rem] text-LIGHT-TEXT">
+            All SpendWise balances and transactions are shown in
             {properCase(currency)}
           </p>
         </div>
-        <select
-          name="currency"
-          id="currency"
-          className="border-BORDER w-fit rounded-md border p-2 text-[0.8rem] font-semibold"
-        >
-          <option value="">₦ — Nigerian Naira </option>
-          <option value="">$ — United States Dollar</option>
-          <option value="">€ — European Euro</option>
-        </select>
-      </div>
-      <div>
         <div>
-          <p>Dark / Light Mode</p>
-          <p>A bright clean view of your finances</p>
+          <Select options={currencyArray} />
         </div>
       </div>
-      <div>
-        <div>
-          <p>Default Transaction Category</p>
-          <p>Your starting category when adding a new transaction</p>
+      <div className="p-3 border-b border-b-BORDER">
+        <div >
+          <p className="font-bold">Dark / Light Mode</p>
+          <p className="text-[0.7rem] text-LIGHT-TEXT">A bright clean view of your finances</p>
         </div>
-        <select
-          name="defaultCategory"
-          id="defaultCategory"
-          className="border-BORDER w-fit rounded-md border p-2 text-[0.8rem] font-semibold"
-        >
-          <option value="">Food</option>
-          <option value="">Transport</option>
-          <option value="">Bills</option>
-          <option value="">Entertainment</option>
-          <option value="">Income</option>
-          <option value="">Shopping</option>
-          <option value="">Health</option>
-        </select>
+      </div>
+      <div className="p-3 flex justify-between gap-2">
+        <div>
+          <p className="font-bold">Default Transaction Category</p>
+          <p className="text-[0.7rem] text-LIGHT-TEXT">Your starting category when adding a new transaction</p>
+        </div>
+        <div>
+          <Select options={categoryArray} />
+        </div>
       </div>
     </div>
   );

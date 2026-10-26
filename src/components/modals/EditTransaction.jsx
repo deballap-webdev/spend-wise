@@ -12,7 +12,7 @@ const EditTransaction = ({ transaction, setIsEditOpen }) => {
   const [editDate, setEditDate] = useState(transaction.date);
   const categoryArray = useStoreState((state) => state.categoryArray);
   const typeArray = useStoreState((state) => state.typeArray);
-  const editTransaction = useStoreActions((actions) => actions.editTransaction)
+  const editTransaction = useStoreActions((actions) => actions.history.editTransaction)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -129,7 +129,7 @@ const EditTransaction = ({ transaction, setIsEditOpen }) => {
             className="bg-NAV-ACTIVE flex items-center justify-center gap-2 rounded-md px-3 py-1 text-[0.9rem] font-medium text-white"
           >
             <LuCheck />
-            Add Transaction
+            Save Changes
           </button>
         </div>
       </form>

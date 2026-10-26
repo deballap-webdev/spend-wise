@@ -3,7 +3,7 @@ import getIcon from "../utils/getIcon";
 import properCase from "../utils/properCase";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { useState } from "react"
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import EditBudget from "./modals/EditBudget";
 import Delete from "./modals/Delete"
 const BudgetCard = ({ budget }) => {
@@ -11,10 +11,10 @@ const BudgetCard = ({ budget }) => {
   const getTotalForCategory = useStoreState(state => state.getTotalForCategory)
   const amount = getTotalForCategory(budget.category)
   const symbol = useStoreState(state => state.symbol)
-  const percent = (amount / budget.limit) * 100;
+  const percent = ((amount / budget.limit) * 100).toFixed(2);
   const [isEditBudgetOpen, setIsEditBugetOPen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
-  const deleteBudget = useStoreActions(actions => actions.deleteBudget)
+  const deleteBudget = useStoreActions(actions => actions.allocations.deleteBudget)
   return (
     <div className="bg-CARD-BG p-3 rounded-md w-100  border border-BORDER flex flex-col gap-3">
       <div className="justify-between flex items-center flex-wrap">
@@ -37,9 +37,10 @@ const BudgetCard = ({ budget }) => {
         <p className="text-[0.8rem] font-medium" style={{ color: percent < 100 ? "green" : percent === 100 ? "orange" : "red" }}>{percent}%</p>
         <p className="text-[0.8rem]"> {amount <= budget.limit ? `${symbol}${budget.limit - amount} remaining` : `${symbol}${amount - budget.limit} over budget`}</p>
       </div>
-      <p className="text-LIGHT-TEXT text-[0.8rem]">Start {format(budget.startDate, "d MMM yyyy")}</p>
+      <p className="text-LIGHT-TEXT text-[0.8rem]">Start {format(parseISO(budget.startDate), "d MMM yyyy")}</p>
       {isEditBudgetOpen && <EditBudget setIsEditBudgetOpen={setIsEditBugetOPen} budget={budget} />}
       {isDeleteOpen && <Delete deleteFunction={deleteBudget} functionParam={budget.id} description={properCase(`${budget.category} Budget`)} headText={properCase(`${budget.category} Budget`)} setIsDeleteOpen={setIsDeleteOpen} />}
+
     </div>
   );
 };

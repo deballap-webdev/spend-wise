@@ -14,7 +14,7 @@ const ProgressBar = ({ color, category, amount }) => {
           className="h-2 rounded-lg"
         ></div>
       </div>
-      <button>+ Add Budget</button>
+
     </div>
   );
 };
