@@ -15,20 +15,28 @@ const TransactionForm = ({ setIsModalOpen }) => {
   const [type, setType] = useState("expense");
   const [note, setNote] = useState("");
   const [date, setDate] = useState("");
+  const currency = useStoreState(state => state.settings.currency)
   const getFilteredCategories = useStoreState(state => state.getFilteredCategories)
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newTransaction = {
-      category,
-      description: desc,
-      date,
-      note,
-      type,
-      amount,
-      id: Date.now(),
-    };
-    addTransaction(newTransaction)
-    setIsModalOpen(false);
+    try {
+      const newTransaction = {
+        category,
+        description: desc,
+        date,
+        note,
+        type,
+        amount,
+        currency,
+        id: Date.now(),
+      };
+      addTransaction(newTransaction)
+      setIsModalOpen(false);
+
+    } catch (err) {
+      console.log(err)
+    }
+
   };
 
   return (

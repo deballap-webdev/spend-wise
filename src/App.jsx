@@ -20,7 +20,7 @@ const App = () => {
 
   return (
     <div className="min-h-screen w-full">
-      {!isLoading && !fetchError && <Routes>
+      {!isLoading && <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="transactions" element={<Transactions />} />

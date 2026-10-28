@@ -22,9 +22,9 @@ const RecentTransRow = ({ trans }) => {
       </div>
       <div className="flex flex-col items-end justify-center">
         {trans.type === "income" ? (
-          <p className="text-[0.7rem] font-bold text-green-700">{`+${symbol}${trans.amount}`}</p>
+          <p className="text-[0.7rem] font-bold text-green-700">{`+${symbol}${trans.amount.toLocaleString()}`}</p>
         ) : (
-          <p className="text-[0.7rem] font-bold text-red-700">{`-${symbol}${trans.amount}`}</p>
+          <p className="text-[0.7rem] font-bold text-red-700">{`-${symbol}${trans.amount.toLocaleString()}`}</p>
         )}
 
         <p className="text-LIGHT-TEXT text-[0.7rem]">

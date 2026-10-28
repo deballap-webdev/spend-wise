@@ -26,6 +26,8 @@ export default createStore({
         note: "",
         description: "Prime videos",
         amount: 15000,
+
+        currency: ""
       },
       {
         category: "transport",
@@ -153,10 +155,14 @@ export default createStore({
 
 
   settings: persist({
-    currency: "nigerian naira",
+    currency: "NGN",
     setCurrency: action((state, payload) => {
       state.currency = payload;
     }),
+    isDark: false,
+    setIsDark: action((state, payload) => {
+      state.isDark = payload
+    })
   }),
 
   getPercentOfTotalExpense: computed((state) => (category) => {
@@ -173,9 +179,9 @@ export default createStore({
       .slice(0, 4),
   ),
   symbol: computed((state) =>
-    state.settings.currency === "united states dollar"
+    state.settings.currency === "USD"
       ? "$"
-      : state.settings.currency === "european euro"
+      : state.settings.currency === "EUR"
         ? "€"
         : "₦",
   ),
@@ -277,5 +283,14 @@ export default createStore({
   rates: [],
   setRates: action((state, rates) => {
     state.rates = rates
-  })
+  }),
+  ratesCache: persist({
+    cache: {
+      "2026-10-28": { USD: 1, EUR: 0.92, NGN: 1500 }
+    },
+    setRateCache: action((state, payload) => {
+      state.cache = { ...state.cache, ...payload }
+    })
+  },
+    { storage: localStorage })
 });

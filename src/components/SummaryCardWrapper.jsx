@@ -12,21 +12,21 @@ const SummaryCardWrapper = () => {
     <div className="flex w-full flex-row gap-3">
       <SummaryCard
         text="Total Balance"
-        amount={`${symbol}${totalIncome - totalExpenses}`}
+        amount={`${symbol}${(totalIncome - totalExpenses).toLocaleString()}`}
         percentChange={"+12%"}
         icon={<LuWallet className="icon" />}
         color="black"
       />
       <SummaryCard
         text="Total Income"
-        amount={`${symbol}${totalIncome}`}
+        amount={`${symbol}${totalIncome.toLocaleString()}`}
         percentChange={"+20%"}
         icon={<LuArrowDown className="bg-LIGHT-GREEN h-8 w-8 rounded-lg p-2" />}
         color="#009464"
       />
       <SummaryCard
         text="Total Expenses"
-        amount={`${symbol}${totalExpenses}`}
+        amount={`${symbol}${totalExpenses.toLocaleString()}`}
         percentChange={"+18%"}
         icon={<LuArrowUp className="bg-LIGHT-RED h-8 w-8 rounded-lg p-2" />}
         color="#de4544"

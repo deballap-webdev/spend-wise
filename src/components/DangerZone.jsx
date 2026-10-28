@@ -1,7 +1,7 @@
 
 const DangerZone = () => {
     return (
-        <div className=" bg-CARD-BG rounded-md border border-BORDER">
+        <div className=" bg-CARD-BG rounded-md border border-BORDER max-w-200">
             <p className="font-bold text-red-500 border-b border-BORDER p-3">Danger Zone</p>
             <div className="p-3 flex items-center justify-between">
                 <div>
