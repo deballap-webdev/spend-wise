@@ -5,8 +5,8 @@ import { useState } from "react";
 import Delete from "./modals/Delete";
 import EditTransaction from "./modals/EditTransaction";
 import { format, parseISO } from "date-fns";
-import { useStoreActions } from "easy-peasy";
-
+import { useStoreActions, useStoreState } from "easy-peasy";
+import convCurrency from "../utils/convCurrency";
 const TransactionItem = ({ transaction }) => {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -14,6 +14,10 @@ const TransactionItem = ({ transaction }) => {
   const deleteTransaction = useStoreActions(
     (actions) => actions.history.deleteTransaction,
   );
+  const currency = useStoreState(state => state.settings.currency)
+  const ratesCache = useStoreState(state => state.ratesCache.cache)
+  const targetCurrencyRate = ratesCache[transaction.date][currency]
+  localStorage.clear()
   return (
     <div className="bg-CARD-BG border-b-BORDER flex border-collapse justify-between border-b p-4 text-[0.78em]">
       <div className="flex w-3/10 items-center gap-2">
@@ -31,7 +35,7 @@ const TransactionItem = ({ transaction }) => {
       <div className="w-1/5 text-[0.7rem]">
         {dateTime ? format(dateTime, "d MMM yyyy") : "N/A"}
       </div>
-      <div className="w-1/5">{transaction.amount}</div>
+      <div className="w-1/5">{convCurrency(transaction.amount, currency, transaction.rateToUSD, targetCurrencyRate).toLocaleString()}</div>
       <div className="flex w-1/10">
         <button onClick={() => setIsEditOpen(true)}>
           <LuPencil />
@@ -51,7 +55,7 @@ const TransactionItem = ({ transaction }) => {
       )}
       {isEditOpen && (
         <EditTransaction
-          transaction={transaction}
+          transactionf={transaction}
           setIsEditOpen={setIsEditOpen}
         />
       )}

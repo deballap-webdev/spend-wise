@@ -1,6 +1,4 @@
-import { ca } from "date-fns/locale";
 import { useStoreState } from "easy-peasy";
-
 const ProgressBar = ({ color, category }) => {
   const percentage = useStoreState((state) => state.getPercentOfTotalExpense);
   const getTotalForCategory = useStoreState(state => state.getTotalForCategory)
