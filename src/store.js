@@ -171,12 +171,14 @@ export default createStore({
     return (state.getTotalForCategory(category) / totalExpense) * 100;
   }),
 
-  recentTransactions: computed((state) =>
-    state.transactionsSortedByDate
+  recentTransactions: computed((state) => {
+    const now = Date.now()
+    return state.transactionsSortedByDate
       .filter(
-        (transaction) => parseISO(transaction.date).getTime() <= Date.now(),
+        (transaction) => parseISO(transaction.date).getTime() <= now,
       )
-      .slice(0, 4),
+      .slice(0, 4)
+  },
   ),
   symbol: computed((state) =>
     state.settings.currency === "USD"
@@ -280,10 +282,7 @@ export default createStore({
   }, {
     storage: localStorage
   }),
-  rates: [],
-  setRates: action((state, rates) => {
-    state.rates = rates
-  }),
+
   ratesCache: persist({
     cache: {
       "2026-10-28": { USD: 1, EUR: 0.92, NGN: 1500 }
@@ -292,5 +291,13 @@ export default createStore({
       state.cache = { ...state.cache, ...payload }
     })
   },
-    { storage: localStorage })
-});
+    { storage: localStorage }),
+  isLoading: false,
+  setIsLoading: action((state, payload) => { state.isLoading = payload }),
+  fetchError: null,
+  setFetchError: action((state, payload) => {
+    state.fetchError = payload
+  })
+}
+
+);

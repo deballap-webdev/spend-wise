@@ -1,14 +1,19 @@
 import axios from "axios"
 import store from "../store"
 const currencyApi = async (date, quote) => {
-    const currentState = store.getState()
-    const cache = currentState.ratesCache.cache
+    const state = store.getState()
+    const cache = state.ratesCache.cache
     if (cache[date]) {
         return cache[date]
     }
     try {
-        const response = await axios.get(`https://api.frankfurter.app/${date}?base=USD&quotes=${quote}`)
-        return response.data
+        const response = await axios.get(`https://api.frankfurter.dev/v2/rates?base=USD&quote=${quote}&from=${date}&to=${date}`)
+        let rates = {};
+
+        for (let i = 0; i < response.data.length; i++) {
+            rates[`${response.data[i].quote}`] = response.data[i].rate
+        }
+        return rates
     } catch (err) {
         if (err.response) {
             console.log(err.response.data)
@@ -19,3 +24,5 @@ const currencyApi = async (date, quote) => {
         }
     }
 }
+
+export default currencyApi

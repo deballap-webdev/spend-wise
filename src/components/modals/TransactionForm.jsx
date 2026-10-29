@@ -3,7 +3,7 @@ import { useStoreState, useStoreActions } from "easy-peasy";
 import Select from "../Select";
 import { LuCheck, LuX } from "react-icons/lu";
 import handleAmount from "../../utils/handleAmount";
-
+import currencyApi from "../../api/currencyApi";
 const TransactionForm = ({ setIsModalOpen }) => {
   const [amount, setAmount] = useState("");
   const symbol = useStoreState((state) => state.symbol);
@@ -16,27 +16,25 @@ const TransactionForm = ({ setIsModalOpen }) => {
   const [note, setNote] = useState("");
   const [date, setDate] = useState("");
   const currency = useStoreState(state => state.settings.currency)
+  const setRateCache = useStoreActions(state => state.ratesCache.setRateCache)
   const getFilteredCategories = useStoreState(state => state.getFilteredCategories)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const newTransaction = {
-        category,
-        description: desc,
-        date,
-        note,
-        type,
-        amount,
-        currency,
-        id: Date.now(),
-      };
-      addTransaction(newTransaction)
-      setIsModalOpen(false);
-
-    } catch (err) {
-      console.log(err)
-    }
-
+    const newTransaction = {
+      category,
+      description: desc,
+      date,
+      note,
+      type,
+      amount,
+      currency,
+      id: Date.now(),
+    };
+    const rates = await currencyApi(date, 'NGN,EUR')
+    const rateToUSD = currency === "USD" ? 1 : rates[currency]
+    setRateCache({ [date]: rates })
+    addTransaction({ ...newTransaction, rateToUSD })
+    setIsModalOpen(false);
   };
 
   return (
