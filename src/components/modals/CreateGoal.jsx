@@ -1,21 +1,22 @@
 import { LuCheck, LuX } from "react-icons/lu";
 import handleAmount from "../../utils/handleAmount";
 import { useState } from "react";
-import { useStoreActions } from "easy-peasy";
+import { useStoreActions, useStoreState } from "easy-peasy";
 const CreateGoal = ({ setIsCreateGoalOpen }) => {
   const [targetAmount, setTargetAmount] = useState("");
   const [savedAmount, setSavedAmount] = useState("");
   const [name, setName] = useState("");
   const [targetDate, setTargetDate] = useState("");
   const addGoal = useStoreActions((actions) => actions.targets.addGoal);
-
-  const handleSubmit = (e) => {
+  const currency = useStoreState(state => state.settings.currency)
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newGoal = {
       targetAmount,
       name,
       targetDate,
       savedAmount,
+      currency,
       id: Date.now(),
     };
     addGoal(newGoal);

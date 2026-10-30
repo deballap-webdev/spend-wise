@@ -78,8 +78,8 @@ export default createStore({
   ),
 
   convCurrency: computed(state => (amountInUSD) => {
-    const latestDate = Object.keys(state.ratesCache.cache).sort().pop()
-    const targetRate = state.ratesCache.cache[latestDate][state.settings.currency]
+
+    const targetRate = state.ratesCache.cache[state.latestDate][state.settings.currency]
     return amountInUSD * targetRate
   }),
   settings: persist({
@@ -150,7 +150,9 @@ export default createStore({
       {
         category: "transport",
         limit: 30000,
-        startDate: "01-01-2026",
+        startDate: "2026-01-01",
+        currency: "NGN",
+        rateToUSD: 1458,
         id: "",
       },
     ],
@@ -174,6 +176,7 @@ export default createStore({
         targetAmount: 80000,
         savedAmount: 9000,
         targetDate: "2027-12-07",
+        currency: "NGN",
         id: 1,
       },
       {
@@ -181,6 +184,7 @@ export default createStore({
         targetAmount: 800000,
         savedAmount: 450000,
         targetDate: "2027-12-07",
+        currency: "EUR",
         id: 2,
       },
       {
@@ -188,6 +192,7 @@ export default createStore({
         targetAmount: 80000,
         savedAmount: 4500,
         targetDate: "2027-12-07",
+        currency: "NGN",
         id: 3,
       },
       {
@@ -195,6 +200,7 @@ export default createStore({
         targetAmount: 900000,
         savedAmount: 450000,
         targetDate: "2027-12-07",
+        currency: "USD",
         id: 4,
       },
     ],
@@ -235,6 +241,7 @@ export default createStore({
   fetchError: null,
   setFetchError: action((state, payload) => {
     state.fetchError = payload
-  })
+  }),
+  latestDate: computed(state => Object.keys(state.ratesCache.cache).sort().pop())
 }
 );

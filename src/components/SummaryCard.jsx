@@ -15,3 +15,4 @@ const SummaryCard = ({ amount, icon, color, text, percentChange }) => {
 };
 
 export default SummaryCard;
+3

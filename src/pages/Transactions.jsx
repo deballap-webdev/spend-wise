@@ -30,7 +30,7 @@ const Transactions = () => {
     }
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isModalOpen]);
-
+  const [pageNumber, setPageNumber] = useState(1);
   const filteredTransactions = transactions.filter((transaction) => {
     const matchesSearch =
       transaction.description.toLowerCase().includes(search.toLowerCase()) ||
@@ -50,6 +50,8 @@ const Transactions = () => {
       "This Week": isThisWeek(parseISO(transaction.date)),
       "This Month": isThisMonth(parseISO(transaction.date)),
     };
+
+
     return (
       matchesSearch &&
       matchesType &&
@@ -61,9 +63,11 @@ const Transactions = () => {
     setSearch(e.target.value);
   };
 
+
   if (!isRehydrated) return <Loading />
 
   return (
+
     <div className="bg-BODY-BG flex grow flex-col gap-4 p-4">
       <div className="flex flex-wrap items-center justify-between gap-y-2">
         <div>
@@ -123,7 +127,7 @@ const Transactions = () => {
           />
         </div>
       </div>
-      <TransactionList transactions={filteredTransactions} />
+      <TransactionList transactions={filteredTransactions} pageNumber={pageNumber} setPageNumber={setPageNumber} />
       {isModalOpen && <TransactionForm setIsModalOpen={setIsModalOpen} />}
     </div>
   );

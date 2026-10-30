@@ -15,6 +15,7 @@ const EditGoal = ({ setIsEditGoalOpen, goal }) => {
       targetAmount,
       savedAmount,
       targetDate,
+      currency: goal.currency,
       id: goal.id,
     };
     editGoal(updatedGoal);

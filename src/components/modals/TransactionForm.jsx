@@ -30,7 +30,7 @@ const TransactionForm = ({ setIsModalOpen }) => {
       currency,
       id: Date.now(),
     };
-    const rates = await currencyApi(date, 'NGN,EUR')
+    const rates = await currencyApi(date, 'ngn,eur')
     const rateToUSD = currency === "USD" ? 1 : rates[currency]
     setRateCache({ [date]: rates })
     addTransaction({ ...newTransaction, rateToUSD })

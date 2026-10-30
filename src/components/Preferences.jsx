@@ -5,7 +5,7 @@ import { useState } from "react";
 const Preferences = () => {
   const symbol = useStoreState((state) => state.symbol);
   const { currency } = useStoreState((state) => state.settings);
-  const currencyArray = [{ value: "nigerian naira", label: "₦ — Nigerian Naira" }, { value: "european euro", label: "€ — European Euro" }, { value: "united states dollar", label: "$ — United States Dollar" }]
+  const currencyArray = [{ value: "NGN", label: "₦ — Nigerian Naira" }, { value: "EUR", label: "€ — European Euro" }, { value: "USD", label: "$ — United States Dollar" }]
   const categoryArray = useStoreState(state => state.categoryArray)
   const isDark = useStoreState((state) => state.settings.isDark)
   const setIsDark = useStoreActions((actions) => actions.settings.setIsDark)
@@ -16,7 +16,7 @@ const Preferences = () => {
         <div>
           <p className="font-bold">Currency Selection</p>
           <p className="text-[0.7rem] text-LIGHT-TEXT">
-            All SpendWise balances and transactions are shown in {properCase(currency)}
+            All SpendWise balances and transactions are shown in {currency}
           </p>
         </div>
         <div>

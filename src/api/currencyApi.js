@@ -7,9 +7,8 @@ const currencyApi = async (date, quote) => {
         return cache[date]
     }
     try {
-        const response = await axios.get(`https://api.frankfurter.dev/v2/rates?base=USD&quote=${quote}&from=${date}&to=${date}`)
+        const response = await axios.get(`https://api.frankfurter.dev/v2/rates?base=USD&quotes=${quote}&from=${date}&to=${date}`)
         let rates = {};
-
         for (let i = 0; i < response.data.length; i++) {
             rates[`${response.data[i].quote}`] = response.data[i].rate
         }

@@ -17,7 +17,6 @@ const TransactionItem = ({ transaction }) => {
   const currency = useStoreState(state => state.settings.currency)
   const ratesCache = useStoreState(state => state.ratesCache.cache)
   const targetCurrencyRate = ratesCache[transaction.date][currency]
-  localStorage.clear()
   return (
     <div className="bg-CARD-BG border-b-BORDER flex border-collapse justify-between border-b p-4 text-[0.78em]">
       <div className="flex w-3/10 items-center gap-2">
@@ -55,7 +54,7 @@ const TransactionItem = ({ transaction }) => {
       )}
       {isEditOpen && (
         <EditTransaction
-          transactionf={transaction}
+          transaction={transaction}
           setIsEditOpen={setIsEditOpen}
         />
       )}

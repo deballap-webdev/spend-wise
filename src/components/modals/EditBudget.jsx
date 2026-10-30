@@ -2,6 +2,7 @@ import { LuCheck, LuX } from "react-icons/lu";
 import Select from "../Select";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import { useState } from "react"
+import handleAmount from "../../utils/handleAmount";
 const EditBudget = ({ budget, setIsEditBudgetOpen }) => {
   const categoryArray = useStoreState(state => state.categoryArray
   )
@@ -15,6 +16,7 @@ const EditBudget = ({ budget, setIsEditBudgetOpen }) => {
       category,
       limit,
       startDate,
+      currency: budget.currency,
       id: budget.id
     }
     editBudget(updatedBudget)
@@ -38,7 +40,7 @@ const EditBudget = ({ budget, setIsEditBudgetOpen }) => {
         <div className="flex gap-3">
           <div className="input-label">
             <label htmlFor="limit">Monthlt Limit</label>
-            <input type="text" name="limit" id="limit" value={limit} onChange={(e) => setLimit(e.target.value)} />
+            <input type="text" name="limit" id="limit" value={limit} onChange={(e) => setLimit(handleAmount(e))} />
           </div>
           <div className="input-label">
             <label htmlFor="startDate">Start Date</label>

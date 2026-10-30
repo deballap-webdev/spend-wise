@@ -10,7 +10,6 @@ const RecentTransRow = ({ trans }) => {
   const currency = useStoreState(state => state.settings.currency)
   const cache = useStoreState(state => state.ratesCache.cache)
   const targetRate = cache[trans.date][currency]
-  localStorage.clear()
   const formattedAmount = convCurrency(trans.amount, currency, trans.rateToUSD, targetRate).toLocaleString()
   return (
     <div className="border-b-BORDER flex items-center justify-between border-b p-4">

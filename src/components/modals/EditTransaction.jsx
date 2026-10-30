@@ -2,6 +2,7 @@ import { useState } from "react";
 import { LuX, LuCheck } from "react-icons/lu";
 import Select from "../Select";
 import { useStoreActions, useStoreState } from "easy-peasy";
+import currencyApi from "../../api/currencyApi";
 
 const EditTransaction = ({ transaction, setIsEditOpen }) => {
   const [editType, setEditType] = useState(transaction.type);
@@ -13,8 +14,9 @@ const EditTransaction = ({ transaction, setIsEditOpen }) => {
   const categoryArray = useStoreState((state) => state.categoryArray);
   const typeArray = useStoreState((state) => state.typeArray);
   const editTransaction = useStoreActions((actions) => actions.history.editTransaction)
-
-  const handleSubmit = (e) => {
+  const currency = useStoreState(state => state.settings.currency)
+  const setRateCache = useStoreActions(actions => actions.ratesCache.setRateCache)
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedTransaction = {
       note: editNote,
@@ -24,8 +26,12 @@ const EditTransaction = ({ transaction, setIsEditOpen }) => {
       amount: editAmount,
       date: editDate,
       id: transaction.id,
+      currency: transaction.currency
     };
-    editTransaction(updatedTransaction)
+    const rates = await currencyApi(editDate, 'ngn,eur')
+    const rateToUSD = currency === "USD" ? 1 : rates[currency]
+    setRateCache({ [editDate]: rates })
+    editTransaction({ ...updatedTransaction, rateToUSD })
     setIsEditOpen(false);
   };
 

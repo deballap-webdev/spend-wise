@@ -6,15 +6,23 @@ import { useState } from "react"
 import { format, parseISO } from "date-fns";
 import EditBudget from "./modals/EditBudget";
 import Delete from "./modals/Delete"
+import convCurrency from "../utils/convCurrency";
 const BudgetCard = ({ budget }) => {
+  localStorage.clear()
+  const currency = useStoreState(state => state.settings.currency)
   const icon = getIcon(budget.category);
   const getTotalForCategory = useStoreState(state => state.getTotalForCategory)
   const amount = getTotalForCategory(budget.category)
   const symbol = useStoreState(state => state.symbol)
-  const percent = ((amount / budget.limit) * 100).toFixed(2);
+  const percent = parseFloat(((amount / budget.limit) * 100).toFixed(2));
   const [isEditBudgetOpen, setIsEditBugetOPen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const deleteBudget = useStoreActions(actions => actions.allocations.deleteBudget)
+  const cache = useStoreState(state => state.ratesCache.cache)
+  const latestDate = useStoreState(state => state.latestDate)
+  const rateToUSD = cache[latestDate][budget.currency]
+  const targetRate = cache[latestDate][currency]
+  const convLimit = convCurrency(budget.limit, currency, rateToUSD, targetRate)
   return (
     <div className="bg-CARD-BG p-3 rounded-md w-100  border border-BORDER flex flex-col gap-3">
       <div className="justify-between flex items-center flex-wrap">
@@ -28,19 +36,18 @@ const BudgetCard = ({ budget }) => {
           <button onClick={() => setIsDeleteOpen(true)}> <LuTrash2 className="text-red-500" /></button>
         </div>
       </div>
-      <p className="font-bold text-[1.2rem]">{symbol}{amount}</p>
-      <p className="text-[0.8rem] text-LIGHT-TEXT -mt-2">spent of {symbol}{budget.limit} monthly budget</p>
+      <p className="font-bold text-[1.2rem]">{symbol}{amount.toLocaleString()}</p>
+      <p className="text-[0.8rem] text-LIGHT-TEXT -mt-2">spent of {symbol}{convLimit.toLocaleString()} monthly budget</p>
       <div className="bg-RANGE-BG h-2 rounded-md mt-3">
         <div className="bg-GREEN h-2 rounded-md" style={{ width: percent < 100 ? `${percent}%` : "100%", backgroundColor: percent > 100 ? "red" : null }}></div>
       </div>
       <div className="flex justify-between flex-row-reverse">
         <p className="text-[0.8rem] font-medium" style={{ color: percent < 100 ? "green" : percent === 100 ? "orange" : "red" }}>{percent}%</p>
-        <p className="text-[0.8rem]"> {amount <= budget.limit ? `${symbol}${budget.limit - amount} remaining` : `${symbol}${amount - budget.limit} over budget`}</p>
+        <p className="text-[0.8rem]"> {amount <= convLimit ? `${symbol}${(convLimit - amount).toLocaleString()} remaining` : `${symbol}${(amount - convLimit).toLocaleString()} over budget`}</p>
       </div>
       <p className="text-LIGHT-TEXT text-[0.8rem]">Start {format(parseISO(budget.startDate), "d MMM yyyy")}</p>
       {isEditBudgetOpen && <EditBudget setIsEditBudgetOpen={setIsEditBugetOPen} budget={budget} />}
       {isDeleteOpen && <Delete deleteFunction={deleteBudget} functionParam={budget.id} description={properCase(`${budget.category} Budget`)} headText={properCase(`${budget.category} Budget`)} setIsDeleteOpen={setIsDeleteOpen} />}
-
     </div>
   );
 };

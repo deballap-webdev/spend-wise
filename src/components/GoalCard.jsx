@@ -5,6 +5,7 @@ import { format, parseISO } from "date-fns"
 import EditGoal from "../components/modals/EditGoal";
 import Delete from "./modals/Delete";
 import AddContribution from "./modals/AddContribution";
+import convCurrency from "../utils/convCurrency";
 const GoalCard = ({ goal }) => {
   const symbol = useStoreState((state) => state.symbol);
   const percent = (goal.savedAmount / goal.targetAmount) * 100;
@@ -13,34 +14,41 @@ const GoalCard = ({ goal }) => {
   const deleteGoal = useStoreActions((actions) => actions.targets.deleteGoal);
   const dateTime = parseISO(goal.targetDate)
   const [isAddContOpen, setIsAddContOpen] = useState(false)
-
-
+  const latestDate = useStoreState(state => state.latestDate)
+  const cache = useStoreState(state => state.ratesCache.cache)
+  const currency = useStoreState(state => state.settings.currency)
+  const rateToUSD = cache[latestDate][goal.currency]
+  const targetRate = cache[latestDate][currency]
+  const convTargetAmount = convCurrency(goal.targetAmount, currency, rateToUSD, targetRate)
+  const convSavedAmount = convCurrency(goal.savedAmount, currency, rateToUSD, targetRate)
+  const status = convSavedAmount < convTargetAmount ? "in progress" : "completed"
   return (
     <div className="w-70">
       <div className="bg-LIGHT-GREEN text-GREEN2 flex h-50 items-center justify-center rounded-tl-md rounded-tr-md text-[5rem]">
         <LuTarget />
       </div>
       <div className="bg-CARD-BG roounded-br-md flex flex-col gap-3 rounded-bl-md px-3 py-3">
-        <p className="font-bold">{goal.name}</p>
-        <p className="text-[0.8rem]">{`Target: ${goal.targetAmount}`}</p>
+        <div className="flex justify-between">   <p className="font-bold">{goal.name}</p>
+          <p className="bg-BORDER text-GREEN px-2 py-0.5 rounded-md font-medium text-[0.8rem]">{status}</p></div>
+
+        <p className="text-[0.8rem]">{`Target: ${convTargetAmount.toLocaleString()}`}</p>
         <p className="text-[0.8rem]">Target Date: {dateTime ? format(dateTime, "d MMM yyyy") : "N/A"}</p>
         <p className="text-[1.2rem] font-bold">
-          {`${symbol}${goal.savedAmount} `}
+          {`${symbol}${convSavedAmount.toLocaleString()} `}
           <span className="text-[0.7rem] font-normal">saved</span>
         </p>
         <div className="bg-RANGE-BG h-2 w-full rounded-md">
           <div
             className="bg-GREEN h-2 rounded-md"
-            style={{ width: `${percent}%` }}
+            style={{ width: percent <= 100 ? `${percent}%` : "100%" }}
           ></div>
         </div>
         <p className="text-[0.7rem]">
           {symbol}
-          {goal.targetAmount - goal.savedAmount} remaining
+          {convSavedAmount <= convTargetAmount ? (convTargetAmount - convSavedAmount).toLocaleString() : 0} remaining
         </p>
         <div className="flex justify-between">
           <button className="bg-GREEN rounded-md px-3 py-1 text-[0.8rem] text-white" onClick={() => setIsAddContOpen(true)}>
-            {" "}
             + Add contribution
           </button>
           <div>
