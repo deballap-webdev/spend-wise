@@ -12,7 +12,6 @@ const Select = ({ id, options, allOptionsLabel, value, setValue }) => {
         <option
           key={option.value}
           value={option.value}
-          selected={option.default}
         >
           {option.label}
         </option>

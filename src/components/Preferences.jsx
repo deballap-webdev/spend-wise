@@ -1,9 +1,6 @@
 import { useStoreActions, useStoreState } from "easy-peasy";
-import properCase from "../utils/properCase";
 import Select from "./Select";
-import { useState } from "react";
 const Preferences = () => {
-  const symbol = useStoreState((state) => state.symbol);
   const { currency } = useStoreState((state) => state.settings);
   const currencyArray = [{ value: "NGN", label: "₦ — Nigerian Naira" }, { value: "EUR", label: "€ — European Euro" }, { value: "USD", label: "$ — United States Dollar" }]
   const categoryArray = useStoreState(state => state.categoryArray)

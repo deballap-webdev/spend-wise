@@ -1,16 +1,13 @@
-import { useStoreState } from "easy-peasy";
-import { useState, useEffect } from "react";
 import TransactionItem from "./TransactionItem";
 import EmptyTransaction from "./empty/EmptyTransaction";
-const TransactionList = ({ transactions }) => {
-  const [pageNumber, setPageNumber] = useState(1);
-  useEffect(() => {
-    setPageNumber(1)
-  }, [transactions])
+const TransactionList = ({ transactions, pageNumber, setPageNumber }) => {
   const itemsPerPage = 8;
-  const startIndex = (pageNumber - 1) * itemsPerPage;
-  const endIndex = pageNumber * itemsPerPage;
-  const isFirstPage = pageNumber === 1;
+
+  const totalPages = Math.ceil(transactions.length / itemsPerPage) || 1;
+  const safePageNumber = pageNumber > totalPages ? totalPages : pageNumber
+  const startIndex = (safePageNumber - 1) * itemsPerPage;
+  const endIndex = safePageNumber * itemsPerPage;
+  const isFirstPage = safePageNumber === 1;
   const isLastPage = transactions ? endIndex >= transactions.length : 0;
   return (
     <div className="border-BORDER overflow-x-auto rounded-md border">

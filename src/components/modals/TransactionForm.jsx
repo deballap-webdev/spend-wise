@@ -7,17 +7,18 @@ import currencyApi from "../../api/currencyApi";
 const TransactionForm = ({ setIsModalOpen }) => {
   const [amount, setAmount] = useState("");
   const symbol = useStoreState((state) => state.symbol);
-
+  const getFilteredCategories = useStoreState(state => state.getFilteredCategories)
   const typeArray = useStoreState((state) => state.typeArray);
   const addTransaction = useStoreActions(actions => actions.history.addTransaction)
-  const [category, setCategory] = useState("food");
   const [desc, setDesc] = useState("");
   const [type, setType] = useState("expense");
   const [note, setNote] = useState("");
   const [date, setDate] = useState("");
   const currency = useStoreState(state => state.settings.currency)
   const setRateCache = useStoreActions(state => state.ratesCache.setRateCache)
-  const getFilteredCategories = useStoreState(state => state.getFilteredCategories)
+  const defaultCategory = useStoreState(state => state.defaultCategory)
+
+  const [category, setCategory] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newTransaction = {
@@ -37,6 +38,11 @@ const TransactionForm = ({ setIsModalOpen }) => {
     setIsModalOpen(false);
   };
 
+  const handleTypeChange = (value) => {
+    const validCategories = getFilteredCategories(value)
+    setCategory(validCategories.some(cat => cat.value === defaultCategory) ? defaultCategory : validCategories[0]?.value || "")
+    setType(value)
+  }
   return (
     <div
       className="backDrop"
@@ -60,7 +66,7 @@ const TransactionForm = ({ setIsModalOpen }) => {
         <div className="flex gap-3">
           <div className="input-label w-1/2">
             <label htmlFor="type">Type</label>
-            <Select options={typeArray} value={type} setValue={setType} />
+            <Select options={typeArray} value={type} setValue={handleTypeChange} />
           </div>
           <div className="input-label w-1/2">
             <label htmlFor="amount">{`Amount (${symbol})`}</label>
@@ -89,6 +95,7 @@ const TransactionForm = ({ setIsModalOpen }) => {
           <div className="input-label w-1/2">
             <label htmlFor="category">Category</label>
             <Select
+              key={type}
               options={getFilteredCategories(type)}
               value={category}
               setValue={setCategory}

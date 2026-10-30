@@ -8,6 +8,7 @@ import { format, parseISO } from "date-fns";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import convCurrency from "../utils/convCurrency";
 const TransactionItem = ({ transaction }) => {
+
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const dateTime = parseISO(transaction.date);

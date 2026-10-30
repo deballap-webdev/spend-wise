@@ -242,6 +242,7 @@ export default createStore({
   setFetchError: action((state, payload) => {
     state.fetchError = payload
   }),
-  latestDate: computed(state => Object.keys(state.ratesCache.cache).sort().pop())
+  latestDate: computed(state => Object.keys(state.ratesCache.cache).sort().pop()),
+  defaultCategory: "food",
 }
 );
