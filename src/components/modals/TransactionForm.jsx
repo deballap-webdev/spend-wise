@@ -17,8 +17,9 @@ const TransactionForm = ({ setIsModalOpen }) => {
   const currency = useStoreState(state => state.settings.currency)
   const setRateCache = useStoreActions(state => state.ratesCache.setRateCache)
   const defaultCategory = useStoreState(state => state.defaultCategory)
-
-  const [category, setCategory] = useState("");
+  const validCategories = getFilteredCategories(type)
+  const initialCat = (validCategories.some(cat => cat.value === defaultCategory) ? defaultCategory : validCategories[0]?.value || "")
+  const [category, setCategory] = useState(initialCat);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newTransaction = {

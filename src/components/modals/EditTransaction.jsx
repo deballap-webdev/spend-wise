@@ -16,6 +16,10 @@ const EditTransaction = ({ transaction, setIsEditOpen }) => {
   const editTransaction = useStoreActions((actions) => actions.history.editTransaction)
   const currency = useStoreState(state => state.settings.currency)
   const setRateCache = useStoreActions(actions => actions.ratesCache.setRateCache)
+  const getFilteredCategories = useStoreState(state => state.getFilteredCategories)
+
+  const defaultCategory = useStoreState(state => state.defaultCategory)
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedTransaction = {
@@ -34,6 +38,11 @@ const EditTransaction = ({ transaction, setIsEditOpen }) => {
     editTransaction({ ...updatedTransaction, rateToUSD })
     setIsEditOpen(false);
   };
+  const handleTypeChange = (value) => {
+    const validCategories = getFilteredCategories(value)
+    setEditCategory(validCategories.some(cat => cat.value === defaultCategory) ? defaultCategory : validCategories[0]?.value || "")
+    setEditType(value)
+  }
 
   return (
     <div
@@ -47,7 +56,6 @@ const EditTransaction = ({ transaction, setIsEditOpen }) => {
         onSubmit={(e) => handleSubmit(e)}
       >
         <div className="flex justify-between">
-          {" "}
           <h3 className="font-bold">Edit Transaction</h3>
           <button type="button" onClick={() => setIsEditOpen(false)}>
             <LuX />
@@ -62,7 +70,7 @@ const EditTransaction = ({ transaction, setIsEditOpen }) => {
             <Select
               options={typeArray}
               value={editType}
-              setValue={setEditType}
+              setValue={handleTypeChange}
             />
           </div>
           <div className="input-label w-1/2">
@@ -91,7 +99,7 @@ const EditTransaction = ({ transaction, setIsEditOpen }) => {
           <div className="input-label w-1/2">
             <label htmlFor="category">Category</label>
             <Select
-              options={categoryArray}
+              options={getFilteredCategories(editType)}
               value={editCategory}
               setValue={setEditCategory}
             />
