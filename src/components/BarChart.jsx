@@ -1,6 +1,17 @@
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js"
 import { Bar } from "react-chartjs-2"
+import getMonthlyTotals from "../utils/getMonthlyTotals"
+import store from "../store"
+
+
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
+
+const state = store.getState()
+const transactions = state.history.transactions
+const rates = state.ratesCache.cache
+const currency = state.settings.currency
+const monthlyTotals = getMonthlyTotals(transactions, rates, currency)
+console.log(monthlyTotals)
 
 const data = {
     labels: ['Jan', 'Feb', 'Mar'],
