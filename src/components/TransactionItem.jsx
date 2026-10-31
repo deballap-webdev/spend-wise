@@ -18,6 +18,9 @@ const TransactionItem = ({ transaction }) => {
   const currency = useStoreState(state => state.settings.currency)
   const ratesCache = useStoreState(state => state.ratesCache.cache)
   const targetCurrencyRate = ratesCache[transaction.date][currency]
+  const convAmount = convCurrency(transaction.amount, currency, transaction.rateToUSD, targetCurrencyRate).toLocaleString()
+
+
   return (
     <div className="bg-CARD-BG border-b-BORDER flex border-collapse justify-between border-b p-4 text-[0.78em]">
       <div className="flex w-3/10 items-center gap-2">
@@ -35,7 +38,7 @@ const TransactionItem = ({ transaction }) => {
       <div className="w-1/5 text-[0.7rem]">
         {dateTime ? format(dateTime, "d MMM yyyy") : "N/A"}
       </div>
-      <div className="w-1/5">{convCurrency(transaction.amount, currency, transaction.rateToUSD, targetCurrencyRate).toLocaleString()}</div>
+      <div className="w-1/5">{convAmount}</div>
       <div className="flex w-1/10">
         <button onClick={() => setIsEditOpen(true)}>
           <LuPencil />
@@ -57,6 +60,7 @@ const TransactionItem = ({ transaction }) => {
         <EditTransaction
           transaction={transaction}
           setIsEditOpen={setIsEditOpen}
+          convAmount={convAmount}
         />
       )}
     </div>

@@ -3,13 +3,14 @@ import Select from "../Select";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import { useState } from "react"
 import handleAmount from "../../utils/handleAmount";
-const EditBudget = ({ budget, setIsEditBudgetOpen }) => {
+const EditBudget = ({ budget, setIsEditBudgetOpen, convLimit }) => {
   const categoryArray = useStoreState(state => state.categoryArray
   )
   const [category, setCategory] = useState(budget.category)
-  const [limit, setLimit] = useState(budget.limit)
+  const [limit, setLimit] = useState(convLimit)
   const [startDate, setStartDate] = useState(budget.startDate)
   const editBudget = useStoreActions(actions => actions.allocations.editBudget)
+  const symbol = useStoreState(state => state.symbol)
   const handleSubmit = (e) => {
     e.preventDefault()
     const updatedBudget = {
@@ -39,7 +40,7 @@ const EditBudget = ({ budget, setIsEditBudgetOpen }) => {
         </div>
         <div className="flex gap-3">
           <div className="input-label">
-            <label htmlFor="limit">Monthlt Limit</label>
+            <label htmlFor="limit">Monthlt Limit {`(${symbol})`}</label>
             <input type="text" name="limit" id="limit" value={limit} onChange={(e) => setLimit(handleAmount(e))} />
           </div>
           <div className="input-label">

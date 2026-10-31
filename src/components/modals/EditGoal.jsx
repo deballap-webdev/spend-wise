@@ -1,13 +1,14 @@
 import { useState } from "react";
 import handleAmount from "../../utils/handleAmount";
 import { LuX, LuCheck } from "react-icons/lu";
-import { useStoreActions } from "easy-peasy";
-const EditGoal = ({ setIsEditGoalOpen, goal }) => {
+import { useStoreActions, useStoreState } from "easy-peasy";
+const EditGoal = ({ setIsEditGoalOpen, goal, convSavedAmount, convTargetAmount }) => {
   const [name, setName] = useState(goal.name);
-  const [targetAmount, setTargetAmount] = useState(goal.targetAmount);
-  const [savedAmount, setSavedAmount] = useState(goal.savedAmount);
+  const [targetAmount, setTargetAmount] = useState(convTargetAmount);
+  const [savedAmount, setSavedAmount] = useState(convSavedAmount);
   const [targetDate, setTargetDate] = useState(goal.targetDate);
   const editGoal = useStoreActions((actions) => actions.targets.editGoal);
+  const symbol = useStoreState(state => state.symbol)
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedGoal = {
@@ -59,7 +60,7 @@ const EditGoal = ({ setIsEditGoalOpen, goal }) => {
         <div className="flex gap-3">
           <div className="flex w-1/2 flex-col gap-1">
             <label htmlFor="targetAmount" className="text-[0.8rem] font-medium">
-              Target Amount{" "}
+              Target Amount {`(${symbol})`}
             </label>
             <input
               type="text"
@@ -74,7 +75,7 @@ const EditGoal = ({ setIsEditGoalOpen, goal }) => {
           </div>
           <div className="flex w-1/2 flex-col gap-1">
             <label htmlFor="savedAmount" className="text-[0.8rem] font-medium">
-              Current Saved Amount
+              Current Saved Amount {`(${symbol})`}
             </label>
             <input
               type="text"

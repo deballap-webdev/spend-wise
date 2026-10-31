@@ -1,11 +1,12 @@
 import { useStoreActions, useStoreState } from "easy-peasy";
 import Select from "./Select";
 const Preferences = () => {
-  const { currency } = useStoreState((state) => state.settings);
   const currencyArray = [{ value: "NGN", label: "₦ — Nigerian Naira" }, { value: "EUR", label: "€ — European Euro" }, { value: "USD", label: "$ — United States Dollar" }]
   const categoryArray = useStoreState(state => state.categoryArray)
   const isDark = useStoreState((state) => state.settings.isDark)
   const setIsDark = useStoreActions((actions) => actions.settings.setIsDark)
+  const currency = useStoreState(state => state.settings.currency)
+  const setCurrency = useStoreActions(actions => actions.settings.setCurrency)
   return (
     <div className="bg-CARD-BG  rounded-md border border-BORDER max-w-200">
       <div className="font-bold border-b border-b-BORDER p-3">Preferences</div>
@@ -17,7 +18,7 @@ const Preferences = () => {
           </p>
         </div>
         <div>
-          <Select options={currencyArray} />
+          <Select options={currencyArray} value={currency} setValue={setCurrency} />
         </div>
       </div>
       <div className="p-3 border-b border-b-BORDER flex justify-between items-center">

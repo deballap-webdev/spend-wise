@@ -9,6 +9,7 @@ const CreateGoal = ({ setIsCreateGoalOpen }) => {
   const [targetDate, setTargetDate] = useState("");
   const addGoal = useStoreActions((actions) => actions.targets.addGoal);
   const currency = useStoreState(state => state.settings.currency)
+  const symbol = useStoreState(state => state.symbol)
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newGoal = {
@@ -63,7 +64,7 @@ const CreateGoal = ({ setIsCreateGoalOpen }) => {
         <div className="flex gap-3">
           <div className="flex w-1/2 flex-col gap-1">
             <label htmlFor="targetAmount" className="text-[0.8rem] font-medium">
-              Target Amount{" "}
+              Target Amount {`(${symbol})`}
             </label>
             <input
               type="text"
@@ -78,7 +79,7 @@ const CreateGoal = ({ setIsCreateGoalOpen }) => {
           </div>
           <div className="flex w-1/2 flex-col gap-1">
             <label htmlFor="savedAmount" className="text-[0.8rem] font-medium">
-              Current Saved Amount
+              Current Saved Amount {`(${symbol})`}
             </label>
             <input
               type="text"

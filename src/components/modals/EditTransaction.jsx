@@ -1,25 +1,25 @@
 import { useState } from "react";
 import { LuX, LuCheck } from "react-icons/lu";
 import Select from "../Select";
-import { useStoreActions, useStoreState } from "easy-peasy";
+import { useStoreActions, useStoreState } from
+  "easy-peasy";
 import currencyApi from "../../api/currencyApi";
 
-const EditTransaction = ({ transaction, setIsEditOpen }) => {
+
+const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
   const [editType, setEditType] = useState(transaction.type);
   const [editDesc, setEditDesc] = useState(transaction.description);
   const [editCategory, setEditCategory] = useState(transaction.category);
   const [editNote, setEditNote] = useState(transaction.note);
-  const [editAmount, setEditAmount] = useState(transaction.amount);
+  const [editAmount, setEditAmount] = useState(convAmount);
   const [editDate, setEditDate] = useState(transaction.date);
-  const categoryArray = useStoreState((state) => state.categoryArray);
   const typeArray = useStoreState((state) => state.typeArray);
   const editTransaction = useStoreActions((actions) => actions.history.editTransaction)
   const currency = useStoreState(state => state.settings.currency)
   const setRateCache = useStoreActions(actions => actions.ratesCache.setRateCache)
   const getFilteredCategories = useStoreState(state => state.getFilteredCategories)
-
   const defaultCategory = useStoreState(state => state.defaultCategory)
-
+  const symbol = useStoreState(state => state.symbol)
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedTransaction = {
@@ -74,7 +74,7 @@ const EditTransaction = ({ transaction, setIsEditOpen }) => {
             />
           </div>
           <div className="input-label w-1/2">
-            <label htmlFor="amount">Amount</label>
+            <label htmlFor="amount">Amount {`(${symbol})`}</label>
             <input
               type="text"
               id="amount"

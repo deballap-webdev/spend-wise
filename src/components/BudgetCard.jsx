@@ -14,7 +14,7 @@ const BudgetCard = ({ budget }) => {
   const getTotalForCategory = useStoreState(state => state.getTotalForCategory)
   const amount = getTotalForCategory(budget.category)
   const symbol = useStoreState(state => state.symbol)
-  const percent = parseFloat(((amount / budget.limit) * 100).toFixed(2));
+
   const [isEditBudgetOpen, setIsEditBugetOPen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const deleteBudget = useStoreActions(actions => actions.allocations.deleteBudget)
@@ -23,6 +23,7 @@ const BudgetCard = ({ budget }) => {
   const rateToUSD = cache[latestDate][budget.currency]
   const targetRate = cache[latestDate][currency]
   const convLimit = convCurrency(budget.limit, currency, rateToUSD, targetRate)
+  const percent = parseFloat(((amount / convLimit) * 100).toFixed(2));
   return (
     <div className="bg-CARD-BG p-3 rounded-md w-100  border border-BORDER flex flex-col gap-3">
       <div className="justify-between flex items-center flex-wrap">
@@ -46,7 +47,7 @@ const BudgetCard = ({ budget }) => {
         <p className="text-[0.8rem]"> {amount <= convLimit ? `${symbol}${(convLimit - amount).toLocaleString()} remaining` : `${symbol}${(amount - convLimit).toLocaleString()} over budget`}</p>
       </div>
       <p className="text-LIGHT-TEXT text-[0.8rem]">Start {format(parseISO(budget.startDate), "d MMM yyyy")}</p>
-      {isEditBudgetOpen && <EditBudget setIsEditBudgetOpen={setIsEditBugetOPen} budget={budget} />}
+      {isEditBudgetOpen && <EditBudget setIsEditBudgetOpen={setIsEditBugetOPen} budget={budget} convLimit={convLimit} />}
       {isDeleteOpen && <Delete deleteFunction={deleteBudget} functionParam={budget.id} description={properCase(`${budget.category} Budget`)} headText={properCase(`${budget.category} Budget`)} setIsDeleteOpen={setIsDeleteOpen} />}
     </div>
   );

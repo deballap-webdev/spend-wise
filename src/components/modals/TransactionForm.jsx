@@ -130,6 +130,7 @@ const TransactionForm = ({ setIsModalOpen }) => {
             <button
               type="button"
               className="border-BORDER rounded-md border px-2 font-medium shadow"
+              onClick={() => setIsModalOpen(false)}
             >
               Cancel
             </button>
