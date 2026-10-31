@@ -3,7 +3,7 @@ import { LuX } from "react-icons/lu"
 import { useState } from "react"
 import handleAmount from "../../utils/handleAmount"
 import convCurrency from "../../utils/convCurrency"
-
+import useEscapeModal from "../../hooks/useEscapeModal"
 const AddContribution = ({ goal, setIsAddContOpen }) => {
     const symbol = useStoreState(state => state.symbol)
     const [amount, setAmount] = useState("")
@@ -27,6 +27,7 @@ const AddContribution = ({ goal, setIsAddContOpen }) => {
         setIsAddContOpen(false)
         setInvalid(false)
     }
+    useEscapeModal(true, setIsAddContOpen)
     return (
         <div className="backDrop">
             <form className="bg-BODY-BG flex flex-col gap-3 rounded-md p-3 w-100" onSubmit={(e) => handleSubmit(e)}>

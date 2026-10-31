@@ -2,6 +2,7 @@ import { useStoreActions, useStoreState } from "easy-peasy";
 import Select from "../Select";
 import { LuCheck, LuX } from "react-icons/lu";
 import { useState } from "react";
+import useEscapeModal from "../../hooks/useEscapeModal";
 
 const AddBudget = ({ setIsAddBudgetOpen }) => {
   const getFilteredCategories = useStoreState((state) => state.getFilteredCategories);
@@ -28,6 +29,8 @@ const AddBudget = ({ setIsAddBudgetOpen }) => {
     addBudget(newBudget)
     setIsAddBudgetOpen(false)
   }
+  useEscapeModal(true, setIsAddBudgetOpen)
+
   return (
     <div
       className="backDrop"

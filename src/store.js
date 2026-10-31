@@ -244,5 +244,45 @@ export default createStore({
   }),
   latestDate: computed(state => Object.keys(state.ratesCache.cache).sort().pop()),
   defaultCategory: "food",
+
+  incomeExpenseHistory: {
+    jan: {
+      income: ""
+    },
+    mar: {
+      income: "",
+      expense: ""
+    },
+    apr: {
+      income: "",
+      expense: "",
+    },
+    jun: {
+      income: "",
+      expense: ""
+    },
+    jul: {
+      income: "",
+      expense: ""
+    },
+    aug: {
+      income: "",
+      expense: ""
+    },
+    sept: {
+      income: "",
+      expense: "",
+    },
+    nov: {
+      income: "",
+      expense: ""
+    },
+    dec: {
+      income: "",
+      expense: ""
+    }
+  },
+
 }
+
 );

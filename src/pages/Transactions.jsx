@@ -1,5 +1,5 @@
 import useActiveComponent from "../hooks/useActiveOutlet";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useStoreState, useStoreRehydrated } from "easy-peasy";
 import { isThisWeek, isThisMonth, isToday } from "date-fns";
 import { LuSearch, LuDownload } from "react-icons/lu";
@@ -9,6 +9,7 @@ import Select from "../components/Select";
 import { parseISO } from "date-fns";
 import properCase from "../utils/properCase";
 import Loading from "../components/empty/Loading";
+import useEscapeModal from "../hooks/useEscapeModal";
 const Transactions = () => {
   useActiveComponent("Transactions");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,16 +21,7 @@ const Transactions = () => {
   const [type, setType] = useState("All Types");
   const [dateRange, setDateRange] = useState("All Dates");
   const isRehydrated = useStoreRehydrated()
-
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape") setIsModalOpen(false);
-    };
-    if (isModalOpen) {
-      window.addEventListener("keydown", handleKeyDown);
-    }
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isModalOpen]);
+  useEscapeModal(isModalOpen, setIsModalOpen)
   const [pageNumber, setPageNumber] = useState(1);
   const filteredTransactions = transactions.filter((transaction) => {
     const matchesSearch =

@@ -1,7 +1,9 @@
 import { useState } from "react";
 import handleAmount from "../../utils/handleAmount";
 import { LuX, LuCheck } from "react-icons/lu";
-import { useStoreActions, useStoreState } from "easy-peasy";
+import { useStoreActions, useStoreState } from
+  "easy-peasy";
+import useEscapeModal from "../../hooks/useEscapeModal";
 const EditGoal = ({ setIsEditGoalOpen, goal, convSavedAmount, convTargetAmount }) => {
   const [name, setName] = useState(goal.name);
   const [targetAmount, setTargetAmount] = useState(convTargetAmount);
@@ -22,6 +24,7 @@ const EditGoal = ({ setIsEditGoalOpen, goal, convSavedAmount, convTargetAmount }
     editGoal(updatedGoal);
     setIsEditGoalOpen(false);
   };
+  useEscapeModal(true, setIsEditGoalOpen)
   return (
     <div
       className="backDrop"

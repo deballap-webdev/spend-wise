@@ -6,14 +6,12 @@ import BudgetCard from "../components/BudgetCard";
 import EmptyBudget from "../components/empty/EmptyBudget";
 import GoalCard from "../components/GoalCard";
 import Loading from "../components/empty/Loading";
-
 const Budgets = () => {
   useActiveComponent("Budgets");
   const [isAddBudgetOpen, setIsAddBudgetOpen] = useState(false);
   const budgets = useStoreState((state) => state.allocations.budgets);
   const goals = useStoreState(state => state.targets.goals)
   const isRehydrated = useStoreRehydrated()
-
   if (!isRehydrated) return <Loading />
   return (
     <main className="bg-BODY-BG grow p-4">

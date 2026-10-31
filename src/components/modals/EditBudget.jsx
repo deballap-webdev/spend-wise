@@ -3,6 +3,7 @@ import Select from "../Select";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import { useState } from "react"
 import handleAmount from "../../utils/handleAmount";
+import useEscapeModal from "../../hooks/useEscapeModal";
 const EditBudget = ({ budget, setIsEditBudgetOpen, convLimit }) => {
   const categoryArray = useStoreState(state => state.categoryArray
   )
@@ -23,6 +24,7 @@ const EditBudget = ({ budget, setIsEditBudgetOpen, convLimit }) => {
     editBudget(updatedBudget)
     setIsEditBudgetOpen(false)
   }
+  useEscapeModal(true, setIsEditBudgetOpen)
   return (
     <div className="backDrop" onClick={(e) => {
       if (e.target === e.currentTarget) setIsEditBudgetOpen(false)

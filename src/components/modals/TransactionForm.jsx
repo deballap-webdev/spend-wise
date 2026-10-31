@@ -4,6 +4,7 @@ import Select from "../Select";
 import { LuCheck, LuX } from "react-icons/lu";
 import handleAmount from "../../utils/handleAmount";
 import currencyApi from "../../api/currencyApi";
+import useEscapeModal from "../../hooks/useEscapeModal";
 const TransactionForm = ({ setIsModalOpen }) => {
   const [amount, setAmount] = useState("");
   const symbol = useStoreState((state) => state.symbol);
@@ -44,6 +45,8 @@ const TransactionForm = ({ setIsModalOpen }) => {
     setCategory(validCategories.some(cat => cat.value === defaultCategory) ? defaultCategory : validCategories[0]?.value || "")
     setType(value)
   }
+
+  useEscapeModal(true, setIsModalOpen)
   return (
     <div
       className="backDrop"

@@ -1,4 +1,5 @@
 import { LuTrash2, LuX } from "react-icons/lu";
+import useEscapeModal from "../../hooks/useEscapeModal";
 const Delete = ({
   description,
   setIsDeleteOpen,
@@ -6,6 +7,8 @@ const Delete = ({
   functionParam,
   headText,
 }) => {
+  useEscapeModal(true, setIsDeleteOpen)
+
   return (
     <div
       className="backDrop"

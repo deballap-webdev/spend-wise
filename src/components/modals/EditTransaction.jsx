@@ -4,7 +4,7 @@ import Select from "../Select";
 import { useStoreActions, useStoreState } from
   "easy-peasy";
 import currencyApi from "../../api/currencyApi";
-
+import useEscapeModal from "../../hooks/useEscapeModal";
 
 const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
   const [editType, setEditType] = useState(transaction.type);
@@ -43,6 +43,7 @@ const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
     setEditCategory(validCategories.some(cat => cat.value === defaultCategory) ? defaultCategory : validCategories[0]?.value || "")
     setEditType(value)
   }
+  useEscapeModal(true, setIsEditOpen)
 
   return (
     <div

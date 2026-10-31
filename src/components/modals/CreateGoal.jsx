@@ -2,6 +2,7 @@ import { LuCheck, LuX } from "react-icons/lu";
 import handleAmount from "../../utils/handleAmount";
 import { useState } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
+import useEscapeModal from "../../hooks/useEscapeModal";
 const CreateGoal = ({ setIsCreateGoalOpen }) => {
   const [targetAmount, setTargetAmount] = useState("");
   const [savedAmount, setSavedAmount] = useState("");
@@ -23,7 +24,7 @@ const CreateGoal = ({ setIsCreateGoalOpen }) => {
     addGoal(newGoal);
     setIsCreateGoalOpen(false);
   };
-
+  useEscapeModal(true, setIsCreateGoalOpen)
   return (
     <div
       className="backDrop"
