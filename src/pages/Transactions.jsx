@@ -15,7 +15,7 @@ const Transactions = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const typeArray = useStoreState((state) => state.typeArray);
   const categoryArray = useStoreState((state) => state.categoryArray);
-  const transactions = useStoreState((state) => state.history.transactions);
+  const transactions = useStoreState((state) => state.transactionsSortedByDate);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All Categories");
   const [type, setType] = useState("All Types");

@@ -12,7 +12,6 @@ const ExpenseSummary = () => {
       <div className="flex-col flex gap-3 py-4">
 
         <ProgressBar category="Food" color="#00a979" />
-
         <ProgressBar category="Entertainment" color="#a975ce" />
         <ProgressBar category="Bills" color="#dfa635" />
         <ProgressBar category="Transport" color="#3496de" />

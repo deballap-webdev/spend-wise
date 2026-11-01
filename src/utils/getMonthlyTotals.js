@@ -57,9 +57,9 @@ const getMonthlyTotals = (trans, rates, currency) => {
     validTrans.forEach((tran) => {
         const myDate = new Date(tran.date)
         const targetRate = rates[tran.date][tran.currency]
+        const monthlyTotalsClone = { ...monthlyTotals }
         const month = monthArray[myDate.getMonth()]
-        monthlyTotals[month][tran.type] += convCurrency(tran.amount, currency, tran.rateToUSD, targetRate)
-        console.log(currency)
+        monthlyTotalsClone[month][tran.type] += convCurrency(tran.amount, currency, tran.rateToUSD, targetRate)
     })
     return monthlyTotals
 }
