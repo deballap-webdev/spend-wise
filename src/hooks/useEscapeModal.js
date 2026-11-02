@@ -7,6 +7,7 @@ const useEscapeModal = (isModalOpen, setIsModalOpen) => {
         if (isModalOpen) {
             window.addEventListener("keydown", handleKeyDown);
         }
+        console.log(isModalOpen)
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, [isModalOpen, setIsModalOpen]);
 }
