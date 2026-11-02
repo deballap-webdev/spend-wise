@@ -5,9 +5,6 @@ import { useStoreState } from "easy-peasy"
 import formatNumber from "../utils/formatNumber"
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
-
-
-
 const BarChart = () => {
     const transactions = useStoreState(state => state.history.transactions)
     const rates = useStoreState(state => state.ratesCache.cache)
