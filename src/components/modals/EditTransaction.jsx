@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LuX, LuCheck } from "react-icons/lu";
+import { LuX, LuCheck, LuRefreshCcw } from "react-icons/lu";
 import Select from "../Select";
 import { useStoreActions, useStoreState } from
   "easy-peasy";
@@ -20,7 +20,10 @@ const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
   const getFilteredCategories = useStoreState(state => state.getFilteredCategories)
   const defaultCategory = useStoreState(state => state.defaultCategory)
   const symbol = useStoreState(state => state.symbol)
+  const [isSaving, setIsSaving] = useState(false)
+  const [fetchError, setFetchError] = useState(null)
   const handleSubmit = async (e) => {
+    setIsSaving(true)
     e.preventDefault();
     const updatedTransaction = {
       note: editNote,
@@ -33,23 +36,30 @@ const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
       currency: transaction.currency
     };
     const rates = await currencyApi(editDate, 'ngn,eur')
+    if (rates.err) {
+      rates.message ? setFetchError(rates.message) : rates.data ? setFetchError(rates.data) : setFetchError("Something went wrong")
+      setIsSaving(false)
+      return
+    }
     const rateToUSD = currency === "USD" ? 1 : rates[currency]
     setRateCache({ [editDate]: rates })
     editTransaction({ ...updatedTransaction, rateToUSD })
     setIsEditOpen(false);
+    setIsSaving(false)
+    setFetchError(null)
   };
   const handleTypeChange = (value) => {
     const validCategories = getFilteredCategories(value)
     setEditCategory(validCategories.some(cat => cat.value === defaultCategory) ? defaultCategory : validCategories[0]?.value || "")
     setEditType(value)
   }
-  useEscapeModal(true, setIsEditOpen)
+  useEscapeModal(true, setIsEditOpen, isSaving)
 
   return (
     <div
       className="backDrop"
       onClick={(e) => {
-        if (e.target === e.currentTarget) setIsEditOpen(false);
+        if ((e.target === e.currentTarget) && !isSaving) setIsEditOpen(false);
       }}
     >
       <form
@@ -58,10 +68,11 @@ const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
       >
         <div className="flex justify-between">
           <h3 className="font-bold">Edit Transaction</h3>
-          <button type="button" onClick={() => setIsEditOpen(false)}>
+          <button type="button" onClick={() => setIsEditOpen(false)} disabled={isSaving}>
             <LuX />
           </button>
         </div>
+        {fetchError && <p className="text-red-500">{fetchError} please try again</p>}
         <p className="text-LIGHT-TEXT text-[0.8rem]">
           Update the details of your transaction
         </p>
@@ -72,6 +83,7 @@ const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
               options={typeArray}
               value={editType}
               setValue={handleTypeChange}
+              disabled={isSaving}
             />
           </div>
           <div className="input-label w-1/2">
@@ -82,6 +94,7 @@ const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
               name="amount"
               value={editAmount}
               onChange={(e) => setEditAmount(e.target.value)}
+              disabled={isSaving}
             />
           </div>
         </div>
@@ -94,6 +107,7 @@ const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
             required
             value={editDesc}
             onChange={(e) => setEditDesc(e.target.value)}
+            disabled={isSaving}
           />
         </div>
         <div className="flex gap-3">
@@ -103,6 +117,7 @@ const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
               options={getFilteredCategories(editType)}
               value={editCategory}
               setValue={setEditCategory}
+              disabled={isSaving}
             />
           </div>
 
@@ -114,6 +129,7 @@ const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
               id="date"
               value={editDate}
               onChange={(e) => setEditDate(e.target.value)}
+              disabled={isSaving}
             />
           </div>
         </div>
@@ -129,6 +145,7 @@ const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
             rows="3"
             value={editNote}
             onChange={(e) => setEditNote(e.target.value)}
+            disabled={isSaving}
           ></textarea>
         </div>
         <div className="mt-3 flex justify-end gap-2">
@@ -136,15 +153,17 @@ const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
             type="button"
             className="border-BORDER rounded-md border px-2 font-medium shadow"
             onClick={() => setIsEditOpen(false)}
+            disabled={isSaving}
           >
             Cancel
           </button>
           <button
             type="submit"
             className="bg-NAV-ACTIVE flex items-center justify-center gap-2 rounded-md px-3 py-1 text-[0.9rem] font-medium text-white"
+            disabled={isSaving}
           >
-            <LuCheck />
-            Save Changes
+            {isSaving ? <><LuRefreshCcw /> Saving... </> : <><LuCheck />
+              Save Changes</>}
           </button>
         </div>
       </form>

@@ -40,7 +40,7 @@ const TransactionForm = ({ setIsModalOpen }) => {
     const rates = await currencyApi(date, 'ngn,eur')
     if (rates.err) {
       setIsAdding(false)
-      console.log(rates)
+      setFetchError(rates.message)
       return
     }
     const rateToUSD = currency === "USD" ? 1 : rates[currency]
@@ -48,6 +48,7 @@ const TransactionForm = ({ setIsModalOpen }) => {
     addTransaction({ ...newTransaction, rateToUSD })
     setIsModalOpen(false);
     setIsAdding(false)
+    setFetchError(null)
   };
 
   const handleTypeChange = (value) => {
@@ -56,12 +57,12 @@ const TransactionForm = ({ setIsModalOpen }) => {
     setType(value)
   }
 
-  useEscapeModal(true, setIsModalOpen)
+  useEscapeModal(true, setIsModalOpen, isAdding)
   return (
     <div
       className="backDrop"
       onClick={(e) => {
-        if (e.target === e.currentTarget) setIsModalOpen(false);
+        if ((e.target === e.currentTarget) && !isAdding) setIsModalOpen(false);
       }}
     >
       <form
@@ -73,14 +74,16 @@ const TransactionForm = ({ setIsModalOpen }) => {
           <button
             className="text-[0.7rem] hover:cursor-pointer"
             onClick={() => setIsModalOpen(false)}
+            disabled={isAdding}
           >
             <LuX />
           </button>
         </div>
+        {fetchError && <p className="text-red-500">{fetchError} please try again</p>}
         <div className="flex gap-3">
           <div className="input-label w-1/2">
             <label htmlFor="type">Type</label>
-            <Select options={typeArray} value={type} setValue={handleTypeChange} />
+            <Select options={typeArray} value={type} setValue={handleTypeChange} disabled={isAdding} />
           </div>
           <div className="input-label w-1/2">
             <label htmlFor="amount">{`Amount (${symbol})`}</label>
@@ -91,6 +94,7 @@ const TransactionForm = ({ setIsModalOpen }) => {
               inputMode="decimal"
               onChange={(e) => setAmount(handleAmount(e))}
               required
+              disabled={isAdding}
             />
           </div>
         </div>
@@ -103,6 +107,7 @@ const TransactionForm = ({ setIsModalOpen }) => {
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
             required
+            disabled={isAdding}
           />
         </div>
         <div className="flex gap-3">
@@ -113,6 +118,8 @@ const TransactionForm = ({ setIsModalOpen }) => {
               options={getFilteredCategories(type)}
               value={category}
               setValue={setCategory}
+              disabled={isAdding}
+
             />
           </div>
           <div className="input-label w-1/2">
@@ -124,6 +131,7 @@ const TransactionForm = ({ setIsModalOpen }) => {
               value={date}
               onChange={(e) => setDate(e.target.value)}
               required
+              disabled={isAdding}
             />
           </div>
         </div>
@@ -138,18 +146,21 @@ const TransactionForm = ({ setIsModalOpen }) => {
             rows="4"
             value={note}
             onChange={(e) => setNote(e.target.value)}
+            disabled={isAdding}
           ></textarea>
           <div className="mt-3 flex justify-end gap-2">
             <button
               type="button"
               className="border-BORDER rounded-md border px-2 font-medium shadow"
               onClick={() => setIsModalOpen(false)}
+              disabled={isAdding}
             >
               Cancel
             </button>
             <button
               type="submit"
               className="bg-NAV-ACTIVE flex items-center justify-center gap-2 rounded-md px-3 py-1 text-[0.9rem] font-medium text-white"
+              disabled={isAdding}
             >
               {isAdding ? <> <LuRefreshCcw className="animate-spin" />
                 Adding... </> : <><LuCheck /> Add Transaction</>}

@@ -10,7 +10,6 @@ const ClearAll = () => {
             <LuX />
           </button>
         </div>
-
         <p className="text-LIGHT-TEXT text-[0.8rem]">
           This removes all transactions, budgets, and goal contributiond for
           this session. This cannot be undone

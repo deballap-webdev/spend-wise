@@ -1,15 +1,15 @@
 import { useEffect } from "react";
-const useEscapeModal = (isModalOpen, setIsModalOpen) => {
+const useEscapeModal = (isModalOpen, setIsModalOpen, disabled) => {
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === "Escape") setIsModalOpen(false);
         };
-        if (isModalOpen) {
+        if (isModalOpen && !disabled) {
             window.addEventListener("keydown", handleKeyDown);
         }
         console.log(isModalOpen)
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [isModalOpen, setIsModalOpen]);
+    }, [isModalOpen, setIsModalOpen, disabled]);
 }
 
 export default useEscapeModal
