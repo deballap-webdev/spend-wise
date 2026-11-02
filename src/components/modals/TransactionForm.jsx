@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import Select from "../Select";
-import { LuCheck, LuX } from "react-icons/lu";
+import { LuCheck, LuX, LuRefreshCcw } from "react-icons/lu";
 import handleAmount from "../../utils/handleAmount";
 import currencyApi from "../../api/currencyApi";
 import useEscapeModal from "../../hooks/useEscapeModal";
@@ -21,8 +21,11 @@ const TransactionForm = ({ setIsModalOpen }) => {
   const validCategories = getFilteredCategories(type)
   const initialCat = (validCategories.some(cat => cat.value === defaultCategory) ? defaultCategory : validCategories[0]?.value || "")
   const [category, setCategory] = useState(initialCat);
+  const [isAdding, setIsAdding] = useState(false)
+  const [fetchError, setFetchError] = useState(null)
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsAdding(true)
     const newTransaction = {
       category,
       description: desc,
@@ -33,11 +36,18 @@ const TransactionForm = ({ setIsModalOpen }) => {
       currency,
       id: Date.now(),
     };
+    /* const ratesDate = Date(date) <= Date.now() ?  date : Date.now() */
     const rates = await currencyApi(date, 'ngn,eur')
+    if (rates.err) {
+      setIsAdding(false)
+      console.log(rates)
+      return
+    }
     const rateToUSD = currency === "USD" ? 1 : rates[currency]
     setRateCache({ [date]: rates })
     addTransaction({ ...newTransaction, rateToUSD })
     setIsModalOpen(false);
+    setIsAdding(false)
   };
 
   const handleTypeChange = (value) => {
@@ -141,8 +151,8 @@ const TransactionForm = ({ setIsModalOpen }) => {
               type="submit"
               className="bg-NAV-ACTIVE flex items-center justify-center gap-2 rounded-md px-3 py-1 text-[0.9rem] font-medium text-white"
             >
-              <LuCheck />
-              Add Transaction
+              {isAdding ? <> <LuRefreshCcw className="animate-spin" />
+                Adding... </> : <><LuCheck /> Add Transaction</>}
             </button>
           </div>
         </div>

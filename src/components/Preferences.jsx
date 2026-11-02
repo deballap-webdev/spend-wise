@@ -26,7 +26,7 @@ const Preferences = () => {
           <p className="font-bold">Dark / Light Mode</p>
           <p className="text-[0.7rem] text-LIGHT-TEXT">A bright clean view of your finances</p>
         </div>
-        <label for="toggleColorTheme" className="relative inline-block w-15 h-8.5 "  ><input type="checkbox" value="" className="sr-only peer" checked={isDark} id="toggleColorTheme" />
+        <label htmlFor="toggleColorTheme" className="relative inline-block w-15 h-8.5 "  ><input type="checkbox" value="" className="sr-only peer" checked={isDark} id="toggleColorTheme" />
           <div className="absolute inset-0 bg-gray-300 rounded-[34px] h-8.5 w-15 transition-colors duration-400 peer-checked:bg-[#2196f3]">
           </div>
           <button className="absolute h-6.5 w-6.5 left-1 bottom-1 bg-white rounded-full transition-transform duration-400 peer-checked:translate-x-6.5 cursor-pointer" onClick={() => setIsDark(!isDark)} ></button>

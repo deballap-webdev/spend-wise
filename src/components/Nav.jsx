@@ -33,7 +33,7 @@ const Nav = () => {
             </div>
             <button className="text-xl h-12 w-12  place-content-center rounded-md cursor-pointer grid sm:hidden " onClick={() => setIsNavOpen(false)}><LuX /></button>
           </div>
-          <div>
+          <div className="self-start">
             {!isCollapsed && <h3 className="text-LIGHT-TEXT mb-4 w-full px-4 text-[0.8rem]">
               workspace
             </h3>}

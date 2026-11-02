@@ -18,8 +18,18 @@ const currencyApi = async (date, quote) => {
             console.log(err.response.data)
             console.log(err.response.status)
             console.log(err.response.headers)
+            return {
+                data: err.response.data,
+                status: err.response.status,
+                headers: err.response.headers,
+                err: true
+            }
         } else {
-            console.log(err.stack)
+            return {
+                stack: err.stack,
+                message: err.message,
+                err: true
+            }
         }
     }
 }
