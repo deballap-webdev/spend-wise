@@ -243,7 +243,7 @@ export default createStore({
   }),
   latestDate: computed(state => Object.keys(state.ratesCache.cache).sort().pop()),
   defaultCategory: "food",
-  isNavOpen: true,
+  isNavOpen: false,
   setIsNavOpen: action((state, payload) => {
     state.isNavOpen = payload
   })

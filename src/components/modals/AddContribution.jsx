@@ -15,7 +15,7 @@ const AddContribution = ({ goal, setIsAddContOpen }) => {
     const rateToUSD = cache[latestDate][goal.currency]
     const targetRate = cache[latestDate][currency]
     const convSavedAmount = convCurrency(goal.savedAmount, currency, rateToUSD, targetRate)
-    const convtargetAmount = convCurrency(goal.targetAount, currency, rateToUSD, targetRate)
+    const convtargetAmount = convCurrency(goal.targetAmount, currency, rateToUSD, targetRate)
     const handleSubmit = (e) => {
         e.preventDefault()
         if (amount <= 0) {

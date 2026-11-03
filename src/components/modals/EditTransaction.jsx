@@ -5,6 +5,7 @@ import { useStoreActions, useStoreState } from
   "easy-peasy";
 import currencyApi from "../../api/currencyApi";
 import useEscapeModal from "../../hooks/useEscapeModal";
+import handleAmount from "../../utils/handleAmount";
 
 const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
   const [editType, setEditType] = useState(transaction.type);
@@ -35,12 +36,15 @@ const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
       id: transaction.id,
       currency: transaction.currency
     };
-    const rates = await currencyApi(editDate, 'ngn,eur')
+    const todayStr = new Date().toISOString().split('T')[0]
+    const ratesDate = todayStr <= editDate ? editDate : todayStr
+    const rates = await currencyApi(ratesDate, 'ngn,eur')
     if (rates.err) {
-      rates.message ? setFetchError(rates.message) : rates.data ? setFetchError(rates.data) : setFetchError("Something went wrong")
+      rates.message ? setFetchError(rates.message) : rates.data ? setFetchError(rates.data.message) : setFetchError("Something went wrong")
       setIsSaving(false)
       return
     }
+
     const rateToUSD = currency === "USD" ? 1 : rates[currency]
     setRateCache({ [editDate]: rates })
     editTransaction({ ...updatedTransaction, rateToUSD })
@@ -93,7 +97,7 @@ const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
               id="amount"
               name="amount"
               value={editAmount}
-              onChange={(e) => setEditAmount(e.target.value)}
+              onChange={(e) => setEditAmount(handleAmount(e))}
               disabled={isSaving}
             />
           </div>

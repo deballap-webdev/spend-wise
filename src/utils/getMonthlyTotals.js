@@ -51,17 +51,29 @@ const monthlyTotals = {
     },
 }
 
+const deepClone = (obj) => {
+    if (typeof obj !== "object" || obj === null) return obj;
+    const container = Array.isArray(obj) ? [] : {}
+    for (let key in obj) {
+        const value = obj[key]
+        container[key] = deepClone(value)
+    }
+    return container;
+}
+
 const getMonthlyTotals = (trans, rates, currency) => {
     const validTrans = (trans).filter(tran => isThisYear(parseISO(tran.date)))
     const monthArray = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
     validTrans.forEach((tran) => {
         const myDate = new Date(tran.date)
         const targetRate = rates[tran.date][tran.currency]
-        const monthlyTotalsClone = { ...monthlyTotals }
+        const monthlyTotalsClone = deepClone(monthlyTotals)
         const month = monthArray[myDate.getMonth()]
         monthlyTotalsClone[month][tran.type] += convCurrency(tran.amount, currency, tran.rateToUSD, targetRate)
     })
-    return monthlyTotals
+    return monthlyTotalsClone;
 }
+
+
 
 export default getMonthlyTotals

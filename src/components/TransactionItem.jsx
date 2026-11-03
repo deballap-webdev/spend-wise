@@ -8,7 +8,6 @@ import { format, parseISO } from "date-fns";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import convCurrency from "../utils/convCurrency";
 const TransactionItem = ({ transaction }) => {
-
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const dateTime = parseISO(transaction.date);
@@ -17,9 +16,11 @@ const TransactionItem = ({ transaction }) => {
   );
   const currency = useStoreState(state => state.settings.currency)
   const ratesCache = useStoreState(state => state.ratesCache.cache)
-  const targetCurrencyRate = ratesCache[transaction.date][currency]
+  const latestDate = useStoreState(state => state.latestDate)
+  const targetCurrencyRate = ratesCache[transaction.date][currency] ? ratesCache[transaction.date][currency] : ratesCache[latestDate][currency]
   const convAmount = convCurrency(transaction.amount, currency, transaction.rateToUSD, targetCurrencyRate).toLocaleString()
   const symbol = useStoreState(state => state.symbol)
+
   return (
     <div className="bg-CARD-BG border-b-BORDER flex border-collapse justify-between border-b p-4 text-[0.78em]">
       <div className="flex w-3/10 items-center gap-2">
