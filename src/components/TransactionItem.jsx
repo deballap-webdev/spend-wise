@@ -21,7 +21,7 @@ const TransactionItem = ({ transaction }) => {
   const convAmount = convCurrency(transaction.amount, currency, transaction.rateToUSD, targetCurrencyRate).toLocaleString()
   const symbol = useStoreState(state => state.symbol)
   return (
-    <div className="bg-CARD-BG border-b-BORDER flex border-collapse justify-between border-b p-4 text-[0.78em]">
+    <div className="bg-CARD-BG border-b-BORDER hover:bg-ICON-BG flex border-collapse justify-between border-b p-4 text-[0.78em]">
       <div className="flex w-3/10 items-center gap-2">
         {getIcon(transaction.category)}
         <div>
@@ -38,12 +38,12 @@ const TransactionItem = ({ transaction }) => {
         {dateTime ? format(dateTime, "d MMM yyyy") : "N/A"}
       </div>
       <div className={`w-1/5 ${transaction.type === "expense" ? "text-red-500" : "text-GREEN"} text-[0.7rem] font-medium`}>{transaction.type === "expense" ? "-" : "+"}{symbol}{convAmount}</div>
-      <div className="flex w-1/10">
-        <button onClick={() => setIsEditOpen(true)}>
+      <div className="flex w-1/10 items-center justify-center" >
+        <button onClick={() => setIsEditOpen(true)} className="hover:bg-LIGHT-GREEN items-center justify-end rounded-md p-2 flex">
           <LuPencil />
         </button>
-        <button onClick={() => setIsDeleteOpen(true)}>
-          <LuTrash2 className="ml-3 text-red-400" />
+        <button onClick={() => setIsDeleteOpen(true)} className="rounded-md hover:bg-LIGHT-RED grid place-content-center p-2 ml-3">
+          <LuTrash2 className=" text-red-400" />
         </button>
       </div>
       {isDeleteOpen && (

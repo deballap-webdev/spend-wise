@@ -61,9 +61,7 @@ export default createStore({
       return transaction.type === type ? amountInCurrency + accum : accum;
     }, 0)
     return parseFloat(totalInCurrency.toFixed(2));
-
   }),
-
 
   getTotalForCategoryInCycle: computed((state) => (category) => {
     const transInCycle = filterTransByBudgetCycle(state.history.transactions, state.settings.startDate)
@@ -169,6 +167,9 @@ export default createStore({
         return budget.id === payload.id ? payload : budget
       })
     }),
+    setBudgets: action((state, payload) => {
+      state.budgets = payload
+    })
   }, {
     storage: localStorage
   }),
@@ -218,6 +219,9 @@ export default createStore({
     editGoal: action((state, payload) => {
       state.goals = state.goals.map(goal => goal.id === payload.id ? payload : goal)
     }),
+    setGoals: action((state, payload) => {
+      state.goals = payload
+    })
   }, {
     storage: localStorage
   }),
