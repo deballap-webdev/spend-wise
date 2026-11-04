@@ -20,7 +20,6 @@ const TransactionItem = ({ transaction }) => {
   const targetCurrencyRate = ratesCache[transaction.date][currency] ? ratesCache[transaction.date][currency] : ratesCache[latestDate][currency]
   const convAmount = convCurrency(transaction.amount, currency, transaction.rateToUSD, targetCurrencyRate).toLocaleString()
   const symbol = useStoreState(state => state.symbol)
-
   return (
     <div className="bg-CARD-BG border-b-BORDER flex border-collapse justify-between border-b p-4 text-[0.78em]">
       <div className="flex w-3/10 items-center gap-2">

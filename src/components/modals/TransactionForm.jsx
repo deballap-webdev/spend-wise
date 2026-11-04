@@ -5,7 +5,6 @@ import { LuCheck, LuX, LuRefreshCcw } from "react-icons/lu";
 import handleAmount from "../../utils/handleAmount";
 import currencyApi from "../../api/currencyApi";
 import useEscapeModal from "../../hooks/useEscapeModal";
-import { cache } from "react";
 const TransactionForm = ({ setIsModalOpen }) => {
   const [amount, setAmount] = useState("");
   const symbol = useStoreState((state) => state.symbol);
@@ -18,7 +17,7 @@ const TransactionForm = ({ setIsModalOpen }) => {
   const [date, setDate] = useState("");
   const currency = useStoreState(state => state.settings.currency)
   const setRateCache = useStoreActions(state => state.ratesCache.setRateCache)
-  const defaultCategory = useStoreState(state => state.defaultCategory)
+  const defaultCategory = useStoreState(state => state.settings.defaultCategory)
   const validCategories = getFilteredCategories(type)
   const initialCat = (validCategories.some(cat => cat.value === defaultCategory) ? defaultCategory : validCategories[0]?.value || "")
   const latestDate = useStoreState(state => state.latestDate)
@@ -42,14 +41,12 @@ const TransactionForm = ({ setIsModalOpen }) => {
 
     const data = await currencyApi(date, 'ngn,eur')
     let rates = data
-    console.log(rates)
     if (rates.err) {
       setIsAdding(false)
       rates.message ? setFetchError(rates.message) : rates.data ? setFetchError(rates.data.message) : setFetchError("Something went wrong")
       return
     }
     if (!Object.keys(rates).length) rates = ratesCache[latestDate]
-
     const rateToUSD = currency === "USD" ? 1 : rates[currency]
     setRateCache({ [date]: rates })
     addTransaction({ ...newTransaction, rateToUSD })

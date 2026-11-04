@@ -4,10 +4,9 @@ import { useStoreState } from "easy-peasy";
 
 const SummaryCardWrapper = () => {
   const symbol = useStoreState((state) => state.symbol);
-  const getTotalAmount = useStoreState((state) => state.totalAmount);
-  const totalExpenses = getTotalAmount("expense");
-  const totalIncome = getTotalAmount("income");
-  localStorage.clear()
+  const getTotalAmountInCycle = useStoreState((state) => state.getTotalAmountInCycle);
+  const totalExpenses = getTotalAmountInCycle("expense");
+  const totalIncome = getTotalAmountInCycle("income");
   return (
     <div className="flex w-full flex-row gap-3 flex-wrap">
       <SummaryCard

@@ -18,9 +18,9 @@ const currencyApi = async (date, quote) => {
         return rates
     } catch (err) {
         if (err.response) {
-            console.log(err.response.data)
-            console.log(err.response.status)
-            console.log(err.response.headers)
+            console.error(err.response.data)
+            console.error(err.response.status)
+            console.error(err.response.headers)
             return {
                 data: err.response.data,
                 status: err.response.status,

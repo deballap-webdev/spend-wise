@@ -6,9 +6,9 @@ const DangerZone = () => {
             <div className="p-3 flex items-center justify-between">
                 <div>
                     <p className="font-bold">Clear All Data</p>
-                    <p className="text-[0.7rem] text-LIGHT-TEXT">Permanetly remove all transactions, budgets, and sacings progress from this session</p>
+                    <p className="text-[0.7rem] text-LIGHT-TEXT">Permanetly remove all transactions, budgets, and savings progress from this session</p>
                 </div>
-                <button className="text-white bg-red-600 px-2 py-0.5 rounded-md">Clear all</button>
+                <button className="text-white text-nowrap bg-red-600 px-2 py-0.5 rounded-md">Clear all</button>
             </div>
         </div>
     )

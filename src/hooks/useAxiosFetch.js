@@ -22,7 +22,7 @@ const useAxiosFetch = (dataUrl) => {
                 if (isMounted) {
                     setData([])
                     setFetchError(err.message)
-                    console.log(err.message)
+                    console.error(err.message)
                 }
             } finally {
                 isMounted && setIsLoading(false)

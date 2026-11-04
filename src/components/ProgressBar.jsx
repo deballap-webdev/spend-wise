@@ -1,8 +1,8 @@
 import { useStoreState } from "easy-peasy";
 const ProgressBar = ({ color, category }) => {
-  const percentage = useStoreState((state) => state.getPercentOfTotalExpense);
-  const getTotalForCategory = useStoreState(state => state.getTotalForCategory)
-  const amount = getTotalForCategory(category.toLowerCase())
+  const percentage = useStoreState((state) => state.getPercentExpenseInCycle);
+  const getTotalForCategoryInCycle = useStoreState(state => state.getTotalForCategoryInCycle)
+  const amount = getTotalForCategoryInCycle(category.toLowerCase())
   const symbol = useStoreState(state => state.symbol)
   return (
     <div>

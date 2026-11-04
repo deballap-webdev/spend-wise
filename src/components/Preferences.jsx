@@ -7,6 +7,10 @@ const Preferences = () => {
   const setIsDark = useStoreActions((actions) => actions.settings.setIsDark)
   const currency = useStoreState(state => state.settings.currency)
   const setCurrency = useStoreActions(actions => actions.settings.setCurrency)
+  const defaultCategory = useStoreState(state => state.settings.defaultCategory)
+  const setDefaultCategory = useStoreActions(actions => actions.settings.setDefaultCategory)
+  const startDate = useStoreState(state => state.settings.startDate)
+  const setStartDate = useStoreActions(actions => actions.settings.setStartDate)
   return (
     <div className="bg-CARD-BG  rounded-md border border-BORDER max-w-200">
       <div className="font-bold border-b border-b-BORDER p-3">Preferences</div>
@@ -32,15 +36,29 @@ const Preferences = () => {
           <button className="absolute h-6.5 w-6.5 left-1 bottom-1 bg-white rounded-full transition-transform duration-400 peer-checked:translate-x-6.5 cursor-pointer" onClick={() => setIsDark(!isDark)} ></button>
         </label>
       </div>
+      <div className="p-3 flex justify-between gap-2 border-b border-b-BORDER">
+        <div>
+          <p className="font-bold">Budget Cycle Start Date</p>
+          <p className="text-[0.7rem] text-LIGHT-TEXT">choose the day your budget refreshes or leave blank to automatically start on the 1st of the month</p>
+        </div>
+        <div className="input-label">
+          <label className="sr-only" htmlFor="budgetStartDate">Budget cycle start date</label>
+          <input type="date" id="budgetStartDate" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+        </div>
+      </div>
       <div className="p-3 flex justify-between gap-2">
         <div>
           <p className="font-bold">Default Transaction Category</p>
           <p className="text-[0.7rem] text-LIGHT-TEXT">Your starting category when adding a new transaction</p>
         </div>
         <div>
-          <Select options={categoryArray} />
+          <Select options={categoryArray}
+            value={defaultCategory}
+            setValue={setDefaultCategory}
+          />
         </div>
       </div>
+
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { createStore, action, computed, persist } from "easy-peasy";
 import { parseISO } from "date-fns";
-
+import filterTransByBudgetCycle from "./utils/filterTransByBudgetCycle";
 
 export default createStore({
   isCollapsed: false,
@@ -52,36 +52,36 @@ export default createStore({
   }),
 
 
-  totalAmount: computed(
-    (state) => (type) => {
-      const totalInUSD = state.history.transactions.reduce((accum, transaction) => {
-        const amountInUSD = transaction.amount / transaction.rateToUSD;
-        return transaction.type === type ? amountInUSD + accum : accum;
+  getTotalAmountInCycle: computed((state) => (type) => {
+    const transInCycle = filterTransByBudgetCycle(state.history.transactions, state.settings.startDate)
+    const totalInUSD = transInCycle.reduce((accum, transaction) => {
+      const amountInUSD = transaction.amount / transaction.rateToUSD;
+      return transaction.type === type ? amountInUSD + accum : accum;
+    }, 0)
+    if (state.settings.currency === "USD") return parseFloat(totalInUSD.toFixed(2));
+    const convCurrency = state.convCurrency
+    return parseFloat(convCurrency(totalInUSD).toFixed(2))
+  }),
+
+  getTotalForCategoryInCycle: computed((state) => (category) => {
+
+    const transInCycle = filterTransByBudgetCycle(state.history.transactions, state.settings.startDate)
+
+    const totalInUSD = transInCycle.filter((transaction) => transaction.category === category)
+      .reduce((accum, transaction) => {
+        const amountInUSD = transaction.amount / transaction.rateToUSD
+        return accum + amountInUSD
       }, 0)
-      if (state.settings.currency === "USD") return parseFloat(totalInUSD.toFixed(2));
-      const convCurrency = state.convCurrency
-      return parseFloat(convCurrency(totalInUSD).toFixed(2))
-    }
-    ,
-  ),
-  getTotalForCategory: computed(
-    (state) => (category) => {
-      const totalInUSD = state.history.transactions.filter((transaction) => transaction.category === category)
-        .reduce((accum, transaction) => {
-          const amountInUSD = transaction.amount / transaction.rateToUSD
-          return accum + amountInUSD
-        }, 0)
-      if (state.settings.currency === "USD") return parseFloat(totalInUSD.toFixed(2));
-      const convCurrency = state.convCurrency
-      return parseFloat(convCurrency(totalInUSD).toFixed(2))
-    },
-  ),
+    if (state.settings.currency === "USD") return parseFloat(totalInUSD.toFixed(2));
+    const convCurrency = state.convCurrency
+    return parseFloat(convCurrency(totalInUSD).toFixed(2))
+  }),
 
   convCurrency: computed(state => (amountInUSD) => {
-
     const targetRate = state.ratesCache.cache[state.latestDate][state.settings.currency]
     return amountInUSD * targetRate
   }),
+
   settings: persist({
     currency: "NGN",
     setCurrency: action((state, payload) => {
@@ -90,13 +90,21 @@ export default createStore({
     isDark: false,
     setIsDark: action((state, payload) => {
       state.isDark = payload
+    }),
+    startDate: "",
+    setStartDate: action((state, payload) => {
+      state.startDate = payload
+    }),
+    defaultCategory: "food",
+    setDefaultCategory: action((state, payload) => {
+      state.defaultCategory = payload
     })
   }),
 
-  getPercentOfTotalExpense: computed((state) => (category) => {
-    const totalExpense = state.totalAmount("expense");
+  getPercentExpenseInCycle: computed((state) => (category) => {
+    const totalExpense = state.getTotalAmountInCycle("expense");
     if (totalExpense === 0) return 0;
-    return (state.getTotalForCategory(category) / totalExpense) * 100;
+    return (state.getTotalForCategoryInCycle(category) / totalExpense) * 100;
   }),
 
   recentTransactions: computed((state) => {
@@ -149,7 +157,6 @@ export default createStore({
       {
         category: "transport",
         limit: 30000,
-        startDate: "2026-01-01",
         currency: "NGN",
         rateToUSD: 1458,
         id: "",
@@ -162,7 +169,10 @@ export default createStore({
       state.budgets = state.budgets.filter(budget => budget.id !== payload)
     }),
     editBudget: action((state, payload) => {
-      state.budgets = state.budgets.map(budget => budget.id === payload.id ? payload : budget)
+      state.budgets = state.budgets.map(budget => {
+
+        return budget.id === payload.id ? payload : budget
+      })
     }),
   }, {
     storage: localStorage
@@ -242,10 +252,9 @@ export default createStore({
     state.fetchError = payload
   }),
   latestDate: computed(state => Object.keys(state.ratesCache.cache).sort().pop()),
-  defaultCategory: "food",
   isNavOpen: false,
   setIsNavOpen: action((state, payload) => {
     state.isNavOpen = payload
-  })
+  }),
 }
 );

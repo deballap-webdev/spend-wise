@@ -5,13 +5,16 @@ import { useState } from "react";
 import useEscapeModal from "../../hooks/useEscapeModal";
 
 const AddBudget = ({ setIsAddBudgetOpen }) => {
-  const getFilteredCategories = useStoreState((state) => state.getFilteredCategories);
-  const [category, setCategory] = useState("");
+  const getFilteredCategories = useStoreState(state => state.getFilteredCategories)
+  const validCategories = getFilteredCategories("expense")
+  const defaultCategory = useStoreState(state => state.settings.defaultCategory)
+  const initialCat = (validCategories.some(cat => cat.value === defaultCategory) ? defaultCategory : validCategories[0]?.value || "")
+  const [category, setCategory] = useState(initialCat);
   const [limit, setLimit] = useState("");
-  const [startDate, setStartDate] = useState("");
   const addBudget = useStoreActions((actions) => actions.allocations.addBudget);
   const budgets = useStoreState(state => state.allocations.budgets)
   const [exists, setExists] = useState(false)
+  const currency = useStoreState(state => state.settings.currency)
   const handleSubmit = (e) => {
     e.preventDefault()
     for (let i = 0; i < budgets.length; i++) {
@@ -23,7 +26,9 @@ const AddBudget = ({ setIsAddBudgetOpen }) => {
     const newBudget = {
       category,
       limit,
-      startDate
+
+      currency,
+      id: Date.now()
     }
     setExists(false)
     addBudget(newBudget)
@@ -57,29 +62,18 @@ const AddBudget = ({ setIsAddBudgetOpen }) => {
             id="budgetCategory"
           />
         </div>
-        <div className="flex gap-3">
-          <div className="input-label">
-            <label htmlFor="limit">Monthlt Limit</label>
-            <input
-              type="text"
-              name="limit"
-              id="limit"
-              value={limit}
-              onChange={(e) => setLimit(e.target.value)}
-              required
-            />
-          </div>
-          <div className="input-label">
-            <label htmlFor="startDate">Start Date</label>
-            <input
-              type="date"
-              value={startDate}
-              id="startDate"
-              onChange={(e) => setStartDate(e.target.value)}
-              required
-            />
-          </div>
+        <div className="input-label">
+          <label htmlFor="limit">Monthlt Limit</label>
+          <input
+            type="text"
+            name="limit"
+            id="limit"
+            value={limit}
+            onChange={(e) => setLimit(e.target.value)}
+            required
+          />
         </div>
+
         {exists && <p className="text-red-500 font-bold text-[0.7rem]">A budget already exists for the category Edit its limit instead</p>}
         <div className="mt-4 flex justify-end gap-2">
 

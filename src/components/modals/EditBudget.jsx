@@ -5,22 +5,31 @@ import { useState } from "react"
 import handleAmount from "../../utils/handleAmount";
 import useEscapeModal from "../../hooks/useEscapeModal";
 const EditBudget = ({ budget, setIsEditBudgetOpen, convLimit }) => {
-  const categoryArray = useStoreState(state => state.categoryArray
+  const getFilteredCategories = useStoreState(state => state.getFilteredCategories
   )
+  const categoryArray = getFilteredCategories("expense")
   const [category, setCategory] = useState(budget.category)
   const [limit, setLimit] = useState(convLimit)
-  const [startDate, setStartDate] = useState(budget.startDate)
+
   const editBudget = useStoreActions(actions => actions.allocations.editBudget)
+  const [exists, setExists] = useState(false)
   const symbol = useStoreState(state => state.symbol)
+  const budgets = useStoreState(state => state.allocations.budgets)
   const handleSubmit = (e) => {
     e.preventDefault()
+    for (let i = 0; i < budgets.length; i++) {
+      if (budgets[i].category === category) {
+        setExists(true)
+        return;
+      }
+    }
     const updatedBudget = {
+      ...budget,
       category,
       limit,
-      startDate,
-      currency: budget.currency,
-      id: budget.id
+
     }
+    setExists(false)
     editBudget(updatedBudget)
     setIsEditBudgetOpen(false)
   }
@@ -40,16 +49,15 @@ const EditBudget = ({ budget, setIsEditBudgetOpen, convLimit }) => {
           <label htmlFor="category">Category</label>
           <Select id="editCategory" options={categoryArray} value={category} setValue={setCategory} />
         </div>
-        <div className="flex gap-3">
-          <div className="input-label">
-            <label htmlFor="limit">Monthlt Limit {`(${symbol})`}</label>
-            <input type="text" name="limit" id="limit" value={limit} onChange={(e) => setLimit(handleAmount(e))} />
-          </div>
-          <div className="input-label">
-            <label htmlFor="startDate">Start Date</label>
-            <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-          </div>
+
+        <div className="input-label">
+          <label htmlFor="limit">Monthlt Limit {`(${symbol})`}</label>
+          <input type="text" name="limit" id="limit" value={limit} onChange={(e) => setLimit(handleAmount(e))} />
         </div>
+
+
+
+        {exists && <p className="text-red-500 font-bold text-[0.7rem]">A budget already exists for the category Edit its limit instead</p>}
         <div className="flex justify-end gap-2">
           <button type="button" className="border-BORDER rounded-md border px-2 py-0.5 shadow" onClick={() => setIsEditBudgetOpen(false)}>
             Cancel
