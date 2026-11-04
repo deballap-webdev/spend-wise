@@ -1,6 +1,7 @@
 import { createStore, action, computed, persist } from "easy-peasy";
 import { parseISO } from "date-fns";
 import filterTransByBudgetCycle from "./utils/filterTransByBudgetCycle";
+import convCurrency from "./utils/convCurrency";
 
 export default createStore({
   isCollapsed: false,
@@ -54,32 +55,26 @@ export default createStore({
 
   getTotalAmountInCycle: computed((state) => (type) => {
     const transInCycle = filterTransByBudgetCycle(state.history.transactions, state.settings.startDate)
-    const totalInUSD = transInCycle.reduce((accum, transaction) => {
-      const amountInUSD = transaction.amount / transaction.rateToUSD;
-      return transaction.type === type ? amountInUSD + accum : accum;
+    const totalInCurrency = transInCycle.reduce((accum, transaction) => {
+      const targetRate = state.ratesCache.cache[transaction.date][state.settings.currency]
+      const amountInCurrency = convCurrency(transaction.amount, state.settings.currency, transaction.rateToUSD, targetRate)
+      return transaction.type === type ? amountInCurrency + accum : accum;
     }, 0)
-    if (state.settings.currency === "USD") return parseFloat(totalInUSD.toFixed(2));
-    const convCurrency = state.convCurrency
-    return parseFloat(convCurrency(totalInUSD).toFixed(2))
+    return parseFloat(totalInCurrency.toFixed(2));
+
   }),
+
 
   getTotalForCategoryInCycle: computed((state) => (category) => {
-
     const transInCycle = filterTransByBudgetCycle(state.history.transactions, state.settings.startDate)
-
-    const totalInUSD = transInCycle.filter((transaction) => transaction.category === category)
+    const totalInCurrency = transInCycle.filter((transaction) => transaction.category === category)
       .reduce((accum, transaction) => {
-        const amountInUSD = transaction.amount / transaction.rateToUSD
-        return accum + amountInUSD
-      }, 0)
-    if (state.settings.currency === "USD") return parseFloat(totalInUSD.toFixed(2));
-    const convCurrency = state.convCurrency
-    return parseFloat(convCurrency(totalInUSD).toFixed(2))
-  }),
+        const targetRate = state.ratesCache.cache[transaction.date][state.settings.currency]
 
-  convCurrency: computed(state => (amountInUSD) => {
-    const targetRate = state.ratesCache.cache[state.latestDate][state.settings.currency]
-    return amountInUSD * targetRate
+        const amountInCurrency = convCurrency(transaction.amount, state.settings.currency, transaction.rateToUSD, targetRate)
+        return accum + amountInCurrency
+      }, 0)
+    return parseFloat(totalInCurrency.toFixed(2))
   }),
 
   settings: persist({
