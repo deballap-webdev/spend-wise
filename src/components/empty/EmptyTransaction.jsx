@@ -6,7 +6,7 @@ const EmptyTransaction = () => {
       <LuSearch className="text-[1.5rem]" />
       <p className="font-bold">No transactions found</p>
       <p className="text-LIGHT-TEXT">
-        Try a different seacrh add your first transaction
+        Try a different search or add your first transaction
       </p>
     </div>
   );

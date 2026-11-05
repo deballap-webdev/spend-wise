@@ -15,6 +15,7 @@ const AddBudget = ({ setIsAddBudgetOpen }) => {
   const budgets = useStoreState(state => state.allocations.budgets)
   const [exists, setExists] = useState(false)
   const currency = useStoreState(state => state.settings.currency)
+  const symbol = useStoreState(state => state.symbol)
   const handleSubmit = (e) => {
     e.preventDefault()
     for (let i = 0; i < budgets.length; i++) {
@@ -46,7 +47,7 @@ const AddBudget = ({ setIsAddBudgetOpen }) => {
       <form className="bg-BODY-BG flex flex-col gap-3 rounded-md p-3" onSubmit={(e) => handleSubmit(e)}>
         <div className="flex justify-between">
           <h3 className="font-bold">Add Budget</h3>
-          <button onClick={() => setIsAddBudgetOpen(false)}>
+          <button onClick={() => setIsAddBudgetOpen(false)} type="button">
             <LuX />
           </button>
         </div>
@@ -63,7 +64,7 @@ const AddBudget = ({ setIsAddBudgetOpen }) => {
           />
         </div>
         <div className="input-label">
-          <label htmlFor="limit">Monthlt Limit</label>
+          <label htmlFor="limit">Monthly Limit {`(${symbol})`}</label>
           <input
             type="text"
             name="limit"
@@ -84,7 +85,7 @@ const AddBudget = ({ setIsAddBudgetOpen }) => {
           >
             Cancel
           </button>
-          <button className="bg-NAV-ACTIVE flex items-center gap-1 rounded-md px-2 py-1 text-white">
+          <button className="bg-NAV-ACTIVE flex items-center gap-1 rounded-md px-2 py-1 text-white" type="submit">
             <LuCheck /> Add Budget
           </button>
         </div>

@@ -39,6 +39,7 @@ const TransactionForm = ({ setIsModalOpen }) => {
       id: Date.now(),
     };
 
+    console.log(newTransaction)
     const data = await currencyApi(date, 'ngn,eur')
     let rates = data
     if (rates.err) {

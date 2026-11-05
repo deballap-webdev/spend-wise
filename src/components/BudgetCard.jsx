@@ -1,4 +1,4 @@
-import { LuPencil, LuTrash2, LuTriangleAlert } from "react-icons/lu";
+import { LuTriangleAlert } from "react-icons/lu";
 import getIcon from "../utils/getIcon";
 import properCase from "../utils/properCase";
 import { useStoreState, useStoreActions } from "easy-peasy";
@@ -6,6 +6,8 @@ import { useState } from "react"
 import EditBudget from "./modals/EditBudget";
 import Delete from "./modals/Delete"
 import convCurrency from "../utils/convCurrency";
+import EditButton from "./buttons/EditButton";
+import DeleteButton from "./buttons/DeleteButton";
 
 const BudgetCard = ({ budget }) => {
   const currency = useStoreState(state => state.settings.currency)
@@ -22,8 +24,6 @@ const BudgetCard = ({ budget }) => {
   const targetRate = cache[latestDate][currency]
   const convLimit = convCurrency(budget.limit, currency, rateToUSD, targetRate);
   const percent = parseFloat(((amount / convLimit) * 100).toFixed(2));
-
-
   return (
     <div className="bg-CARD-BG p-3 rounded-md w-100  border border-BORDER flex flex-col gap-3">
       <div className="justify-between flex items-center flex-wrap">
@@ -33,8 +33,8 @@ const BudgetCard = ({ budget }) => {
         </div>
         <div className="flex gap-2 items-center">
           {percent > 100 && <div className="flex text-[0.7rem] items-center gap-1 text-red-600 font-bold bg-LIGHT-RED px-2 py-1 rounded-sm"><LuTriangleAlert /> Budget Exceeded</div>}
-          <button onClick={() => setIsEditBugetOPen(true)}><LuPencil /></button>
-          <button onClick={() => setIsDeleteOpen(true)}> <LuTrash2 className="text-red-500" /></button>
+          <EditButton editFunction={() => setIsEditBugetOPen(true)} />
+          <DeleteButton setIsDeleteOpen={setIsDeleteOpen} />
         </div>
       </div>
       <p className="font-bold text-[1.2rem]">{symbol}{amount.toLocaleString()}</p>
@@ -46,7 +46,6 @@ const BudgetCard = ({ budget }) => {
         <p className="text-[0.8rem] font-medium" style={{ color: percent < 100 ? "green" : percent === 100 ? "orange" : "red" }}>{percent}%</p>
         <p className="text-[0.8rem]"> {amount <= convLimit ? `${symbol}${(convLimit - amount).toLocaleString()} remaining` : `${symbol}${(amount - convLimit).toLocaleString()} over budget`}</p>
       </div>
-
       {isEditBudgetOpen && <EditBudget setIsEditBudgetOpen={setIsEditBugetOPen} budget={budget} convLimit={convLimit} />}
       {isDeleteOpen && <Delete deleteFunction={deleteBudget} functionParam={budget.id} description={properCase(`${budget.category} Budget`)} headText={properCase(`${budget.category} Budget`)} setIsDeleteOpen={setIsDeleteOpen} />}
     </div>

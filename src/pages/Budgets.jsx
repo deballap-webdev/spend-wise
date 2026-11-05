@@ -8,6 +8,7 @@ import GoalCard from "../components/GoalCard";
 import Loading from "../components/empty/Loading";
 import { getCycleDates } from "../utils/filterTransByBudgetCycle";
 import { format } from "date-fns"
+import EmptyGoal from "../components/empty/EmptyGoal";
 const Budgets = () => {
   useActiveComponent("Budgets");
   const [isAddBudgetOpen, setIsAddBudgetOpen] = useState(false);
@@ -40,6 +41,8 @@ const Budgets = () => {
       <div className=" flex flex-wrap gap-3">
         {goals.map(goal => <GoalCard goal={goal} key={goal.id} />)}
       </div>
+
+      {goals.length === 0 && <EmptyGoal />}
     </main>
   );
 };

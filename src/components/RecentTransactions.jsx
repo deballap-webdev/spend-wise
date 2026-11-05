@@ -17,6 +17,9 @@ const RecentTransactions = () => {
       {recentTrans.map((trans) => (
         <RecentTransRow key={trans.id} trans={trans} />
       ))}
+      {
+        recentTrans.length === 0 && <p className="text-LIGHT-TEXT text-center text-[clamp(2vh,1rem,2.5vh)] mt-8">No transactions yet.</p>
+      }
     </div>
   );
 };

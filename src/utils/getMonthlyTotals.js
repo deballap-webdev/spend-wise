@@ -59,6 +59,7 @@ const deepClone = (obj) => {
         container[key] = deepClone(value)
     }
     return container;
+
 }
 
 const getMonthlyTotals = (trans, rates, currency) => {
@@ -67,11 +68,12 @@ const getMonthlyTotals = (trans, rates, currency) => {
     const monthlyTotalsClone = deepClone(monthlyTotals)
     validTrans.forEach((tran) => {
         const myDate = new Date(tran.date)
-        const targetRate = rates[tran.date][tran.currency]
+        const targetRate = tran.currency === "USD" ? 1 : rates[tran.date][tran.currency]
+
         const month = monthArray[myDate.getMonth()]
         monthlyTotalsClone[month][tran.type] += convCurrency(tran.amount, currency, tran.rateToUSD, targetRate)
 
-    })
+    });
     return monthlyTotalsClone;
 
 }
