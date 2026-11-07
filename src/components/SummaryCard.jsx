@@ -2,7 +2,6 @@ const SummaryCard = ({ amount, icon, color, text, percentChange }) => {
   return (
     <div className="bg-CARD-BG border-BORDER flex h-40 grow flex-col justify-evenly rounded-md border p-2">
       <div className="flex flex-row items-center justify-between">
-
         <p className="text-[0.7rem]">{text}</p>
         {icon}
       </div>
@@ -15,4 +14,3 @@ const SummaryCard = ({ amount, icon, color, text, percentChange }) => {
 };
 
 export default SummaryCard;
-3

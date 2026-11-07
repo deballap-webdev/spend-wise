@@ -11,7 +11,6 @@ const Dashboard = () => {
       <div className="flex gap-3 flex-wrap">
         <RecentTransactions />
         <ExpenseSummary />
-
       </div>
     </main>
   );

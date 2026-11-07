@@ -1,12 +1,18 @@
 import SummaryCard from "./SummaryCard";
 import { LuWallet, LuArrowDown, LuArrowUp } from "react-icons/lu";
 import { useStoreState } from "easy-peasy";
+import getMonthlyTotals from "../utils/getMonthlyTotals";
 
 const SummaryCardWrapper = () => {
   const symbol = useStoreState((state) => state.symbol);
   const getTotalAmountInCycle = useStoreState((state) => state.getTotalAmountInCycle);
   const totalExpenses = getTotalAmountInCycle("expense");
   const totalIncome = getTotalAmountInCycle("income");
+  const transactions = useStoreState(state => state.history.transactions)
+  const rates = useStoreState(state => state.ratesCache.cache)
+  const currency = useStoreState(state => state.settings.currency)
+  const monthlyTotals = getMonthlyTotals(transactions, rates, currency)
+  console.log(Object.keys(monthlyTotals))
   return (
     <div className="flex w-full flex-row gap-3 flex-wrap">
       <SummaryCard

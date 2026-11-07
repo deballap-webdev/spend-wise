@@ -26,7 +26,7 @@ const ClearAll = ({ setIsClearAllOpen }) => {
         </p>
         <div className="flex justify-end gap-2">
           <button className="border-DARK-GREEN hover:bg-GREEN rounded-md border px-2 py-1 text-[0.8rem] hover:text-white" onClick={() => setIsClearAllOpen(false)}>
-            Keep my data
+            Keep my data 
           </button>
           <button className="rounded-md border bg-red-600 px-2 py-1 text-[0.8rem] text-white" onClick={handleClear}>
             Clear All Data

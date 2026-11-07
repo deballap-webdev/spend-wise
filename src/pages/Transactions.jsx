@@ -7,7 +7,7 @@ import TransactionList from "../components/TransactionList";
 import TransactionForm from "../components/modals/TransactionForm";
 import Select from "../components/Select";
 import { parseISO } from "date-fns";
-import properCase from "../utils/properCase";
+import properCase from "../utils/properCase"
 import Loading from "../components/empty/Loading";
 import useEscapeModal from "../hooks/useEscapeModal";
 const Transactions = () => {
@@ -42,7 +42,6 @@ const Transactions = () => {
       "This Week": isThisWeek(parseISO(transaction.date)),
       "This Month": isThisMonth(parseISO(transaction.date)),
     };
-
 
     return (
       matchesSearch &&

@@ -33,6 +33,7 @@ const Budgets = () => {
           <BudgetCard budget={budget} key={budget.id} />
         ))}
       </div>
+
       {isAddBudgetOpen && <AddBudget setIsAddBudgetOpen={setIsAddBudgetOpen} />}
       {budgets.length === 0 && <EmptyBudget setIsAddBudgetOpen={setIsAddBudgetOpen} />
       }

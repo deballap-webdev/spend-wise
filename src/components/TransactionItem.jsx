@@ -1,4 +1,3 @@
-import { LuPencil, LuTrash2 } from "react-icons/lu";
 import properCase from "../utils/properCase";
 import getIcon from "../utils/getIcon";
 import { useState } from "react";
