@@ -6,12 +6,16 @@ const filterTransByBudgetCycle = (transactions, startDate) => {
     return transactions.filter(trans => parseISO(trans.date) >= cycleStart && parseISO(trans.date) < cycleEnd)
 }
 
-export function getCycleDates(startDate) {
+const getTransInPrevCycle = (transactions, startDate) => {
+    const { cycleEnd, cycleStart } = getCycleDates(startDate, true)
+    return transactions.filter(trans => parseISO(trans.date) >= cycleStart && parseISO(trans.date) < cycleEnd)
+}
+
+export function getCycleDates(startDate, prev) {
     if (!startDate) {
-        const monthIndex = new Date().getMonth()
+        const monthIndex = prev ? new Date().getMonth() - 1 : new Date().getMonth()
         const yr = new Date().getFullYear()
         const lastDay = new Date(yr, monthIndex - 1, 0).getDate()
-
         return {
             cycleEnd: new Date(yr, monthIndex, lastDay),
             cycleStart: new Date(yr, monthIndex, 1)
@@ -20,9 +24,9 @@ export function getCycleDates(startDate) {
     const day = parseISO(startDate).getDate()
     const todayStr = new Date().toISOString().split('T')[0]
     const year = parseISO(todayStr).getFullYear()
-    const month = parseISO(todayStr).getMonth()
-    let startYr = year;
-    let startMonth = month;
+    const month = prev ? parseISO(todayStr).getMonth() - 1 : parseISO(todayStr).getMonth()
+    let startYr = month < 0 ? year - 1 : year;
+    let startMonth = month < 0 ? 11 : month;
     if (parseISO(todayStr).getDate() < day) startMonth -= 1;
     if (startMonth < 0) {
         startMonth = 11;
@@ -48,4 +52,8 @@ const getSafeDay = (yr, monthIndex, day) => {
     return lastDay >= day ? day : lastDay;
 }
 
+
+
+
 export default filterTransByBudgetCycle
+export { getTransInPrevCycle }

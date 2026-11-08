@@ -1,6 +1,6 @@
 import { createStore, action, computed, persist } from "easy-peasy";
 import { parseISO } from "date-fns";
-import filterTransByBudgetCycle from "./utils/filterTransByBudgetCycle";
+import filterTransByBudgetCycle, { getTransInPrevCycle } from "./utils/filterTransByBudgetCycle";
 import convCurrency from "./utils/convCurrency";
 
 export default createStore({
@@ -53,8 +53,9 @@ export default createStore({
   }),
 
 
-  getTotalAmountInCycle: computed((state) => (type) => {
-    const transInCycle = filterTransByBudgetCycle(state.history.transactions, state.settings.startDate)
+  getTotalAmountInCycle: computed((state) => (type, prev) => {
+    const filterFunc = prev ? getTransInPrevCycle : filterTransByBudgetCycle
+    const transInCycle = filterFunc(state.history.transactions, state.settings.startDate)
     const totalInCurrency = transInCycle.reduce((accum, transaction) => {
       const targetRate = state.ratesCache.cache[transaction.date][state.settings.currency]
       const amountInCurrency = convCurrency(transaction.amount, state.settings.currency, transaction.rateToUSD, targetRate)
@@ -63,8 +64,9 @@ export default createStore({
     return parseFloat(totalInCurrency.toFixed(2));
   }),
 
-  getTotalForCategoryInCycle: computed((state) => (category) => {
-    const transInCycle = filterTransByBudgetCycle(state.history.transactions, state.settings.startDate)
+  getTotalForCategoryInCycle: computed((state) => (category, prev) => {
+    const filterFunc = prev ? getTransInPrevCycle : filterTransByBudgetCycle
+    const transInCycle = filterFunc(state.history.transactions, state.settings.startDate)
     const totalInCurrency = transInCycle.filter((transaction) => transaction.category === category)
       .reduce((accum, transaction) => {
         const targetRate = state.ratesCache.cache[transaction.date][state.settings.currency]
@@ -74,6 +76,8 @@ export default createStore({
       }, 0)
     return parseFloat(totalInCurrency.toFixed(2))
   }),
+
+
 
   settings: persist({
     currency: "NGN",
@@ -254,6 +258,25 @@ export default createStore({
   isNavOpen: false,
   setIsNavOpen: action((state, payload) => {
     state.isNavOpen = payload
+  }),
+
+  changeInBal: computed(state => {
+    const thisCycleBal = state.getTotalAmountInCycle("income") - state.getTotalAmountInCycle("expense")
+    const prevCycleBal = state.getTotalAmountInCycle("income", true) - state.getTotalAmountInCycle("expense", true)
+    console.log(prevCycleBal)
+    return parseFloat((thisCycleBal - prevCycleBal).toFixed(2))
+  }),
+
+  changeInExpense: computed(state => {
+    const thisCycleExpense = state.getTotalAmountInCycle("expense")
+    const prevCycleExpense = state.getTotalAmountInCycle("expense", true)
+    return parseFloat((thisCycleExpense - prevCycleExpense).toFixed(2))
+  }),
+
+  changeInIncome: computed(state => {
+    const thisCycleIncome = state.getTotalAmountInCycle("income")
+    const prevCycleIncome = state.getTotalAmountInCycle("income", true)
+    return parseFloat((thisCycleIncome - prevCycleIncome).toFixed(2))
   }),
 }
 );
