@@ -5,7 +5,6 @@ import {
   LuWallet,
   LuTarget,
   LuSettings,
-  LuCircleHelp,
   LuChartNoAxesCombined,
   LuX,
   LuArrowLeft
@@ -53,9 +52,7 @@ const Nav = () => {
             <NavLink icon={<LuSettings />} text="Settings" path="settings" />
           </div>
         </div>
-        <div>
-          <NavLink icon={<LuCircleHelp />} text="Help & Support" />
-        </div>
+
         <button className={`bg-white rounded-[50%] h-6 w-6 flex items-center justify-center  border border-BORDER absolute -right-4 top-18 cursor-button ${isCollapsed ? "rotate-180" : "rotate-0"}`} onClick={() => setIsCollapsed(!isCollapsed)} ><LuArrowLeft title={isCollapsed ? "open nav-menu" : "close nav-menu"} /></button>
       </nav>
     </div >

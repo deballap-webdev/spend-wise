@@ -263,7 +263,6 @@ export default createStore({
   changeInBal: computed(state => {
     const thisCycleBal = state.getTotalAmountInCycle("income") - state.getTotalAmountInCycle("expense")
     const prevCycleBal = state.getTotalAmountInCycle("income", true) - state.getTotalAmountInCycle("expense", true)
-    console.log(prevCycleBal)
     return parseFloat((thisCycleBal - prevCycleBal).toFixed(2))
   }),
 

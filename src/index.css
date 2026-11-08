@@ -43,3 +43,7 @@ button:disabled {
     @apply text-[0.8rem] font-medium;
   }
 }
+
+.focus {
+  @apply focus:outline-1 focus:outline-NAV-ACTIVE focus:shadow-LIGHT-GREEN
+}

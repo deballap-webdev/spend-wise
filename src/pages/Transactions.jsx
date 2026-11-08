@@ -10,6 +10,7 @@ import { parseISO } from "date-fns";
 import properCase from "../utils/properCase"
 import Loading from "../components/empty/Loading";
 import useEscapeModal from "../hooks/useEscapeModal";
+import exportToCSV from "../utils/CSV";
 const Transactions = () => {
   useActiveComponent("Transactions");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,6 +21,7 @@ const Transactions = () => {
   const [category, setCategory] = useState("All Categories");
   const [type, setType] = useState("All Types");
   const [dateRange, setDateRange] = useState("All Dates");
+  const symbol = useStoreState(state => state.symbol)
   const isRehydrated = useStoreRehydrated()
   useEscapeModal(isModalOpen, setIsModalOpen)
   const [pageNumber, setPageNumber] = useState(1);
@@ -68,7 +70,7 @@ const Transactions = () => {
           </p>
         </div>
         <div className="flex">
-          <button className="border-BORDER mr-3 flex flex-row items-center gap-1 rounded-md border px-2 py-1 shadow">
+          <button onClick={() => exportToCSV(filteredTransactions, symbol)} className="border-BORDER mr-3 flex flex-row items-center gap-1 rounded-md border px-2 py-1 shadow">
             <LuDownload /> Export
           </button>
           <button
