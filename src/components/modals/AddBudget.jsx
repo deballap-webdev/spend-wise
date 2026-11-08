@@ -18,16 +18,14 @@ const AddBudget = ({ setIsAddBudgetOpen }) => {
   const symbol = useStoreState(state => state.symbol)
   const handleSubmit = (e) => {
     e.preventDefault()
-    for (let i = 0; i < budgets.length; i++) {
-      if (budgets[i].category === category) {
-        setExists(true)
-        return;
-      }
+    const existingBudget = budgets.find(budget => budget.category === category)
+    if (existingBudget) {
+      setExists(true);
+      return
     }
     const newBudget = {
       category,
       limit,
-
       currency,
       id: Date.now()
     }
@@ -79,13 +77,12 @@ const AddBudget = ({ setIsAddBudgetOpen }) => {
         <div className="mt-4 flex justify-end gap-2">
 
           <button
-            className="border-BORDER rounded-md border px-2 py-0.5 shadow"
-            type="button"
+            className="white-button" type="button"
             onClick={() => setIsAddBudgetOpen(false)}
           >
             Cancel
           </button>
-          <button className="bg-NAV-ACTIVE flex items-center gap-1 rounded-md px-2 py-1 text-white" type="submit">
+          <button className="green-button" type="submit">
             <LuCheck /> Add Budget
           </button>
         </div>

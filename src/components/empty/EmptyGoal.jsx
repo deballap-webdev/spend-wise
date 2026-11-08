@@ -8,7 +8,7 @@ const EmptyGoal = ({ setIsCreateGoalOpen }) => {
             <p className="font-bold text-[0.8rem]">No savings goals yet</p>
             <p className="text-[0.8rem] text-LIGHT-TEXT">Your next milestone starts here</p>
             {setIsCreateGoalOpen ?
-                <button className="text-white bg-GREEN px-2 py-1 rounded-md" onClick={() => setIsCreateGoalOpen(true)}>+ Create Goal</button> : <Link to="/goals" className="text-white bg-GREEN px-2 py-1 rounded-md">+ Create Goal</Link>}
+                <button className="green-button" onClick={() => setIsCreateGoalOpen(true)}>+ Create Goal</button> : <Link to="/goals" className="text-white bg-GREEN px-2 py-1 rounded-md">+ Create Goal</Link>}
         </div>
     )
 }

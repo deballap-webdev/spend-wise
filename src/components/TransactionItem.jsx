@@ -31,7 +31,7 @@ const TransactionItem = ({ transaction }) => {
         </div>
       </div>
       <div className="w-1/5">
-        <p className="bg-ICON-BG w-fit rounded-md px-2 py-0.5">
+        <p className="bg-ICON-BG border border-BORDER w-fit rounded-md px-2 py-0.5">
           {transaction.category}
         </p>
       </div>

@@ -30,16 +30,16 @@ const TransactionList = ({ transactions, pageNumber, setPageNumber }) => {
         {transactions.length
           ? `Showing ${startIndex + 1} - ${endIndex <= transactions.length ? endIndex : transactions.length}  of ${transactions.length} transactions`
           : `0 transactions`}
-        <div>
+        <div className="flex">
           <button
-            className="border-BORDER mr-2 rounded-md border px-2 py-1"
+            className="white-button mr-2"
             disabled={isFirstPage}
             onClick={() => setPageNumber(pageNumber - 1)}
           >
             Previous
           </button>
           <button
-            className="border-BORDER bg-ICON-BG rounded-md border px-2 py-1"
+            className="white-button"
             disabled={isLastPage}
             onClick={() => setPageNumber(pageNumber + 1)}
           >

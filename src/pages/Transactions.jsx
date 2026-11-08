@@ -70,27 +70,26 @@ const Transactions = () => {
           </p>
         </div>
         <div className="flex">
-          <button onClick={() => exportToCSV(filteredTransactions, symbol)} className="border-BORDER mr-3 flex flex-row items-center gap-1 rounded-md border px-2 py-1 shadow">
+          <button onClick={() => exportToCSV(filteredTransactions, symbol)} className="border-BORDER mr-3 flex flex-row items-center gap-1 rounded-md border px-2 py-1 shadow hover:bg-LIGHT-GREEN hover:text-GREEN cursor-pointer" title="export to csv">
             <LuDownload /> Export
           </button>
           <button
-            className="bg-NAV-ACTIVE rounded-md px-3 py-1 text-[0.7rem] text-nowrap text-white"
+            className="green-button"
             onClick={() => setIsModalOpen(true)}
           >
-            {" "}
             + Add Transaction
           </button>
         </div>
       </div>
       <div className="flex flex-wrap gap-3 md:flex-nowrap">
-        <div className="bg-CARD-BG border-BORDER flex h-10 min-w-2/5 grow items-center rounded-md border px-3 focus-within:outline-1">
+        <div className="bg-CARD-BG focus border-BORDER flex h-10 min-w-2/5 grow items-center rounded-md border px-3 focus-within:outline-1">
           <LuSearch />
           <input
             type="search"
             name="transactions"
             id="transaction"
             placeholder="Search transactions.."
-            className="w-full px-4 py-2 outline-0"
+            className="w-full px-4 py-2 outline-0 "
             value={search}
             onChange={(e) => handleFilter(e)}
           />

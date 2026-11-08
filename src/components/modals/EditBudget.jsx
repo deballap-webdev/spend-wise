@@ -17,17 +17,12 @@ const EditBudget = ({ budget, setIsEditBudgetOpen, convLimit }) => {
   const budgets = useStoreState(state => state.allocations.budgets)
   const handleSubmit = (e) => {
     e.preventDefault()
-    for (let i = 0; i < budgets.length; i++) {
-      if (budgets[i].category === category) {
-        setExists(true)
-        return;
-      }
-    }
+    const existingBudget = budgets.find(budget => budget.category === category && budget !== budget)
+    if (existingBudget) { setExists(true); return }
     const updatedBudget = {
       ...budget,
       category,
       limit,
-
     }
     setExists(false)
     editBudget(updatedBudget)
@@ -59,10 +54,10 @@ const EditBudget = ({ budget, setIsEditBudgetOpen, convLimit }) => {
 
         {exists && <p className="text-red-500 font-bold text-[0.7rem]">A budget already exists for the category Edit its limit instead</p>}
         <div className="flex justify-end gap-2">
-          <button type="button" className="border-BORDER rounded-md border px-2 py-0.5 shadow" onClick={() => setIsEditBudgetOpen(false)}>
+          <button type="button" className="white-button" onClick={() => setIsEditBudgetOpen(false)}>
             Cancel
           </button>
-          <button type="sumbit" className="bg-NAV-ACTIVE flex items-center gap-1 rounded-md px-2 py-1 text-white">
+          <button type="sumbit" className="green-button">
             <LuCheck /> Save Changes
           </button>
         </div>

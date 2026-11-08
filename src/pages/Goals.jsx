@@ -11,7 +11,7 @@ const Goals = () => {
   const [isCreateGoalOpen, setIsCreateGoalOpen] = useState(false);
   const isRehydrated = useStoreRehydrated()
   if (!isRehydrated) return <Loading />
-
+  console.log(goals)
   return (
     <div className="bg-BODY-BG flex grow flex-col gap-4 px-6 py-4">
       <div className="flex items-center  justify-between">
@@ -22,8 +22,7 @@ const Goals = () => {
           </p>
         </div>
         <button
-          className="bg-GREEN h-fit rounded-md px-2 py-1 whitespace-nowrap text-white"
-          onClick={() => setIsCreateGoalOpen(true)}
+          className="green-button" onClick={() => setIsCreateGoalOpen(true)}
         >
           + Create Goal
         </button>

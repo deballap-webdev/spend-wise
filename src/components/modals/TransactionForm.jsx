@@ -39,7 +39,6 @@ const TransactionForm = ({ setIsModalOpen }) => {
       id: Date.now(),
     };
 
-    console.log(newTransaction)
     const data = await currencyApi(date, 'ngn,eur')
     let rates = data
     if (rates.err) {
@@ -156,7 +155,7 @@ const TransactionForm = ({ setIsModalOpen }) => {
           <div className="mt-3 flex justify-end gap-2">
             <button
               type="button"
-              className="border-BORDER rounded-md border px-2 font-medium shadow"
+              className="white-button"
               onClick={() => setIsModalOpen(false)}
               disabled={isAdding}
             >
@@ -164,8 +163,7 @@ const TransactionForm = ({ setIsModalOpen }) => {
             </button>
             <button
               type="submit"
-              className="bg-NAV-ACTIVE flex items-center justify-center gap-2 rounded-md px-3 py-1 text-[0.9rem] font-medium text-white"
-              disabled={isAdding}
+              className="green-button" disabled={isAdding}
             >
               {isAdding ? <> <LuRefreshCcw className="animate-spin" />
                 Adding... </> : <><LuCheck /> Add Transaction</>}

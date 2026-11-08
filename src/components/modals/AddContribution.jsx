@@ -40,8 +40,8 @@ const AddContribution = ({ goal, setIsAddContOpen }) => {
                     {invalid && <p className="text-red-500 text-[0.7rem]">Please enter a value greater than 0</p>}
                 </div>
                 <div className="flex gap-3 justify-end">
-                    <button type="button" className="border border-BORDER px-2 rounded-md py-0.5 shadow" onClick={() => setIsAddContOpen(false)}>Cancel</button>
-                    <button className="text-white bg-GREEN px-2 py-1 rounded-md" type="submit">+ Add Contribution</button>
+                    <button type="button" className="white-button" onClick={() => setIsAddContOpen(false)}>Cancel</button>
+                    <button className="green-button" type="submit">+ Add Contribution</button>
                 </div>
             </form>
         </div>

@@ -155,15 +155,14 @@ const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
         <div className="mt-3 flex justify-end gap-2">
           <button
             type="button"
-            className="border-BORDER rounded-md border px-2 font-medium shadow"
-            onClick={() => setIsEditOpen(false)}
+            className="white-button" onClick={() => setIsEditOpen(false)}
             disabled={isSaving}
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="bg-NAV-ACTIVE flex items-center justify-center gap-2 rounded-md px-3 py-1 text-[0.9rem] font-medium text-white"
+            className="green-button"
             disabled={isSaving}
           >
             {isSaving ? <><LuRefreshCcw /> Saving... </> : <><LuCheck />

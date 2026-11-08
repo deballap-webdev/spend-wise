@@ -7,7 +7,7 @@ const ExpenseSummary = () => {
   return (
     <div className="bg-CARD-BG grow border-BORDER rounded-md border p-4">
       <div className="flex justify-between"><h3>Expenses by Category</h3>
-        <Link to="analytics" className="">•••</Link>
+        <Link to="analytics" className="hover:bg-LIGHT-GREEN h-8 w-8 flex items-center justify-center rounded-md">•••</Link>
       </div>
       <div className="flex-col flex gap-3 py-4">
         <ProgressBar category="Food" color="#00a979" />

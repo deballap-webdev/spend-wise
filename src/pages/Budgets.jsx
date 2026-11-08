@@ -24,7 +24,7 @@ const Budgets = () => {
       <div className="flex justify-between items-center">
         <div className="mb-6"><h2 className="font-bold text-[1.2rem]">Monthly Budgets</h2>
           <p className="text-LIGHT-TEXT text-[0.8rem]">Stay on top of your spending</p>
-        </div><button className="text-white bg-GREEN px-2 py-0.5 rounded-md h-fit whitespace-nowrap" onClick={() => setIsAddBudgetOpen(true)}>+ Add Budget</button>
+        </div><button className="green-button" onClick={() => setIsAddBudgetOpen(true)}>+ Add Budget</button>
       </div>
 
       <p className=" text-[0.8rem] font-bold mb-2">Budget Cycle Started {format(cycleStart, "d MMM yyyy")} and ends {format(cycleEnd, "d MMM yyyy")}</p>

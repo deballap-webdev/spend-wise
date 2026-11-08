@@ -107,14 +107,13 @@ const EditGoal = ({ setIsEditGoalOpen, goal, convSavedAmount, convTargetAmount }
         </div>
         <div className="flex justify-end gap-2">
           <button
-            className="border-BORDER rounded-md border px-2 py-0.5 text-[0.8rem] font-medium shadow"
-            type="button"
+            className="white-button" type="button"
             onClick={() => setIsEditGoalOpen(false)}
           >
             Cancel
           </button>
           <button
-            className="bg-NAV-ACTIVE flex items-center justify-center gap-1 rounded-md px-2 py-0.5 text-[0.8rem] font-medium text-white"
+            className="green-button"
             type="submit"
           >
             <LuCheck />
