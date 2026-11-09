@@ -4,6 +4,8 @@ import { LuX, LuCheck } from "react-icons/lu";
 import { useStoreActions, useStoreState } from
   "easy-peasy";
 import useEscapeModal from "../../hooks/useEscapeModal";
+import Xbutton from "../buttons/Xbutton";
+import { setMillisecondsWithOptions } from "date-fns/fp";
 const EditGoal = ({ setIsEditGoalOpen, goal, convSavedAmount, convTargetAmount }) => {
   const [name, setName] = useState(goal.name);
   const [targetAmount, setTargetAmount] = useState(convTargetAmount);
@@ -38,9 +40,7 @@ const EditGoal = ({ setIsEditGoalOpen, goal, convSavedAmount, convTargetAmount }
       >
         <div className="flex justify-between">
           <h3 className="font-bold">Edit Goal</h3>
-          <button type="button" onClick={() => setIsEditGoalOpen(false)}>
-            <LuX />
-          </button>
+          <Xbutton closeFunc={() => setIsEditGoalOpen(false)} />
         </div>
 
         <p className="text-LIGHT-TEXT -mt-2 text-[0.8rem]">

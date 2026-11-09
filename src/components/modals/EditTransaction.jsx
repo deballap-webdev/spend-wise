@@ -6,6 +6,7 @@ import { useStoreActions, useStoreState } from
 import currencyApi from "../../api/currencyApi";
 import useEscapeModal from "../../hooks/useEscapeModal";
 import handleAmount from "../../utils/handleAmount";
+import Xbutton from "../buttons/Xbutton";
 
 const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
   const [editType, setEditType] = useState(transaction.type);
@@ -72,9 +73,7 @@ const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
       >
         <div className="flex justify-between">
           <h3 className="font-bold">Edit Transaction</h3>
-          <button type="button" onClick={() => setIsEditOpen(false)} disabled={isSaving}>
-            <LuX />
-          </button>
+          <Xbutton closeFunc={() => setIsEditOpen(false)} />
         </div>
         {fetchError && <p className="text-red-500">{fetchError} please try again</p>}
         <p className="text-LIGHT-TEXT text-[0.8rem]">

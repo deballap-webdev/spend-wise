@@ -3,6 +3,7 @@ import Select from "../Select";
 import { LuCheck, LuX } from "react-icons/lu";
 import { useState } from "react";
 import useEscapeModal from "../../hooks/useEscapeModal";
+import Xbutton from "../buttons/Xbutton";
 
 const AddBudget = ({ setIsAddBudgetOpen }) => {
   const getFilteredCategories = useStoreState(state => state.getFilteredCategories)
@@ -45,9 +46,7 @@ const AddBudget = ({ setIsAddBudgetOpen }) => {
       <form className="bg-BODY-BG flex flex-col gap-3 rounded-md p-3" onSubmit={(e) => handleSubmit(e)}>
         <div className="flex justify-between">
           <h3 className="font-bold">Add Budget</h3>
-          <button onClick={() => setIsAddBudgetOpen(false)} type="button">
-            <LuX />
-          </button>
+          <Xbutton closeFunc={() => setIsAddBudgetOpen(false)} />
         </div>
         <p className="text-LIGHT-TEXT -mt-2 text-[0.8rem]">
           Set a monthly limit for a spending category

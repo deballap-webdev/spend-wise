@@ -5,6 +5,7 @@ import { LuCheck, LuX, LuRefreshCcw } from "react-icons/lu";
 import handleAmount from "../../utils/handleAmount";
 import currencyApi from "../../api/currencyApi";
 import useEscapeModal from "../../hooks/useEscapeModal";
+import Xbutton from "../buttons/Xbutton";
 const TransactionForm = ({ setIsModalOpen }) => {
   const [amount, setAmount] = useState("");
   const symbol = useStoreState((state) => state.symbol);
@@ -75,13 +76,7 @@ const TransactionForm = ({ setIsModalOpen }) => {
       >
         <div className="flex justify-between">
           <h3 className="text-[1.2rem] font-bold">Add Transaction</h3>
-          <button
-            className="text-[0.7rem] hover:cursor-pointer"
-            onClick={() => setIsModalOpen(false)}
-            disabled={isAdding}
-          >
-            <LuX />
-          </button>
+          <Xbutton closeFunc={() => setIsModalOpen(false)} disabled={isAdding} />
         </div>
         {fetchError && <p className="text-red-500">{fetchError} please try again</p>}
         <div className="flex gap-3">
@@ -99,6 +94,7 @@ const TransactionForm = ({ setIsModalOpen }) => {
               onChange={(e) => setAmount(handleAmount(e))}
               required
               disabled={isAdding}
+
             />
           </div>
         </div>
@@ -112,6 +108,7 @@ const TransactionForm = ({ setIsModalOpen }) => {
             onChange={(e) => setDesc(e.target.value)}
             required
             disabled={isAdding}
+
           />
         </div>
         <div className="flex gap-3">

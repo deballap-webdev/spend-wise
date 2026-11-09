@@ -1,5 +1,6 @@
 import { LuTrash2, LuX } from "react-icons/lu";
 import useEscapeModal from "../../hooks/useEscapeModal";
+import Xbutton from "../buttons/Xbutton";
 const Delete = ({
   description,
   setIsDeleteOpen,
@@ -19,9 +20,7 @@ const Delete = ({
       <div className="bg-BODY-BG flex flex-col gap-3 rounded-md p-3">
         <div className="flex justify-between">
           <h3 className="font-bold">Delete {headText}?</h3>
-          <button type="button" onClick={() => setIsDeleteOpen(false)}>
-            <LuX />
-          </button>
+          <Xbutton closeFunc={() => setIsDeleteOpen(false)} />
         </div>
         <p className="text-LIGHT-TEXT -mt-2 text-[0.8rem]">{`${description} will be removed from your workspace. This cannot be undone`}</p>
 

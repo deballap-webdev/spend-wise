@@ -4,6 +4,7 @@ import { useStoreActions, useStoreState } from "easy-peasy";
 import { useState } from "react"
 import handleAmount from "../../utils/handleAmount";
 import useEscapeModal from "../../hooks/useEscapeModal";
+import Xbutton from "../buttons/Xbutton";
 const EditBudget = ({ budget, setIsEditBudgetOpen, convLimit }) => {
   const getFilteredCategories = useStoreState(state => state.getFilteredCategories
   )
@@ -35,7 +36,7 @@ const EditBudget = ({ budget, setIsEditBudgetOpen, convLimit }) => {
     }}>
       <form className="bg-BODY-BG flex flex-col gap-3 rounded-md p-3" onSubmit={(e) => handleSubmit(e)}>
         <div className="flex justify-between"><h3 className="font-bold">Edit Budget</h3>
-          <button type="button" onClick={() => setIsEditBudgetOpen(false)}><LuX /></button>
+          <Xbutton closeFunc={() => setIsEditBudgetOpen(false)} />
         </div>
         <p className="text-LIGHT-TEXT -mt-2 mb-2 text-[0.8rem]">
           Update your monthly spending limit
@@ -49,9 +50,6 @@ const EditBudget = ({ budget, setIsEditBudgetOpen, convLimit }) => {
           <label htmlFor="limit">Monthlt Limit {`(${symbol})`}</label>
           <input type="text" name="limit" id="limit" value={limit} onChange={(e) => setLimit(handleAmount(e))} />
         </div>
-
-
-
         {exists && <p className="text-red-500 font-bold text-[0.7rem]">A budget already exists for the category Edit its limit instead</p>}
         <div className="flex justify-end gap-2">
           <button type="button" className="white-button" onClick={() => setIsEditBudgetOpen(false)}>

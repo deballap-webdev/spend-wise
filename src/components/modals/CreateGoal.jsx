@@ -3,6 +3,7 @@ import handleAmount from "../../utils/handleAmount";
 import { useState } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import useEscapeModal from "../../hooks/useEscapeModal";
+import Xbutton from "../buttons/Xbutton";
 const CreateGoal = ({ setIsCreateGoalOpen }) => {
   const [targetAmount, setTargetAmount] = useState("");
   const [savedAmount, setSavedAmount] = useState("");
@@ -40,9 +41,7 @@ const CreateGoal = ({ setIsCreateGoalOpen }) => {
       >
         <div className="flex justify-between">
           <h3 className="font-bold">Create Goal</h3>
-          <button type="button" onClick={() => setIsCreateGoalOpen(false)}>
-            <LuX />
-          </button>
+          <Xbutton closeFunc={() => setIsCreateGoalOpen(false)} />
         </div>
 
         <p className="text-LIGHT-TEXT -mt-2 text-[0.8rem]">
