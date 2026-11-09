@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LuX, LuCheck, LuRefreshCcw } from "react-icons/lu";
+import { LuCheck, LuRefreshCcw } from "react-icons/lu";
 import Select from "../Select";
 import { useStoreActions, useStoreState } from
   "easy-peasy";

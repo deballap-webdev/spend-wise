@@ -22,7 +22,7 @@ const TransactionItem = ({ transaction }) => {
   const convAmount = convCurrency(transaction.amount, currency, transaction.rateToUSD, targetCurrencyRate).toLocaleString()
   const symbol = useStoreState(state => state.symbol)
   return (
-    <div className="bg-CARD-BG border-b-BORDER hover:bg-ICON-BG flex border-collapse justify-between border-b p-4 text-[0.78em]">
+    <div className="bg-CARD-BG border-b-BORDER hover:bg-ICON-BG flex border-collapse justify-between border-b p-4 text-[0.78em] gap-2">
       <div className="flex w-3/10 items-center gap-2">
         {getIcon(transaction.category)}
         <div>
@@ -60,6 +60,7 @@ const TransactionItem = ({ transaction }) => {
         />
       )}
     </div>
+
   );
 };
 

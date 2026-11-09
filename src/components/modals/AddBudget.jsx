@@ -1,6 +1,6 @@
 import { useStoreActions, useStoreState } from "easy-peasy";
 import Select from "../Select";
-import { LuCheck, LuX } from "react-icons/lu";
+import { LuCheck } from "react-icons/lu";
 import { useState } from "react";
 import useEscapeModal from "../../hooks/useEscapeModal";
 import Xbutton from "../buttons/Xbutton";

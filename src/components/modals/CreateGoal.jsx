@@ -1,4 +1,4 @@
-import { LuCheck, LuX } from "react-icons/lu";
+import { LuCheck } from "react-icons/lu";
 import handleAmount from "../../utils/handleAmount";
 import { useState } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";

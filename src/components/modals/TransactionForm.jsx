@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import Select from "../Select";
-import { LuCheck, LuX, LuRefreshCcw } from "react-icons/lu";
+import { LuCheck, LuRefreshCcw } from "react-icons/lu";
 import handleAmount from "../../utils/handleAmount";
 import currencyApi from "../../api/currencyApi";
 import useEscapeModal from "../../hooks/useEscapeModal";

@@ -75,6 +75,9 @@ const BarChart = () => {
         scales: {
             x: {
                 grid: {
+
+                    display: false,
+
                     drawOnChatArea: true,
                 },
             },
@@ -84,7 +87,15 @@ const BarChart = () => {
                     callback: function (value) {
                         return formatNumber(value, symbol)
                     }
+                },
+                grid: {
+                    color: "rgba(200, 200, 200, 0.4)",
+
+                },
+                border: {
+                    dash: [5, 6]
                 }
+
             }
         },
     }

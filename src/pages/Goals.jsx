@@ -13,7 +13,7 @@ const Goals = () => {
   if (!isRehydrated) return <Loading />
   console.log(goals)
   return (
-    <div className="bg-BODY-BG flex grow flex-col gap-4 px-6 py-4">
+    <main className="bg-BODY-BG min-h-screen flex grow flex-col gap-4 px-6 py-4">
       <div className="flex items-center  justify-between">
         <div>
           <h2 className="text-[1.5rem] font-bold">Savings Goals</h2>
@@ -22,7 +22,7 @@ const Goals = () => {
           </p>
         </div>
         <button
-          className="green-button" onClick={() => setIsCreateGoalOpen(true)}
+          className="green-button text-nowrap" onClick={() => setIsCreateGoalOpen(true)}
         >
           + Create Goal
         </button>
@@ -36,7 +36,7 @@ const Goals = () => {
       {isCreateGoalOpen && (
         <CreateGoal setIsCreateGoalOpen={setIsCreateGoalOpen} />
       )}
-    </div>
+    </main>
   );
 };
 

@@ -1,11 +1,10 @@
 import { useState } from "react";
 import handleAmount from "../../utils/handleAmount";
-import { LuX, LuCheck } from "react-icons/lu";
+import { LuCheck } from "react-icons/lu";
 import { useStoreActions, useStoreState } from
   "easy-peasy";
 import useEscapeModal from "../../hooks/useEscapeModal";
 import Xbutton from "../buttons/Xbutton";
-import { setMillisecondsWithOptions } from "date-fns/fp";
 const EditGoal = ({ setIsEditGoalOpen, goal, convSavedAmount, convTargetAmount }) => {
   const [name, setName] = useState(goal.name);
   const [targetAmount, setTargetAmount] = useState(convTargetAmount);

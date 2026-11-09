@@ -1,5 +1,4 @@
 import { useStoreActions, useStoreState } from "easy-peasy"
-import { LuX } from "react-icons/lu"
 import { useState } from "react"
 import handleAmount from "../../utils/handleAmount"
 import convCurrency from "../../utils/convCurrency"

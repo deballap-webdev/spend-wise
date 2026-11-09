@@ -1,4 +1,4 @@
-import { LuTrash2, LuX } from "react-icons/lu";
+import { LuTrash2 } from "react-icons/lu";
 import useEscapeModal from "../../hooks/useEscapeModal";
 import Xbutton from "../buttons/Xbutton";
 const Delete = ({

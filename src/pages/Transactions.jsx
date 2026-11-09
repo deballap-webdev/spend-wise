@@ -61,7 +61,7 @@ const Transactions = () => {
 
   return (
 
-    <div className="bg-BODY-BG flex grow flex-col gap-4 p-4">
+    <main className="bg-BODY-BG flex grow flex-col gap-4 p-4 min-h-screen  ">
       <div className="flex flex-wrap items-center justify-between gap-y-2">
         <div>
           <h2 className="text-[1.5rem] font-bold">Transactions</h2>
@@ -81,7 +81,7 @@ const Transactions = () => {
           </button>
         </div>
       </div>
-      <div className="flex flex-wrap gap-3 md:flex-nowrap">
+      <div className="flex flex-wrap gap-3 md:flex-nowrap max-w-screen">
         <div className="bg-CARD-BG focus border-BORDER flex h-10 min-w-2/5 grow items-center rounded-md border px-3 focus-within:outline-1">
           <LuSearch />
           <input
@@ -89,7 +89,7 @@ const Transactions = () => {
             name="transactions"
             id="transaction"
             placeholder="Search transactions.."
-            className="w-full px-4 py-2 outline-0 "
+            className="w-full px-4 py-2 focus:outline-0 search"
             value={search}
             onChange={(e) => handleFilter(e)}
           />
@@ -121,7 +121,7 @@ const Transactions = () => {
       </div>
       <TransactionList transactions={filteredTransactions} pageNumber={pageNumber} setPageNumber={setPageNumber} />
       {isModalOpen && <TransactionForm setIsModalOpen={setIsModalOpen} />}
-    </div>
+    </main>
   );
 };
 

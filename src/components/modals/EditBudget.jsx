@@ -1,4 +1,4 @@
-import { LuCheck, LuX } from "react-icons/lu";
+import { LuCheck } from "react-icons/lu";
 import Select from "../Select";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import { useState } from "react"
@@ -55,7 +55,7 @@ const EditBudget = ({ budget, setIsEditBudgetOpen, convLimit }) => {
           <button type="button" className="white-button" onClick={() => setIsEditBudgetOpen(false)}>
             Cancel
           </button>
-          <button type="sumbit" className="green-button">
+          <button type="submit" className="green-button">
             <LuCheck /> Save Changes
           </button>
         </div>

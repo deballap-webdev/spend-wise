@@ -1,5 +1,4 @@
 import { useStoreActions } from "easy-peasy";
-import { LuX } from "react-icons/lu";
 import Xbutton from "../buttons/Xbutton";
 
 const ClearAll = ({ setIsClearAllOpen }) => {

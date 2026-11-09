@@ -10,41 +10,43 @@ const TransactionList = ({ transactions, pageNumber, setPageNumber }) => {
   const isFirstPage = safePageNumber === 1;
   const isLastPage = transactions ? endIndex >= transactions.length : 0;
   return (
-    <div className="border-BORDER overflow-x-auto rounded-md border">
-      <div className="bg-ICON-BG border-b-BORDER flex h-10 border-collapse items-center rounded-tl-md rounded-tr-md border-b p-4 text-[0.7rem]">
-        <div className="w-3/10">TRANSACTION</div>
-        <div className="w-1/5">CATEGORY</div>
-        <div className="w-1/5">DATE</div>
-        <div className="w-1/5">AMOUNT</div>
-        <div className="w-1/10">ACTIONS</div>
-      </div>
-      {transactions.length !== 0 && (
-        <>
-          {transactions.slice(startIndex, endIndex).map((transaction) => (
-            <TransactionItem transaction={transaction} key={transaction.id} />
-          ))}
-        </>
-      )}
-      {!transactions.length && <EmptyTransaction />}
-      <div className="bg-CARD-BG flex justify-between rounded-br-lg rounded-bl-lg px-4 py-2 text-[0.7rem]">
-        {transactions.length
-          ? `Showing ${startIndex + 1} - ${endIndex <= transactions.length ? endIndex : transactions.length}  of ${transactions.length} transactions`
-          : `0 transactions`}
-        <div className="flex">
-          <button
-            className="white-button mr-2"
-            disabled={isFirstPage}
-            onClick={() => setPageNumber(pageNumber - 1)}
-          >
-            Previous
-          </button>
-          <button
-            className="white-button"
-            disabled={isLastPage}
-            onClick={() => setPageNumber(pageNumber + 1)}
-          >
-            Next
-          </button>
+    <div className="overflow-x-auto">
+      <div className="border-BORDER overflow-x-auto rounded-md border min-w-120">
+        <div className="bg-ICON-BG border-b-BORDER flex h-10 border-collapse items-center rounded-tl-md rounded-tr-md border-b p-4 text-[0.7rem] flx justify-evenly gap-4">
+          <div className="w-3/10">TRANSACTION</div>
+          <div className="w-1/5">CATEGORY</div>
+          <div className="w-1/5">DATE</div>
+          <div className="w-1/5">AMOUNT</div>
+          <div className="w-1/10">ACTIONS</div>
+        </div>
+        {transactions.length !== 0 && (
+          <>
+            {transactions.slice(startIndex, endIndex).map((transaction) => (
+              <TransactionItem transaction={transaction} key={transaction.id} />
+            ))}
+          </>
+        )}
+        {!transactions.length && <EmptyTransaction />}
+        <div className="bg-CARD-BG flex justify-between rounded-br-lg rounded-bl-lg px-4 py-2 text-[0.7rem]">
+          {transactions.length
+            ? `Showing ${startIndex + 1} - ${endIndex <= transactions.length ? endIndex : transactions.length}  of ${transactions.length} transactions`
+            : `0 transactions`}
+          <div className="flex">
+            <button
+              className={`${!isFirstPage ? "white-button" : "px-2 py-0.5 rounded-md"}  mr-2`}
+              disabled={isFirstPage}
+              onClick={() => setPageNumber(pageNumber - 1)}
+            >
+              Previous
+            </button>
+            <button
+              className={`${!isLastPage ? "white-button" : "px-2 py-0.5 rounded-md"}  mr-2`}
+              disabled={isLastPage}
+              onClick={() => setPageNumber(pageNumber + 1)}
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>
