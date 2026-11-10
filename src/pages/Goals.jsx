@@ -29,7 +29,9 @@ const Goals = () => {
       </div>
       <div className="flex flex-wrap gap-4">
         {goals.map((goal) => (
-          <GoalCard goal={goal} key={goal.id} />
+          <div className="w-[min(250px,80%)]">
+            <GoalCard goal={goal} key={goal.id} />
+          </div>
         ))}
       </div>
       {goals.length === 0 && <EmptyGoal setIsCreateGoalOpen={setIsCreateGoalOpen} />}

@@ -68,7 +68,7 @@ const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
       }}
     >
       <form
-        className="bg-BODY-BG flex w-100 flex-col gap-3 rounded-md p-3"
+        className="bg-BODY-BG flex w-50 min-w-max flex-col gap-3 rounded-md p-3"
         onSubmit={(e) => handleSubmit(e)}
       >
         <div className="flex justify-between">

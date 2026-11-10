@@ -71,7 +71,7 @@ const TransactionForm = ({ setIsModalOpen }) => {
       }}
     >
       <form
-        className="bg-BODY-BG mx-auto flex min-w-75 flex-col gap-3 rounded-md px-4 py-2 md:w-100"
+        className="bg-BODY-BG mx-auto  fixed top-5  flex min-w-75 flex-col gap-3 rounded-md px-4 py-2 md:w-100"
         onSubmit={(e) => handleSubmit(e)}
       >
         <div className="flex justify-between">

@@ -26,8 +26,8 @@ const GoalCard = ({ goal }) => {
   const status = convSavedAmount < convTargetAmount ? "in progress" : "completed"
   const editFunction = () => { setIsEditGoalOpen(true) }
   return (
-    <div className="w-70">
-      <div className="bg-LIGHT-GREEN text-GREEN2 flex h-50 items-center justify-center rounded-tl-md rounded-tr-md text-[5rem]">
+    <div className="">
+      <div className="bg-LIGHT-GREEN text-GREEN2 flex h-25 items-center justify-center rounded-tl-md rounded-tr-md text-[5rem]">
         <LuTarget />
       </div>
       <div className="bg-CARD-BG roounded-br-md flex flex-col gap-3 rounded-bl-md px-3 py-3">
@@ -51,7 +51,7 @@ const GoalCard = ({ goal }) => {
           {convSavedAmount <= convTargetAmount ? (convTargetAmount - convSavedAmount).toLocaleString() : 0} remaining
         </p>
         <div className="flex justify-between">
-          <button className="bg-GREEN rounded-md px-3 py-1 text-[0.8rem] text-white" onClick={() => setIsAddContOpen(true)}>
+          <button className="green-button" onClick={() => setIsAddContOpen(true)}>
             + Add contribution
           </button>
           <div className="flex">

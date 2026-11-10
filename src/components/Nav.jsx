@@ -23,7 +23,7 @@ const Nav = () => {
       if (e.target === e.currentTarget) setIsNavOpen(false)
     }}
     >
-      <nav className={`bg-NAV-BG  min-h-screen w-fit flex-col justify-between px-3 py-4 sm:relative absolute ${isNavOpen ? "flex" : "hidden sm:flex"}`} >
+      <nav className={`bg-NAV-BG  min-h-screen overflow-y-auto w-fit scrollbar-none flex-col justify-between px-3 py-4 sm:relative absolute ${isNavOpen ? "flex" : "hidden sm:flex"}`} >
         <div className="justify-start flex flex-col items-center gap-1">
           <div className="mb-2 flex h-20 items-center text-white gap-4">
             <div className="flex items-center gap-2">
@@ -53,9 +53,10 @@ const Nav = () => {
           </div>
         </div>
 
-        <button className={`bg-white rounded-[50%] h-6 w-6 flex items-center justify-center  border border-BORDER absolute -right-4 top-18 cursor-button ${isCollapsed ? "rotate-180" : "rotate-0"}`} onClick={() => setIsCollapsed(!isCollapsed)} ><LuArrowLeft title={isCollapsed ? "open nav-menu" : "close nav-menu"} /></button>
+
       </nav>
-    </div >
+      <button className={`bg-white rounded-[50%] h-6 w-6 flex items-center justify-center  border border-BORDER absolute -right-4 top-18 cursor-button ${isCollapsed ? "rotate-180" : "rotate-0"}`} onClick={() => setIsCollapsed(!isCollapsed)} ><LuArrowLeft title={isCollapsed ? "open nav-menu" : "close nav-menu"} /></button>
+    </div>
 
   );
 };

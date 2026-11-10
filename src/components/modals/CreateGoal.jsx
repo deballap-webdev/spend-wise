@@ -36,7 +36,7 @@ const CreateGoal = ({ setIsCreateGoalOpen }) => {
       }}
     >
       <form
-        className="bg-BODY-BG flex w-100 flex-col gap-3 rounded-md p-2"
+        className="bg-BODY-BG flex min-w-max w-50  flex-col gap-3 rounded-md p-2"
         onSubmit={(e) => handleSubmit(e)}
       >
         <div className="flex justify-between">

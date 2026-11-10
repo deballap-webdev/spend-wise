@@ -37,7 +37,7 @@ const BarChart = () => {
 
     const options = {
         responsive: true,
-
+        maintainAspectRatio: false,
         interaction: {
             mode: 'index',
             intersect: false,
@@ -124,7 +124,7 @@ const BarChart = () => {
         }
     }]
     return (
-        <div className="bg-white p-4 rounded-md">
+        <div className="bg-white p-4 grow-2 min-w-60 h-full rounded-md">
             <Bar data={data} options={options} plugins={customPlugins}></Bar>
         </div>
     )

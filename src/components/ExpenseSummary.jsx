@@ -5,10 +5,8 @@ const ExpenseSummary = () => {
   const getTotalAmountInCycle = useStoreState(state => state.getTotalAmountInCycle)
   const symbol = useStoreState(state => state.symbol)
   return (
-    <div className="bg-CARD-BG grow border-BORDER rounded-md border p-4">
-      <div className="flex justify-between"><h3>Expenses by Category</h3>
-        <Link to="analytics" className="hover:bg-LIGHT-GREEN h-8 w-8 flex items-center justify-center rounded-md">•••</Link>
-      </div>
+    <div className="bg-CARD-BG  border-BORDER rounded-md border p-4">
+      <h3 className="mr-8">Expenses by Category</h3>
       <div className="flex-col flex gap-3 py-4">
         <ProgressBar category="Food" color="#00a979" />
         <ProgressBar category="Entertainment" color="#a975ce" />

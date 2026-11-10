@@ -43,7 +43,7 @@ const AddBudget = ({ setIsAddBudgetOpen }) => {
         if (e.target === e.currentTarget) setIsAddBudgetOpen(false);
       }}
     >
-      <form className="bg-BODY-BG flex flex-col gap-3 rounded-md p-3" onSubmit={(e) => handleSubmit(e)}>
+      <form className="bg-BODY-BG flex flex-col gap-3 rounded-md p-3 min-w-max w-50" onSubmit={(e) => handleSubmit(e)}>
         <div className="flex justify-between">
           <h3 className="font-bold">Add Budget</h3>
           <Xbutton closeFunc={() => setIsAddBudgetOpen(false)} />

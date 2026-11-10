@@ -18,7 +18,7 @@ const EditBudget = ({ budget, setIsEditBudgetOpen, convLimit }) => {
   const budgets = useStoreState(state => state.allocations.budgets)
   const handleSubmit = (e) => {
     e.preventDefault()
-    const existingBudget = budgets.find(budget => budget.category === category && budget !== budget)
+    const existingBudget = budgets.find(b => b.category === category && b !== budget)
     if (existingBudget) { setExists(true); return }
     const updatedBudget = {
       ...budget,
@@ -34,7 +34,7 @@ const EditBudget = ({ budget, setIsEditBudgetOpen, convLimit }) => {
     <div className="backDrop" onClick={(e) => {
       if (e.target === e.currentTarget) setIsEditBudgetOpen(false)
     }}>
-      <form className="bg-BODY-BG flex flex-col gap-3 rounded-md p-3" onSubmit={(e) => handleSubmit(e)}>
+      <form className="bg-BODY-BG flex flex-col gap-3 rounded-md p-3 min-w-max w-50" onSubmit={(e) => handleSubmit(e)}>
         <div className="flex justify-between"><h3 className="font-bold">Edit Budget</h3>
           <Xbutton closeFunc={() => setIsEditBudgetOpen(false)} />
         </div>

@@ -34,7 +34,7 @@ const EditGoal = ({ setIsEditGoalOpen, goal, convSavedAmount, convTargetAmount }
       }}
     >
       <form
-        className="bg-BODY-BG flex w-100 flex-col gap-3 rounded-md p-2"
+        className="bg-BODY-BG flex w-50 min-w-max flex-col gap-3 rounded-md p-2"
         onSubmit={(e) => handleSubmit(e)}
       >
         <div className="flex justify-between">
