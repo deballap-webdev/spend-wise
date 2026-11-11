@@ -13,7 +13,7 @@ const Goals = () => {
   if (!isRehydrated) return <Loading />
   console.log(goals)
   return (
-    <main className="bg-BODY-BG min-h-screen flex grow flex-col gap-4 px-6 py-4">
+    <main className="bg-BODY-BG min-h-screen flex grow flex-col gap-4 px-6 pt-4 pb-12">
       <div className="flex items-center  justify-between">
         <div>
           <h2 className="text-[1.5rem] font-bold">Savings Goals</h2>

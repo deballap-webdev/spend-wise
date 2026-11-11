@@ -61,7 +61,7 @@ const Transactions = () => {
 
   return (
 
-    <main className="bg-BODY-BG flex grow flex-col gap-4 p-4 min-h-screen  ">
+    <main className="bg-BODY-BG flex grow flex-col gap-4 px-4 pt-4 pb-12 min-h-screen  ">
       <div className="flex flex-wrap items-center justify-between gap-y-2">
         <div>
           <h2 className="text-[1.5rem] font-bold">Transactions</h2>

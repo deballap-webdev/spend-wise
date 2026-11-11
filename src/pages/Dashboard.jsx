@@ -10,7 +10,7 @@ const Dashboard = () => {
   const goals = useStoreState(state => state.targets.goals)
   useActiveComponent("Dashboard");
   return (
-    <main className="bg-BODY-BG flex flex-col gap-4 p-4">
+    <main className="bg-BODY-BG flex flex-col gap-4 px-4 pt-4 pb-12">
       <h2>Your money, at a glance.</h2>
       <SummaryCardWrapper />
       <div className="flex gap-3 flex-wrap">

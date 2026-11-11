@@ -51,7 +51,7 @@ const GoalCard = ({ goal }) => {
           {convSavedAmount <= convTargetAmount ? (convTargetAmount - convSavedAmount).toLocaleString() : 0} remaining
         </p>
         <div className="flex justify-between">
-          <button className="green-button" onClick={() => setIsAddContOpen(true)}>
+          <button className="green-button text-nowrap" onClick={() => setIsAddContOpen(true)}>
             + Add contribution
           </button>
           <div className="flex">

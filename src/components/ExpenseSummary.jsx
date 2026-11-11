@@ -1,6 +1,5 @@
 import { useStoreState } from "easy-peasy";
 import ProgressBar from "./ProgressBar";
-import { Link } from "react-router";
 const ExpenseSummary = () => {
   const getTotalAmountInCycle = useStoreState(state => state.getTotalAmountInCycle)
   const symbol = useStoreState(state => state.symbol)

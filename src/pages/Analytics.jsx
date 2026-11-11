@@ -5,7 +5,7 @@ import ExpenseSummary from "../components/ExpenseSummary"
 const Analytics = () => {
   useActiveComponent("Analytics");
   return (
-    <main className="bg-BODY-BG grow p-4 flex flex-col gap-4">
+    <main className="bg-BODY-BG  grow px-4 flex flex-col gap-4 pb-12 pt-4">
       <SummaryCardWrapper />
       <BarChart />
       <ExpenseSummary />

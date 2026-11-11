@@ -20,7 +20,7 @@ const Budgets = () => {
   const isRehydrated = useStoreRehydrated()
   if (!isRehydrated) return <Loading />
   return (
-    <main className="bg-BODY-BG grow p-4 min-h-screen">
+    <main className="bg-BODY-BG grow px-4 pt-4 pb-12 min-h-screen">
       <div className="flex justify-between items-center">
         <div className="mb-6"><h2 className="font-bold text-[1.2rem]">Monthly Budgets</h2>
           <p className="text-LIGHT-TEXT text-[0.8rem]">Stay on top of your spending</p>
