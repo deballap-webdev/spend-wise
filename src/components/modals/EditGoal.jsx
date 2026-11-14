@@ -18,7 +18,7 @@ const EditGoal = ({ setIsEditGoalOpen, goal, }) => {
   const editGoal = useStoreActions((actions) => actions.targets.editGoal);
   const symbol = useStoreState(state => state.symbol)
   const [targetAmount, setTargetAmount] = useState(convCurrency(goal.targetAmount, currency, rateToUSD, targetRate));
-  const [savedAmount, setSavedAmount] = useState(convAmount(goal.savedAmount, currency, rateToUSD, targetRate));
+  const [savedAmount, setSavedAmount] = useState(convCurrency(goal.savedAmount, currency, rateToUSD, targetRate));
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedGoal = {
@@ -29,15 +29,8 @@ const EditGoal = ({ setIsEditGoalOpen, goal, }) => {
       currency: goal.currency,
       id: goal.id,
     };
-    console.log(goal.targetAmount)
-    console.log(goal.savedAmount)
-    console.log(rateToUSD)
-    console.log(targetRate)
 
-    console.log(savedAmount)
-    console.log(targetAmount)
-    console.log(cache[latestDate])
-    console.log(convAmount(savedAmount))
+
     editGoal(updatedGoal);
     setIsEditGoalOpen(false);
   };
