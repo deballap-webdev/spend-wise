@@ -3,25 +3,41 @@ import handleAmount from "../../utils/handleAmount";
 import { LuCheck } from "react-icons/lu";
 import { useStoreActions, useStoreState } from
   "easy-peasy";
+import convCurrency from "../../utils/convCurrency";
 import useEscapeModal from "../../hooks/useEscapeModal";
 import Xbutton from "../buttons/Xbutton";
-const EditGoal = ({ setIsEditGoalOpen, goal, convSavedAmount, convTargetAmount }) => {
+const EditGoal = ({ setIsEditGoalOpen, goal, }) => {
   const [name, setName] = useState(goal.name);
-  const [targetAmount, setTargetAmount] = useState(convTargetAmount);
-  const [savedAmount, setSavedAmount] = useState(convSavedAmount);
+  const convAmount = (amount) => convCurrency(Number(amount), goal.currency, targetRate, rateToUSD)
+  const currency = useStoreState(state => state.settings.currency)
+  const latestDate = useStoreState(state => state.latestDate)
+  const cache = useStoreState(state => state.ratesCache.cache)
+  const rateToUSD = cache[latestDate][goal.currency]
+  const targetRate = cache[latestDate][currency]
   const [targetDate, setTargetDate] = useState(goal.targetDate);
   const editGoal = useStoreActions((actions) => actions.targets.editGoal);
   const symbol = useStoreState(state => state.symbol)
+  const [targetAmount, setTargetAmount] = useState(convCurrency(goal.targetAmount, currency, rateToUSD, targetRate));
+  const [savedAmount, setSavedAmount] = useState(convAmount(goal.savedAmount, currency, rateToUSD, targetRate));
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedGoal = {
       name,
-      targetAmount,
-      savedAmount,
+      savedAmount: convAmount(savedAmount),
+      targetAmount: convAmount(targetAmount),
       targetDate,
       currency: goal.currency,
       id: goal.id,
     };
+    console.log(goal.targetAmount)
+    console.log(goal.savedAmount)
+    console.log(rateToUSD)
+    console.log(targetRate)
+
+    console.log(savedAmount)
+    console.log(targetAmount)
+    console.log(cache[latestDate])
+    console.log(convAmount(savedAmount))
     editGoal(updatedGoal);
     setIsEditGoalOpen(false);
   };

@@ -5,13 +5,18 @@ import { useState } from "react"
 import handleAmount from "../../utils/handleAmount";
 import useEscapeModal from "../../hooks/useEscapeModal";
 import Xbutton from "../buttons/Xbutton";
+import convCurrency from "../../utils/convCurrency";
 const EditBudget = ({ budget, setIsEditBudgetOpen, convLimit }) => {
   const getFilteredCategories = useStoreState(state => state.getFilteredCategories
   )
   const categoryArray = getFilteredCategories("expense")
   const [category, setCategory] = useState(budget.category)
   const [limit, setLimit] = useState(convLimit)
-
+  const cache = useStoreState(state => state.ratesCache.cache)
+  const currency = useStoreState(state => state.settings.currency)
+  const latestDate = useStoreState(state => state.latestDate)
+  const targetRate = cache[latestDate][budget.currency]
+  const rateToUSD = cache[latestDate][currency]
   const editBudget = useStoreActions(actions => actions.allocations.editBudget)
   const [exists, setExists] = useState(false)
   const symbol = useStoreState(state => state.symbol)
@@ -23,7 +28,7 @@ const EditBudget = ({ budget, setIsEditBudgetOpen, convLimit }) => {
     const updatedBudget = {
       ...budget,
       category,
-      limit,
+      limit: convCurrency(Number(limit), budget.currency, rateToUSD, targetRate),
     }
     setExists(false)
     editBudget(updatedBudget)

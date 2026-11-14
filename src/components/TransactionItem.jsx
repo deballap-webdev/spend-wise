@@ -20,6 +20,8 @@ const TransactionItem = ({ transaction }) => {
   const latestDate = useStoreState(state => state.latestDate)
   const targetCurrencyRate = ratesCache[transaction.date][currency] ? ratesCache[transaction.date][currency] : ratesCache[latestDate][currency]
   const convAmount = convCurrency(transaction.amount, currency, transaction.rateToUSD, targetCurrencyRate).toLocaleString()
+  console.log(transaction.amount)
+  console.log(convAmount)
   const symbol = useStoreState(state => state.symbol)
   return (
     <div className="bg-CARD-BG border-b-BORDER hover:bg-ICON-BG flex border-collapse justify-between border-b p-4 text-[0.78em] gap-2">

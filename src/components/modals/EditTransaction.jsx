@@ -7,36 +7,45 @@ import currencyApi from "../../api/currencyApi";
 import useEscapeModal from "../../hooks/useEscapeModal";
 import handleAmount from "../../utils/handleAmount";
 import Xbutton from "../buttons/Xbutton";
+import convCurrency from "../../utils/convCurrency";
 
-const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
+const EditTransaction = ({ transaction, setIsEditOpen }) => {
+  const currency = useStoreState(state => state.settings.currency)
+  const ratesCache = useStoreState(state => state.ratesCache.cache)
+  const latestDate = useStoreState(state => state.latestDate)
+  const targetCurrencyRate = ratesCache[transaction.date] ? ratesCache[transaction.date][currency] : ratesCache[latestDate][currency]
   const [editType, setEditType] = useState(transaction.type);
   const [editDesc, setEditDesc] = useState(transaction.description);
   const [editCategory, setEditCategory] = useState(transaction.category);
   const [editNote, setEditNote] = useState(transaction.note);
-  const [editAmount, setEditAmount] = useState(convAmount);
+  const [editAmount, setEditAmount] = useState(convCurrency(transaction.amount, currency, transaction.rateToUSD, targetCurrencyRate));
   const [editDate, setEditDate] = useState(transaction.date);
   const typeArray = useStoreState((state) => state.typeArray);
   const editTransaction = useStoreActions((actions) => actions.history.editTransaction)
-  const currency = useStoreState(state => state.settings.currency)
   const setRateCache = useStoreActions(actions => actions.ratesCache.setRateCache)
   const getFilteredCategories = useStoreState(state => state.getFilteredCategories)
   const defaultCategory = useStoreState(state => state.defaultCategory)
   const symbol = useStoreState(state => state.symbol)
   const [isSaving, setIsSaving] = useState(false)
   const [fetchError, setFetchError] = useState(null)
+
   const handleSubmit = async (e) => {
     setIsSaving(true)
     e.preventDefault();
+    const amountInUSD = Number(editAmount) / targetCurrencyRate
+
+    const finalSavedAmount = transaction.currency === "USD" ? amountInUSD : amountInUSD * transaction.rateToUSD
     const updatedTransaction = {
       note: editNote,
       type: editType,
       description: editDesc,
       category: editCategory,
-      amount: editAmount,
+      amount: finalSavedAmount,
       date: editDate,
       id: transaction.id,
       currency: transaction.currency
     };
+
     const todayStr = new Date().toISOString().split('T')[0]
     const ratesDate = todayStr <= editDate ? editDate : todayStr
     const rates = await currencyApi(ratesDate, 'ngn,eur')
@@ -73,7 +82,7 @@ const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
       >
         <div className="flex justify-between">
           <h3 className="font-bold">Edit Transaction</h3>
-          <Xbutton closeFunc={() => setIsEditOpen(false)} />
+          <Xbutton closeFunc={() => setIsEditOpen(false)} disabled={isSaving} />
         </div>
         {fetchError && <p className="text-red-500">{fetchError} please try again</p>}
         <p className="text-LIGHT-TEXT text-[0.8rem]">
@@ -164,7 +173,7 @@ const EditTransaction = ({ transaction, setIsEditOpen, convAmount }) => {
             className="green-button"
             disabled={isSaving}
           >
-            {isSaving ? <><LuRefreshCcw /> Saving... </> : <><LuCheck />
+            {isSaving ? <><LuRefreshCcw className="animate-spin" /> Saving... </> : <><LuCheck />
               Save Changes</>}
           </button>
         </div>

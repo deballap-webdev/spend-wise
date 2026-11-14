@@ -5,7 +5,7 @@ const handleAmount = (e) => {
   if (parts.length > 2) {
     value = parts[0] + "." + parts.slice(1).join("");
   }
-  return Number(value);
+  return value;
 };
 
 export default handleAmount;

@@ -61,7 +61,7 @@ const GoalCard = ({ goal }) => {
         </div>
       </div>
       {isEditGoalOpen && (
-        <EditGoal goal={goal} setIsEditGoalOpen={setIsEditGoalOpen} convSavedAmount={convSavedAmount} convTargetAmount={convTargetAmount} />
+        <EditGoal goal={goal} setIsEditGoalOpen={setIsEditGoalOpen} />
       )}
       {isDeleteOpen && (
         <Delete
