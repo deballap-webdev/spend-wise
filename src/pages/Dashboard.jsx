@@ -20,7 +20,7 @@ const Dashboard = () => {
           <ExpenseSummary />
         </div>
       </div>
-      <div className="flex gap-3 flex-wrap">
+      <div className="flex gap-3 flex-wrap" >
         <div className="grow-2 basis-0 min-w-200px">
           <BarChart />
         </div>

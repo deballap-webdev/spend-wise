@@ -19,19 +19,7 @@ export default createStore({
     bills: 4,
   },
   history: persist({
-    transactions: [
-      { category: "entertainment", id: 1, date: "2026-10-03", type: "expense", note: "", description: "Prime videos", amount: 15000, currency: "NGN", rateToUSD: 1548.0 },
-      { category: "transport", id: 2, date: "2026-10-07", type: "expense", note: "", description: "Uber", amount: 30000, currency: "USD", rateToUSD: 1.0 },
-      { category: "income", id: 3, date: "2026-11-09", type: "income", note: "", description: "Freelance", amount: 3000000, currency: "NGN", rateToUSD: 1509.0 },
-      { category: "food", id: 4, date: "2026-03-18", type: "expense", note: "", description: "Fruits", amount: 19000, currency: "NGN", rateToUSD: 1406.0 },
-      { category: "bills", id: 5, date: "2023-12-11", type: "expense", note: "", description: "electricity", amount: 20000, currency: "USD", rateToUSD: 1.0 },
-      { category: "health", id: 6, date: "2027-05-08", type: "expense", note: "", description: "hospital", amount: 5000, currency: "NGN", rateToUSD: 1530.0 },
-      { category: "shopping", id: 7, date: "2026-11-08", type: "expense", note: "2025-09-18", description: "new shoes", amount: 10000, currency: "NGN", rateToUSD: 1490.0 },
-      { category: "shopping", id: 8, date: "2026-11-08", type: "expense", note: "", description: "new shoes", amount: 10000, currency: "EUR", rateToUSD: 0.92 },
-      { category: "shopping", id: 9, date: "2026-10-07", type: "expense", note: "", description: "new shoes", amount: 10000, currency: "USD", rateToUSD: 1.0 },
-      { category: "income", id: 10, date: "2026-10-12", type: "income", note: "", description: "birthday gift", amount: 50000, currency: "USD", rateToUSD: 1.0 },
-      { category: "health", id: 11, date: "2026-10-07", type: "expense", note: "", description: "braces", amount: 20000, currency: "USD", rateToUSD: 1.0 }
-    ],
+    transactions: [],
 
     setTransactions: action((state, payload) => {
       state.transactions = payload;
@@ -150,15 +138,7 @@ export default createStore({
   ),
 
   allocations: persist({
-    budgets: [
-      {
-        category: "transport",
-        limit: 30000,
-        currency: "NGN",
-        rateToUSD: 1458,
-        id: "",
-      },
-    ],
+    budgets: [],
     addBudget: action((state, payload) => {
       state.budgets.push(payload);
     }),
@@ -179,40 +159,7 @@ export default createStore({
   }),
 
   targets: persist({
-    goals: [
-      {
-        name: "Upwork Connects",
-        targetAmount: 80000,
-        savedAmount: 9000,
-        targetDate: "2027-12-07",
-        currency: "NGN",
-        id: 1,
-      },
-      {
-        name: "Laptop",
-        targetAmount: 800000,
-        savedAmount: 450000,
-        targetDate: "2027-12-07",
-        currency: "EUR",
-        id: 2,
-      },
-      {
-        name: "Health",
-        targetAmount: 80000,
-        savedAmount: 4500,
-        targetDate: "2027-12-07",
-        currency: "NGN",
-        id: 3,
-      },
-      {
-        name: "PGD",
-        targetAmount: 900000,
-        savedAmount: 450000,
-        targetDate: "2027-12-07",
-        currency: "USD",
-        id: 4,
-      },
-    ],
+    goals: [],
 
     addGoal: action((state, payload) => {
       state.goals.push(payload);
@@ -231,18 +178,7 @@ export default createStore({
   }),
 
   ratesCache: persist({
-    cache: {
-      "2026-10-28": { "USD": 1.0, "EUR": 0.92, "NGN": 1500.0 },
-      "2026-10-03": { "USD": 1.0, "EUR": 0.91, "NGN": 1548.0 },
-      "2026-10-07": { "USD": 1.0, "EUR": 0.91, "NGN": 1547.0 },
-      "2026-10-06": { "USD": 1.0, "EUR": 0.91, "NGN": 1547.0 },
-      "2026-11-09": { "USD": 1.0, "EUR": 0.94, "NGN": 1509.0 },
-      "2026-03-18": { "USD": 1.0, "EUR": 0.92, "NGN": 1406.0 },
-      "2023-12-11": { "USD": 1.0, "EUR": 0.91, "NGN": 1520.0 },
-      "2027-05-08": { "USD": 1.0, "EUR": 0.91, "NGN": 1530.0 },
-      "2026-11-08": { "USD": 1.0, "EUR": 0.92, "NGN": 1490.0 },
-      "2026-10-12": { "USD": 1.0, "EUR": 0.93, "NGN": 1468.0 }
-    },
+    cache: {},
     setRateCache: action((state, payload) => {
       state.cache = { ...state.cache, ...payload }
     })

@@ -7,9 +7,6 @@ import Goals from "./pages/Goals";
 import Settings from "./pages/Settings";
 import Budgets from "./pages/Budgets";
 import Missing from "./components/Missing";
-import Loading from "./components/empty/Loading";
-import { useStoreActions } from "easy-peasy";
-import { useEffect } from "react";
 const App = () => {
 
   return (
